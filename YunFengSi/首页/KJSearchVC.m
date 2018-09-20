@@ -31,7 +31,6 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
 - (instancetype)init{
     self = [super init];
     if (self) {
-        
         /// 左对齐布局
         UICollectionViewLeftAlignedLayout *flow = [[UICollectionViewLeftAlignedLayout alloc] init];
         flow.minimumInteritemSpacing = 10;
@@ -43,8 +42,7 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
     /// 成为第一响应者
@@ -100,7 +98,7 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
 }
 
 - (void)configureCell:(CMHSearchHistoryCell *)cell atIndexPath:(NSIndexPath *)indexPath withObject:(id)object{
-//    [cell configureModel:object];
+    [cell configureModel:object];
 }
 
 #pragma mark - 事件处理Or辅助方法
