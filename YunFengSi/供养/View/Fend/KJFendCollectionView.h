@@ -10,8 +10,6 @@
 
 @interface KJFendCollectionView : UIView
 
-//+ (instancetype)createFendCollectionViewFromData:(NSObject*)model Size:(void(^)(CGSize size))block;
-
 - (void)getHeight:(CGFloat)height Data:(NSObject*)model;
 
 @end

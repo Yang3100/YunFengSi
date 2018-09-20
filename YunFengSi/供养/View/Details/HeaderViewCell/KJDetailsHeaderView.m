@@ -45,7 +45,7 @@
     
     // 先调用superView的layoutIfNeeded方法再获取frame
     [self layoutIfNeeded];
-    CGFloat h = Handle(10) + CGRectGetHeight(self.headerImageView.frame) + Handle(10) + CGRectGetHeight(self.priceView.frame) + Handle(10) + CGRectGetHeight(self.moreButton.frame) + + Handle(10) + CGRectGetHeight(self.numLabel.frame) + Handle(10) + CGRectGetHeight(self.NumberSeletedView.frame) + Handle(10) + CGRectGetHeight(self.fendButton.frame) + Handle(10) + CGRectGetHeight(self.introLabel.frame);
+    CGFloat h = CGRectGetHeight(self.introLabel.frame) + self.introLabel.frame.origin.y;
     return CGSizeMake(SCREEN_WIDTH, h);
 }
 
@@ -146,7 +146,7 @@
     if (!_moreButton) {
         _moreButton = InsertImageButton(self, CGRectZero, 520, nil, nil, self, @selector(btnClick:));
         _moreButton.adjustsImageWhenHighlighted = NO;
-        _moreButton.backgroundColor = UIColorFromHEXA(0xf9f6f6, 1);
+        _moreButton.backgroundColor = DefaultBackgroudColor;
         [_moreButton setTitle:@"随喜捐赠(元)" forState:UIControlStateNormal];
         _moreButton.titleLabel.font = [UIFont systemFontOfSize:15];
         [_moreButton setTitleColor:UIColorFromHEXA(0x888888,1.0) forState:UIControlStateNormal];
@@ -206,7 +206,7 @@
 - (UILabel*)introLabel{
     if (!_introLabel) {
         _introLabel=InsertLabel(self, CGRectZero, NSTextAlignmentLeft, @"简介:很长很长的简介,我也不想打了!!就随便打一些汉字来表示一下简介吧~~~~", SystemFontSize(14), [UIColor blackColor]);
-        _introLabel.backgroundColor = UIColorFromHEXA(0xf9f6f6, 1);
+        _introLabel.backgroundColor = DefaultBackgroudColor;
         _introLabel.numberOfLines = 0;
     }
     return _introLabel;

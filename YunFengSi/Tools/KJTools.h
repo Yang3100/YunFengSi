@@ -99,8 +99,6 @@ typedef void (^StateBlock)(TDTouchIDState state,NSError *error);
 + (CGFloat)calculateTextHeightWithWidth:(CGFloat)width andText:(NSString *)text attributes:(NSDictionary *)attribute;
 
 
-
-
 #pragma mark *********************    动画相关   ***********************
 // 抖动动画
 + (void)exChangeOut:(UIView *)changeOutView dur:(CFTimeInterval)dur;
@@ -138,12 +136,6 @@ typedef void (^StateBlock)(TDTouchIDState state,NSError *error);
 
 // 验证字符串中是否有特殊字符
 + (BOOL)checkSpecialCharacter:(NSString *)string;
-
-// 验证 qq  微信  微博 是否可以用
-//+ (BOOL)isSupportWX;
-//+ (BOOL)isSupportQQ;
-//+ (BOOL)isSupportSina;
-
 
 #pragma mark *********************    沙盒相关   ***********************
 // 获取沙盒地址数组
@@ -292,9 +284,6 @@ typedef void (^StateBlock)(TDTouchIDState state,NSError *error);
 // 处理二维码模糊的问题
 + (UIImage *)createNonInterpolatedUIImageFormCIImage:(CIImage *)image withSize:(CGFloat) size;
 
-//// 根据用户等级返回背景图片名称
-//+ (UIImage *)returnBackgroundImageNameWithLevel:(NSString *)level;
-
 // 浏览大图, currentImageview 当前图片视图,    alpha 背景透明度
 + (void)scanBigImageWithImageView:(UIImageView *)currentImageview alpha:(CGFloat)alpha;
 
@@ -333,6 +322,9 @@ typedef void (^StateBlock)(TDTouchIDState state,NSError *error);
 // json字符串转字典
 + (NSDictionary *)dictionaryWithJsonString:(NSString *)json;
 
+// 字典转json字符串方法
++ (NSString *)convertToJsonData:(NSDictionary *)dict;
+
 // 读取plist和json文件数据
 + (NSArray*)getPlistOrJsonFile:(NSString*)fileName Type:(NSString*)type;
 
@@ -344,14 +336,8 @@ typedef void (^StateBlock)(TDTouchIDState state,NSError *error);
 // NSClassFromString来对不确定的类进行初始化
 + (id)kj_initNotSureClassWithName:(NSString*)class_name;
 
-// MD5加密
-+ (NSString *)md5To32bit:(NSString *    )str;
-
 // 存储试图或者控制器
 + (id)storageid:(id)str;
-
-// 退出登录移除本地数据
-+ (void)LoginOutRemoveLocalData;
 
 
 #pragma mark *********************    算法相关   ***********************

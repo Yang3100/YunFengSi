@@ -19,7 +19,7 @@
 
 @implementation KJBaseTabBarController
 
-+(void)initialize{
++ (void)initialize{
     // tabBaritme 标题未选中的 颜色 大小设置
     NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
     attrs[NSFontAttributeName] = attrs[NSFontAttributeName];
@@ -38,11 +38,53 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self setupChildVC:[[KJFendVC alloc]init] title:@"供养" image:@"zhifu_normal" selectedImage:@"zhifu_pressed"];
-    [self setupChildVC:[[KJHelpStudyVC alloc]init] title:@"助学" image:@"zixun_normal" selectedImage:@"zixun_pressed"];
-    [self setupChildVC:[[KJHomeVC alloc]init] title:@"首页" image:@"shouye_normal" selectedImage:@"shouye_pressed"];
-    [self setupChildVC:[[KJActivityVC alloc]init] title:@"活动" image:@"simiao_normal" selectedImage:@"simiao_pressed"];
-    [self setupChildVC:[[KJMeVC alloc]init] title:@"我的" image:@"mine_normal" selectedImage:@"mine_pressed"];
+    
+    // 供养
+    KJBaseNavigationController *fendNav = ({
+        KJFendVC *vc = [[KJFendVC alloc]init];
+        // 配置
+        vc.title = @"供养";
+        // 添加到导航栏的栈底控制器
+        [[KJBaseNavigationController alloc] initWithRootViewController:vc];
+    });
+    // 助学
+    KJBaseNavigationController *helpNav = ({
+        KJHelpStudyVC *vc = [[KJHelpStudyVC alloc]init];
+        // 配置
+        vc.title = @"助学";
+        // 添加到导航栏的栈底控制器
+        [[KJBaseNavigationController alloc] initWithRootViewController:vc];
+    });
+    // 首页
+    KJBaseNavigationController *homeNav = ({
+        KJHomeVC *vc = [[KJHomeVC alloc]init];
+        // 配置
+        vc.title = @"首页";
+        // 添加到导航栏的栈底控制器
+        [[KJBaseNavigationController alloc] initWithRootViewController:vc];
+    });
+    // 活动
+    KJBaseNavigationController *activityNav = ({
+        KJActivityVC *vc = [[KJActivityVC alloc]init];
+        // 配置
+        vc.title = @"活动";
+        // 添加到导航栏的栈底控制器
+        [[KJBaseNavigationController alloc] initWithRootViewController:vc];
+    });
+    // 我的
+    KJBaseNavigationController *meNav = ({
+        KJMeVC *vc = [[KJMeVC alloc]init];
+        // 配置
+        vc.title = @"我的";
+        // 添加到导航栏的栈底控制器
+        [[KJBaseNavigationController alloc] initWithRootViewController:vc];
+    });
+    
+    [self setupChildVC:homeNav title:@"首页" image:@"shouye_normal" selectedImage:@"shouye_pressed"];
+    [self setupChildVC:helpNav title:@"助学" image:@"zixun_normal" selectedImage:@"zixun_pressed"];
+    [self setupChildVC:fendNav title:@"供养" image:@"zhifu_normal" selectedImage:@"zhifu_pressed"];
+    [self setupChildVC:activityNav title:@"活动" image:@"simiao_normal" selectedImage:@"simiao_pressed"];
+    [self setupChildVC:meNav title:@"我的" image:@"mine_normal" selectedImage:@"mine_pressed"];
     
     // 更改系统自带的tabbar
     UITabBar *tabbar = [[UITabBar alloc] init];

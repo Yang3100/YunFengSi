@@ -18,29 +18,48 @@
 
 #import <AFNetworking.h>  // 网络相关
 #import <UIKit+AFNetworking.h>
-
 #import <YYKit.h>         //
-
 #import <Masonry.h>       // 自动布局,约束相关
-
 #import <IQKeyboardManager.h> // 弹出键盘相关
+#import <MJRefresh.h>       // 刷新
+#import <MBProgressHUD.h>   // 指示器
+#import <FBKVOController.h> // KVO
+#import <BlocksKit.h>       // 强大的回调库
+#import <BlocksKit/BlocksKit+UIKit.h>
+
+// UIKit
+#import <SDCycleScrollView.h>  // 滚动banner
+#import <UAProgressView.h>     // 环形进度条
 
 #import "KJBaseTableViewCell.h"        // 底层cell
-#import "KJBaseNavigationController.h" // 底层navigation
+#import "KJBaseViewController.h"       // 底层ViewController
+#import "KJBaseNavigationController.h" // 底层NavigationController
+#import "KJBaseTableViewController.h"  // 底层TableViewController
+#import "KJBaseCollectionViewController.h" // 底层CollectionViewController
 
 #import "InitializationUIMethod.h" // 创建常用UI子类，避免重复编码，造成大量创建代码冗余
 //#import "KJNetManager.h"           // 网络请求接口类
-#import "KJTools.h"                // 工具类
+#import "KJTools.h"        // 工具类
+#import "KJEncryptTool.h"  // 加密解密
 
-#import "UIView+HNExtension.h"    // UIView扩展
+// Category
+#import "UIView+MH.h"    // UIView扩展
 #import "UITableView+FDTemplateLayoutCell.h" // cell自适应相关
 #import "UIButton+EnlargeEdge.h"   // 关于button的扩展
 #import "UIBarButtonItem+FYExtension.h" // 关于navigationBarItem
 #import "UINavigationBar+Awesome.h"// 设置navigation的背景颜色
-#import "UITextView+ZWPlaceHolder.h" // 输入框扩展
+#import "UITextView+ZWPlaceHolder.h"  // 输入框扩展
 #import "UITextView+ZWLimitCounter.h" // 限制字数
+#import "NSObject+MHRandom.h"    // 随机数
+#import "UIFont+MHExtension.h"   // 字体大小
+#import "NSString+MH.h"   // 字符串扩展
+#import "NSDate+Extension.h"
+#import "NSDateFormatter+Extension.h"
+#import "UINavigationController+FDFullscreenPopGesture.h"
+#import "MBProgressHUD+MHExtension.h"  // 指示器
 
 #import "Macros.h"                 // 全局宏
 #import "RequestHeader.h"          // 网络请求头文件
+#import "HNRequestManager.h"       // 网络请求
 
 #endif /* PrefixHeader_pch */

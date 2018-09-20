@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "KJHomeVC.h"
+#import "SULoginController.h"
 
 @interface AppDelegate ()
 
@@ -24,8 +24,9 @@
     
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    KJBaseTabBarController *vc = [[KJBaseTabBarController alloc] init];
-    self.window.rootViewController = vc;
+    SULoginController *vc = [[SULoginController alloc] init];
+    KJBaseNavigationController *nav = [[KJBaseNavigationController alloc]initWithRootViewController:vc];
+    self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     
 //    // 判断是不是第一次启动app

@@ -10,4 +10,9 @@
 
 @interface KJBaseNavigationController : UINavigationController
 
+// 显示导航栏的细线
+- (void)showNavigationBottomLine;
+// 隐藏导航栏的细线
+- (void)hideNavigationBottomLine;
+
 @end

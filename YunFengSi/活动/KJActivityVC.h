@@ -8,6 +8,6 @@
 
 #import "KJBaseViewController.h"
 
-@interface KJActivityVC : KJBaseViewController
+@interface KJActivityVC : UIViewController
 
 @end

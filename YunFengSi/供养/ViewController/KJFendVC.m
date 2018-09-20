@@ -13,8 +13,6 @@
 
 @interface KJFendVC ()
 
-@property(nonatomic,strong) UIView *kj_navigationView;
-
 @end
 
 @implementation KJFendVC
@@ -23,7 +21,6 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = DefaultBackgroudColor;
-    [self.view addSubview:self.kj_navigationView];
     
     [self setUI];
 }
@@ -41,7 +38,7 @@
     
     [self.view addSubview:headerView];
     [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.kj_navigationView.bottom);
+        make.top.mas_equalTo(self.view).mas_offset(Handle(64));
         make.left.mas_equalTo(self.view);
         make.width.mas_equalTo(HeaderViewSize.width);
         make.height.mas_equalTo(HeaderViewSize.height);
@@ -60,19 +57,6 @@
     [self.view layoutIfNeeded];
     CGFloat h = CGRectGetHeight(fendCollectionView.frame);
     [fendCollectionView getHeight:h Data:nil];
-    
 }
-
-- (UIView*)kj_navigationView{
-    if (!_kj_navigationView) {
-        _kj_navigationView = InsertView(self.view, CGRectMake(0, 0, SCREEN_WIDTH, 64), MainColor);
-        UILabel *tit = InsertLabel(nil, CGRectMake(0, 20, SCREEN_WIDTH, 43), NSTextAlignmentCenter, @"供养", SystemFontSize(18), DefaultTitleColor);
-        UIView *line = InsertView(nil, CGRectMake(0, 63, SCREEN_WIDTH, 1), DefaultBackgroudColor);
-        [_kj_navigationView addSubview:tit];
-        [_kj_navigationView addSubview:line];
-    }
-    return _kj_navigationView;
-}
-
 
 @end

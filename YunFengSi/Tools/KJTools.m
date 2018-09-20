@@ -7,16 +7,14 @@
 //
 
 #import "KJTools.h"
-#import "sys/utsname.h"
-#import <CommonCrypto/CommonDigest.h> // 加密相关
+#import "sys/utsname.h"  // 机型相关
 // 指纹支付相关
 #import <LocalAuthentication/LocalAuthentication.h>
 #import <AVFoundation/AVFoundation.h>
 
-//头文件中需要定义 PI
+// 头文件中需要定义 PI
 #define PI 3.14159265358979323846264338327950288
-//md5秘钥-加密密钥
-#define Tool_EncryptionKey @"yangkejun-735n197nxn(N′568GGS%d~~9naei';45vhhafdjkv]32rpks;lg,];:vjo(&**&^)"
+
 //颜色相关
 #define UIColorFromHEXA(hex,a) [UIColor colorWithRed:((hex&0xFF0000)>>16)/255.0f green:((hex&0xFF00)>>8)/255.0f blue:(hex&0xFF)/255.0f alpha:a]
 //文字大小
@@ -741,21 +739,6 @@ static CGRect tool_oldframe;
     return [NSString stringWithFormat:@"%@",roundedOunces];
     
 }
-// MD5加密
-+ (NSString *)md5To32bit:(NSString *)str{
-    return [self md5:[NSString stringWithFormat:@"%@%@", Tool_EncryptionKey, str]];
-}
-
-+ (NSString *)md5:(NSString *)string{
-    const char *cStr = [string UTF8String];
-    unsigned char digest[CC_MD5_DIGEST_LENGTH];
-    CC_MD5(cStr, (CC_LONG)strlen(cStr), digest);
-    NSMutableString *result = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
-    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
-        [result appendFormat:@"%02X", digest[i]];
-    }
-    return result;
-}
 
 // json字符串转字典
 + (NSDictionary *)dictionaryWithJsonString:(NSString *)json{
@@ -775,6 +758,42 @@ static CGRect tool_oldframe;
         return nil;
     }
     return dic;
+}
+
+// 字典转json字符串方法
++ (NSString *)convertToJsonData:(NSDictionary *)dict{
+    NSError *error;
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSString *jsonString;
+    
+    if (!jsonData) {
+        
+        NSLog(@"%@",error);
+        
+    }else{
+        
+        jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
+    }
+    
+    NSMutableString *mutStr = [NSMutableString stringWithString:jsonString];
+    
+    NSRange range = {0,jsonString.length};
+    
+    //去掉字符串中的空格
+    
+    [mutStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:range];
+    
+    NSRange range2 = {0,mutStr.length};
+    
+    //去掉字符串中的换行符
+    
+    [mutStr replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:range2];
+    
+    return mutStr;
+    
 }
 
 //// 根据用户等级返回背景图片名称
@@ -885,55 +904,6 @@ static CGRect tool_oldframe;
     
 }
 
-//+ (void)downloadAndZipArchiveWithGiftModel:(HNGiftinfoModel *)model{
-//    if (model.animation.length > 0 && [model.animation hasPrefix:@"http"]){
-//        NSString *fileName = [NSString stringWithFormat:@"%@_%@",model.giftID,model.name];
-//
-//        NSString *fullpath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:fileName];
-//        NSString *temppath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingString:fileName];
-//        NSURL *url = [NSURL URLWithString:model.animation];
-//
-//        HNDownloadManager *manager = [HNDownloadManager resumeManagerWithURL:url targetPath:temppath success:^{
-//
-//            DLog(@"success");
-//
-//            if ([SSZipArchive unzipFileAtPath:temppath toDestination:fullpath]){
-//                DLog(@"成功解压");
-//
-//                // 删除压缩包
-//                [[NSFileManager defaultManager] removeItemAtPath:temppath error:nil];
-//
-//                // 大礼物解压成功发送一个通知到直播间显示
-//                [[NSNotificationCenter defaultCenter] postNotificationName:ZipArchiveSuccess object:nil userInfo:@{@"fileName" : fileName,@"model" : model}];
-//            }
-//
-//        } failure:^(NSError *error) {
-//
-//            DLog(@"failure");
-//
-//        } progress:^(long long totalReceivedContentLength, long long totalContentLength) {
-//            float percent = 1.0 * totalReceivedContentLength / totalContentLength;
-//            //            NSString *strPersent = [[NSString alloc]initWithFormat:@"%.f", percent *100];
-//            //            DLog(@"%@", [NSString stringWithFormat:@"已下载%@%%", strPersent]);
-//
-//            NSLog(@"礼物名字:%@   下载进度:%f",model.name,percent);
-//        }];
-//
-//        [manager start];
-//    }
-//}
-//// 退出登录移除本地数据
-//+ (void)LoginOutRemoveLocalData{
-//    [UserDefault setValue:@"" forKey:KTCIMSDKIDENT];
-//    [UserDefault setValue:@"" forKey:kTCIMSDKAccountType];
-//    [UserDefault setValue:@"" forKey:kTCIMSDKAppId];
-//    [UserDefault setValue:@"" forKey:KTCIMSDKUSERSIG];
-//    [UserDefault setValue:@"" forKey:@"userId"];
-//    [UserDefault setValue:@"" forKey:@"token"];
-//    [UserDefault setValue:@"" forKey:kWebSocketUrl];
-//    [UserDefault setValue:@"" forKey:BindPhoneNum];
-//    [UserDefault synchronize];
-//}
 // 获取沙盒地址Library的目录路径
 + (NSArray *)applicationDocumentsDirectory{
     return NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -1070,58 +1040,6 @@ static CGRect tool_oldframe;
     }
     return NO;
 }
-////是否是5s以上的设备支持
-//+ (NSString *)platform{
-//    size_t size;
-//    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
-//    char *machine = malloc(size);
-//    sysctlbyname("hw.machine", machine, &size, NULL, 0);
-//    NSString *platform = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
-//    free(machine);
-//    return platform;
-//}
-//
-//// 判断是否支持TouchID,只判断手机端，ipad端我们不支持
-//+ (BOOL)IPhoneIsSupportTouchID{
-//    /*
-//     if ([platform isEqualToString:@"iPhone1,1"])   return @"iPhone1G GSM";
-//     if ([platform isEqualToString:@"iPhone1,2"])   return @"iPhone3G GSM";
-//     if ([platform isEqualToString:@"iPhone2,1"])   return @"iPhone3GS GSM";
-//     if ([platform isEqualToString:@"iPhone3,1"])   return @"iPhone4 GSM";
-//     if ([platform isEqualToString:@"iPhone3,3"])   return @"iPhone4 CDMA";
-//     if ([platform isEqualToString:@"iPhone4,1"])   return @"iPhone4S";
-//     if ([platform isEqualToString:@"iPhone5,1"])   return @"iPhone5";
-//     if ([platform isEqualToString:@"iPhone5,2"])   return @"iPhone5";
-//     if ([platform isEqualToString:@"iPhone5,3"])   return @"iPhone 5c (A1456/A1532)";
-//     if ([platform isEqualToString:@"iPhone5,4"])   return @"iPhone 5c (A1507/A1516/A1526/A1529)";
-//     if ([platform isEqualToString:@"iPhone6,1"])   return @"iPhone 5s (A1453/A1533)";
-//     if ([platform isEqualToString:@"iPhone6,2"])   return @"iPhone 5s (A1457/A1518/A1528/A1530)";
-//     */
-//
-//    if(IS_Phone){
-//        if([self platform].length > 6 ){
-//            NSString * numberPlatformStr = [[self platform] substringWithRange:NSMakeRange(6, 1)];
-//            NSInteger numberPlatform = [numberPlatformStr integerValue];
-//            // 是否是5s以上的设备
-//            if(numberPlatform > 5){
-//                return YES;
-//            }
-//            else {
-//                return NO;
-//            }
-//
-//        }
-//        else {
-//            return NO;
-//        }
-//    }
-//    else{
-//        // 我们不支持iPad 设备
-//        return NO;
-//    }
-//
-//}
-//
 
 // 根据出生日期算详细年龄
 + (NSString*)getAgeFormYear:(NSString*)year{
@@ -2066,38 +1984,6 @@ id controller;
     return controller;
 }
 
-//// 退出登录移除本地数据
-//+ (void)LoginOutRemoveLocalData{
-//    [UserDefault setValue:@"" forKey:@"userId"];
-//    [UserDefault setValue:@"" forKey:@"token"];
-//    [UserDefault setValue:@"" forKey:@"token_expires"];
-//    [UserDefault setValue:@"" forKey:@"token_key"];
-//    [UserDefault synchronize];
-//}
-
-// 获取引用计数
-//inline uintptr_t
-//objc_object::rootRetainCount(){
-//    assert(!UseGC);
-//    if (isTaggedPointer()) return (uintptr_t)this;
-//    
-//    sidetable_lock();
-//    isa_t bits = LoadExclusive(&isa.bits);
-//    if (bits.indexed) {
-//        uintptr_t rc = 1 + bits.extra_rc;
-//        if (bits.has_sidetable_rc) {
-//            rc += sidetable_getExtraRC_nolock();
-//        }
-//        sidetable_unlock();
-//        return rc;
-//    }
-//    
-//    sidetable_unlock();
-//    return sidetable_retainCount();
-//}
-//- (NSUInteger)retainCount {
-//    return ((id)self)->rootRetainCount();
-//}
 
 // 使用了贝塞尔曲线"切割"个这个图片, 给UIImageView 添加了的圆角
 + (UIImageView*)bezierPathDrawCircleImageView:(UIImageView*)imageView Image:(UIImage*)image Diameter:(CGFloat)diameter{

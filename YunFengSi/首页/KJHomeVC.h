@@ -8,6 +8,7 @@
 
 #import "KJBaseViewController.h"
 
-@interface KJHomeVC : KJBaseViewController
+
+@interface KJHomeVC : KJBaseTableViewController
 
 @end
