@@ -22,6 +22,7 @@ pod 'TXScrollLabelView' # 文字滚动的label
 pod 'TTTAttributedLabel'   # 富文本
 pod 'SDCycleScrollView'  # 轮播banner
 pod 'UICollectionViewLeftAlignedLayout'  # UICollectionView左对齐布局
+pod 'CHTCollectionViewWaterfallLayout'   # 瀑布流
 
 
 #########  Category  #########

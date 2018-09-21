@@ -64,18 +64,9 @@
 
 //点击item方法
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    KJFendCollectionViewCell *cell = (KJFendCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    
-    KJDetailsVC *vc = [[KJDetailsVC alloc]init];
-    vc.view.backgroundColor = DefaultBackgroudColor;
-    vc.navigationItem.title = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
-//
-//    [[KJTools currentViewController].navigationController pushViewController:vc animated:YES];
-//
-    KJBaseNavigationController *nav = [[KJBaseNavigationController alloc]initWithRootViewController:vc];
-    [[KJTools currentViewController] presentViewController:nav animated:YES completion:^{
-
-    }];
+    if (self.FendCollectionViewClicked) {
+        self.FendCollectionViewClicked(indexPath.row);
+    }
 }
 
 

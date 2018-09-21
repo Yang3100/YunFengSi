@@ -8,6 +8,6 @@
 
 #import "KJBaseViewController.h"
 
-@interface KJMeVC : UIViewController
+@interface KJMeVC : KJBaseCollectionViewController
 
 @end

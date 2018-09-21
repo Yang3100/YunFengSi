@@ -11,6 +11,7 @@
 #import "SUSearchBarView.h"
 
 #import "KJHelpFristCell.h"
+#import "KJNewActivityCell.h"
 
 #import "KJSearchVC.h"
 
@@ -28,6 +29,8 @@ static BOOL statusBarHidden_ = NO;
 @property (nonatomic, readwrite, weak)SUSearchBarView *titleView;
 /// headerView
 @property (nonatomic, readwrite, weak)SDCycleScrollView *headerView;
+
+@property (nonatomic,readwrite,strong) NSMutableArray *temps;
 
 @end
 
@@ -49,9 +52,7 @@ static BOOL statusBarHidden_ = NO;
     // 去掉侧滑pop手势
     self.fd_interactivePopDisabled = YES;
     
-    // 上下拉刷新
-    self.shouldPullDownToRefresh = YES;
-    self.shouldPullUpToLoadMore = YES;
+    [self _setup];
     
     // create subViews
     [self setUI];
@@ -60,16 +61,25 @@ static BOOL statusBarHidden_ = NO;
     [self dealAction];
     
     /// tableView rigister  cell
-    [self.tableView registerClass:[KJHelpFristCell class] forCellReuseIdentifier:@"KJHelpFristCell"];
-    
-    [self tableViewDidTriggerHeaderRefresh];
-    
+//    [self.tableView registerClass:[KJHelpFristCell class] forCellReuseIdentifier:@"KJHelpFristCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"KJNewActivityCell" bundle:nil] forCellReuseIdentifier:@"KJNewActivityCell"];
+
     /// bind viewModel
-    [self _bindViewModel];
+    [self bindViewModel];
+}
+
+#pragma mark - 初始化
+- (void)_setup{
+    self.tableView.frame = CGRectMake(0, 0, kScreenW, kScreenH-44);
+    self.perPage = 10;
+    
+    // 上下拉刷新
+    self.shouldPullDownToRefresh = YES;
+    self.shouldPullUpToLoadMore = YES;
 }
 
 #pragma mark - BindModel
-- (void)_bindViewModel{
+- (void)bindViewModel{
     // kvo
     [FBKVOController controllerWithObserver:self];
 }
@@ -77,11 +87,10 @@ static BOOL statusBarHidden_ = NO;
 #pragma mark - 事件处理
 /// 事件处理
 - (void)dealAction{
-    /// 点击搜索框的事件：这里我就不跳转到搜索界面了  直接退出该界面
+    /// 点击搜索框的事件 - 跳转到搜索界面
     @weakify(self);
     self.titleView.searchBarViewClicked = ^ {
         @strongify(self);
-        @weakify(self);
         KJSearchVC *vc = [[KJSearchVC alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
     };
@@ -103,6 +112,16 @@ static BOOL statusBarHidden_ = NO;
     NSInteger page = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setValue:@(page)forKey:@"page"];
+    /// 请求商品数据
+    /// 请求商品数据 模拟网络请求
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.75f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        /// 移除掉数据
+        [self.dataSource removeAllObjects];
+        /// 获取数据
+        [self.dataSource addObjectsFromArray:self.temps];
+        /// 结束头部控件的刷新并刷新数据
+        [self tableViewDidFinishTriggerHeader:YES reload:YES];
+    });
     /// 请求banner数据 模拟网络请求
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSArray *imageNames = @[@"tu1",
@@ -111,23 +130,6 @@ static BOOL statusBarHidden_ = NO;
         /// 配置数据
         self.headerView.localizationImageNamesGroup = imageNames;
         self.headerView.hidden = !(imageNames.count>0);
-    });
-    /// 请求商品数据
-    /// 请求商品数据 模拟网络请求
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.75f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        /// 移除掉数据
-        [self.dataSource removeAllObjects];
-        /// 获取数据
-//        NSData *data = [NSData dataNamed:[NSString stringWithFormat:@"SUGoodsData_%zd.data",(page)]];
-//        SUGoodsData *goodsData = [SUGoodsData modelWithJSON:data];
-//        /// 转化数据
-//        NSArray *dataSource = [self _dataSourceWithGoodsData:goodsData];
-        for (NSInteger i = 0; i<10; i++){
-            /// 添加数据
-            [self.dataSource addObject:@(i)];
-        }
-        /// 结束头部控件的刷新并刷新数据
-        [self tableViewDidFinishTriggerHeader:YES reload:YES];
     });
 }
 /// 上拉加载
@@ -141,10 +143,7 @@ static BOOL statusBarHidden_ = NO;
     /// 请求商品数据 模拟网络请求
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.75f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         /// 获取数据
-        for (NSInteger i = 0; i<10; i++){
-            /// 添加数据
-            [self.dataSource addObject:@(i)];
-        }
+        [self.dataSource addObjectsFromArray:self.temps];
         /// 结束尾部控件的刷新并刷新数据
         [self tableViewDidFinishTriggerHeader:NO reload:YES];
     });
@@ -152,7 +151,9 @@ static BOOL statusBarHidden_ = NO;
 
 /// config  cell
 - (UITableViewCell *)tableView:(UITableView *)tableView dequeueReusableCellWithIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath{
-    KJHelpFristCell *cell = [KJHelpFristCell cellWithTableView:tableView];
+//    KJNewActivityCell *cell = [KJNewActivityCell cellWithTableView:tableView];
+    KJNewActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KJNewActivityCell"];
+    cell.model = @"";
     /// 处理事件
     @weakify(self);
     /// 头像
@@ -173,7 +174,7 @@ static BOOL statusBarHidden_ = NO;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     /// 由于使用系统的autoLayout来计算cell的高度，每次滚动时都要重新计算cell的布局以此来获得cell的高度 这样一来性能不好
     /// 所以笔者采用实现计算好的cell的高度
-    return 320;
+    return 124;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -275,6 +276,16 @@ static BOOL statusBarHidden_ = NO;
     headerView.hidden = YES;
     headerView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableHeaderView = headerView;
+}
+
+- (NSMutableArray*)temps{
+    if (!_temps) {
+        _temps = [NSMutableArray array];
+        for (NSInteger i = 0; i<20; i++) {
+            [_temps addObject:@(i)];
+        }
+    }
+    return _temps;
 }
 
 

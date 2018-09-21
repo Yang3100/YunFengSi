@@ -112,12 +112,18 @@
     // 拼接请求的接口
     NSString *requestUrl = [NSString stringWithFormat:@"%@%@",REQUEST,code];
     //拼接参数
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    //特殊传入的参数
-    [param addEntriesFromDictionary:parameters];
+    //特殊传入的参数 - parameters
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:parameters];
     //共同的参数
-    [param addEntriesFromDictionary:[self commonParams]];
+    [dict addEntriesFromDictionary:[self commonParams]];
     
+    // 加密
+    NSString *str = [KJEncryptTool get16Num];
+    NSString *key = [KJEncryptTool RSAEncrypt:str];
+    NSString *eightString = [str substringToIndex:8];
+    NSString *msg = [KJEncryptTool DESEncrypt:[KJTools convertToJsonData:dict] key:eightString];
+    //    NSLog(@"---------\n%@\n%@",eightString,msg);
+    NSDictionary *param = @{@"key":key,@"msg":msg};
     
     // GET请求方式
     if (type == HNRequestMethodTypeGET){

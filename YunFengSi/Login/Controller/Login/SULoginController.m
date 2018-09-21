@@ -84,22 +84,14 @@
     /// show loading
     [MBProgressHUD kj_showProgressHUD:@"Loading..."];
     
-    NSString *str = [KJEncryptTool get16Num];
-    NSString *key = [KJEncryptTool RSAEncrypt:str];
+    
         NSDictionary *dict = @{
                                @"type":@"1",
                                @"phone":self.inputView.phoneTextField.text,
-                               @"password":self.inputView.verifyTextField.text
+                               @"password":self.inputView.verifyTextField.text,
                                };
-    NSString *eightString = [str substringToIndex:8];
-    NSString *msg = [KJEncryptTool DESEncrypt:[KJTools convertToJsonData:dict] key:eightString];
-//    NSLog(@"---------\n%@\n%@",eightString,msg);
-    NSDictionary *parameters = @{
-                                 @"key":key,
-                                 @"msg":msg
-                                 };
     //Ggaoye
-    [HNRequestManager sendRequestWithRequestMethodType:HNRequestMethodTypePOST requestAPICode:@"Dzlogin" refreshCache:YES requestParameters:parameters success:^(id responseObject){
+    [HNRequestManager sendRequestWithRequestMethodType:HNRequestMethodTypePOST requestAPICode:@"Dzlogin" refreshCache:YES requestParameters:dict success:^(id responseObject){
         NSLog(@"%@",responseObject);
         /// hid hud
         [MBProgressHUD kj_hideHUD];

@@ -12,4 +12,8 @@
 
 - (void)getHeight:(CGFloat)height;
 
+/// 点击回调
+@property (nonatomic, readwrite, copy)void(^HelpStudyTableViewClicked)(NSInteger index);
+
+
 @end

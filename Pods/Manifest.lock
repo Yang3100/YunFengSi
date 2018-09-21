@@ -29,6 +29,9 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
+  - CHTCollectionViewWaterfallLayout (0.9.7):
+    - CHTCollectionViewWaterfallLayout/ObjC (= 0.9.7)
+  - CHTCollectionViewWaterfallLayout/ObjC (0.9.7)
   - IQKeyboardManager (6.1.0)
   - KVOController (1.2.0)
   - Masonry (1.1.0)
@@ -50,6 +53,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - BlocksKit
+  - CHTCollectionViewWaterfallLayout
   - IQKeyboardManager
   - KVOController
   - Masonry
@@ -66,6 +70,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
     - BlocksKit
+    - CHTCollectionViewWaterfallLayout
     - IQKeyboardManager
     - KVOController
     - Masonry
@@ -82,6 +87,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  CHTCollectionViewWaterfallLayout: 9d11068fafecac106695bb5a5d6d0f738483b598
   IQKeyboardManager: f520b0f411eaefa08058532cb50c48bfeffa8535
   KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
@@ -95,6 +101,6 @@ SPEC CHECKSUMS:
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 860e853eff175a2c5b94d01d8e0a8e1285b37c24
+PODFILE CHECKSUM: 65664c87df7deeb8926f7e8fd396b1f9b9c8b5cf
 
 COCOAPODS: 1.5.3

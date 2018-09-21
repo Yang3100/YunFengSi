@@ -18,33 +18,6 @@
 
 @implementation KJBaseViewController
 
-//- (void)viewDidLoad {
-//    [super viewDidLoad];
-//    // Do any additional setup after loading the view.
-//
-//#ifdef __IPHONE_11_0
-//    /// ignore adjust scroll 64
-//    self.automaticallyAdjustsScrollViewInsets = YES;
-//#else
-//    /// ignore adjust scroll 64
-//    self.automaticallyAdjustsScrollViewInsets = NO;
-//#endif
-//
-//    self.extendedLayoutIncludesOpaqueBars = YES;
-//    /// backgroundColor
-//    self.view.backgroundColor = [UIColor whiteColor];
-//
-//    // 添加返回
-//    self.navigationItem.leftBarButtonItem  = [UIBarButtonItem leftItemWithImage:@"login_goBack" higthImage:@"" title:nil target:self action:@selector(NavBack)];
-//}
-//- (void)NavBack{
-//    if ([KJTools kj_judgeCurrentVCIsPushOrPrsent:self]){  // push方式进入
-//        [self.navigationController popViewControllerAnimated:YES];
-//    }else{
-//        [self dismissViewControllerAnimated:YES completion:nil];
-//    }
-//}
-
 - (void)dealloc{
     NSLog(@"%@--dealloc",NSStringFromClass([self class]));
 }
@@ -183,6 +156,17 @@
     
     /// pop手势
     self.fd_interactivePopDisabled = self.interactivePopDisabled;
+    
+    // 添加返回
+    self.navigationItem.leftBarButtonItem  = [UIBarButtonItem leftItemWithImage:@"login_goBack" higthImage:@"" title:nil target:self action:@selector(NavBack)];
+}
+
+- (void)NavBack{
+    if ([KJTools kj_judgeCurrentVCIsPushOrPrsent:self]){  // push方式进入
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - Public Method

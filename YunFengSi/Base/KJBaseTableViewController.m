@@ -70,10 +70,10 @@
     /// 添加加载和刷新控件
     if (self.shouldPullDownToRefresh){
         /// 下拉刷新
-        @weakify(self);
+        @weakify(self); // 定义了一个__weak的self_weak_变量
         [self.tableView kj_addHeaderRefresh:^(MJRefreshNormalHeader *header){
             /// 加载下拉刷新的数据
-            @strongify(self);
+            @strongify(self); // 局域定义了一个__strong的self指针指向self_weak
             [self tableViewDidTriggerHeaderRefresh];
         }];
         [self.tableView.mj_header beginRefreshing];
@@ -81,11 +81,10 @@
     
     if (self.shouldPullUpToLoadMore){
         /// 上拉加载
-        @weakify(self);
+        __weak typeof(self)weakself = self;
         [self.tableView kj_addFooterRefresh:^(MJRefreshAutoNormalFooter *footer){
             /// 加载上拉刷新的数据
-            @strongify(self);
-            [self tableViewDidTriggerFooterRefresh];
+            [weakself tableViewDidTriggerFooterRefresh];
         }];
     }
     

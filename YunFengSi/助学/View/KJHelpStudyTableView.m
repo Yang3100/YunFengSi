@@ -10,8 +10,6 @@
 #import "KJHelpFristCell.h"
 #import "KJHelpSecondCell.h"
 
-#import "KJHelpDetailsVC.h"
-
 @interface KJHelpStudyTableView()<UITableViewDelegate,UITableViewDataSource>{
     __block CGFloat h;
 }
@@ -28,7 +26,16 @@
 }
 
 - (void)setUI{
-    [self addSubview:self.mainTable];
+    // 初始化table
+    self.mainTable = ({
+        UITableView *table = [UITableView new];
+        table.separatorStyle = UITableViewCellSeparatorStyleNone;//去掉自带分割线
+        table.delegate = self;
+        table.dataSource = self;
+        table.backgroundColor = DefaultBackgroudColor;
+        [self addSubview:table];
+        table;
+    });
     [self.mainTable mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.left.right.mas_equalTo(self);
         make.height.mas_equalTo(self->h);
@@ -37,18 +44,6 @@
     [self.mainTable registerClass:[KJHelpFristCell class] forCellReuseIdentifier:@"KJHelpFristCell"];
     [self.mainTable registerClass:[KJHelpSecondCell class] forCellReuseIdentifier:@"KJHelpSecondCell"];
 }
-- (UITableView*)mainTable{
-    if (!_mainTable){
-        _mainTable = [[UITableView alloc]initWithFrame:CGRectZero style:(UITableViewStylePlain)];
-        //去掉自带分割线
-        [_mainTable setSeparatorStyle:(UITableViewCellSeparatorStyleNone)];
-        _mainTable.delegate = self;
-        _mainTable.dataSource = self;
-        _mainTable.backgroundColor = DefaultBackgroudColor;
-    }
-    return _mainTable;
-}
-
 
 #pragma mark - UITableViewDelegate , UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -83,12 +78,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    KJHelpDetailsVC *vc = [[KJHelpDetailsVC alloc]init];
-    vc.view.backgroundColor = DefaultBackgroudColor;
-    vc.navigationItem.title = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
-    KJBaseNavigationController *nav = [[KJBaseNavigationController alloc]initWithRootViewController:vc];
-    [[KJTools currentViewController] presentViewController:nav animated:YES completion:^{
-    }];
+    if (self.HelpStudyTableViewClicked) {
+        self.HelpStudyTableViewClicked(indexPath.row);
+    }
 }
 
 

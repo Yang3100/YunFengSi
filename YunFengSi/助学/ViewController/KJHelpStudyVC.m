@@ -10,6 +10,8 @@
 #import "KJNewDynamicView.h"
 #import "KJHelpStudyTableView.h"
 
+#import "KJHelpDetailsVC.h"
+
 @interface KJHelpStudyVC ()
 
 @property(nonatomic,strong)UIView *changeView;
@@ -58,6 +60,15 @@
         make.right.mas_equalTo(self.view).mas_offset(-Handle(5));
         make.bottom.mas_equalTo(self.view).mas_offset(-Handle(40));
     }];
+    // 点击cell的事件 - 跳转到详情界面
+    @weakify(self);
+    helpTableView.HelpStudyTableViewClicked = ^(NSInteger index) {
+        @strongify(self);
+        KJHelpDetailsVC *vc = [[KJHelpDetailsVC alloc]init];
+        vc.view.backgroundColor = DefaultBackgroudColor;
+        vc.navigationItem.title = [NSString stringWithFormat:@"%ld",(long)index];
+        [self.navigationController pushViewController:vc animated:YES];
+    };
     
     // 先调用superView的layoutIfNeeded方法再获取frame
     [self.view layoutIfNeeded];

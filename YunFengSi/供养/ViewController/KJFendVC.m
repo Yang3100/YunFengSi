@@ -11,6 +11,8 @@
 #import "KJNewDynamicView.h"
 #import "KJFendCollectionView.h"
 
+#import "KJDetailsVC.h"
+
 @interface KJFendVC ()
 
 @end
@@ -52,6 +54,17 @@
         make.width.mas_equalTo(SCREEN_WIDTH);
         make.bottom.mas_equalTo(self.view).mas_offset(-Handle(40));
     }];
+    
+    // 点击item的事件 - 跳转到详情界面
+    @weakify(self);
+    fendCollectionView.FendCollectionViewClicked = ^(NSInteger index) {
+        @strongify(self);
+        KJDetailsVC *vc = [[KJDetailsVC alloc]init];
+        vc.view.backgroundColor = DefaultBackgroudColor;
+        vc.navigationItem.title = [NSString stringWithFormat:@"%ld",(long)index];
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    };
     
     // 先调用superView的layoutIfNeeded方法再获取frame
     [self.view layoutIfNeeded];

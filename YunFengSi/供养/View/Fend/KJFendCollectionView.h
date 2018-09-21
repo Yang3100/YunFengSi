@@ -12,4 +12,7 @@
 
 - (void)getHeight:(CGFloat)height Data:(NSObject*)model;
 
+/// 点击回调
+@property (nonatomic, readwrite, copy)void(^FendCollectionViewClicked)(NSInteger index);
+
 @end
