@@ -15,7 +15,7 @@ static char leftNameKey;
 
 @implementation UIButton (EnlargeEdge)
 
-- (void)setEnlargeEdgeWithTop:(CGFloat) top right:(CGFloat) right bottom:(CGFloat) bottom left:(CGFloat) left{
+- (void)setEnlargeEdgeWithTop:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom left:(CGFloat)left{
     objc_setAssociatedObject(self, &topNameKey, [NSNumber numberWithFloat:top], OBJC_ASSOCIATION_COPY_NONATOMIC);
     objc_setAssociatedObject(self, &rightNameKey, [NSNumber numberWithFloat:right], OBJC_ASSOCIATION_COPY_NONATOMIC);
     objc_setAssociatedObject(self, &bottomNameKey, [NSNumber numberWithFloat:bottom], OBJC_ASSOCIATION_COPY_NONATOMIC);
@@ -42,11 +42,11 @@ static char leftNameKey;
     if (CGRectEqualToRect(rect, self.bounds)){
         return [super pointInside:point withEvent:event];
     }
-    return CGRectContainsPoint(rect, point) ? YES : NO;
+    return CGRectContainsPoint(rect, point)? YES : NO;
 }
 
 - (void)setShadowColorForBut:(BOOL)isSelect{
-    if (isSelect) {
+    if (isSelect){
         self.layer.shadowColor =  MainColor.CGColor;//UIColorFromHEXA(0xF7CD0D, 1.0).CGColor;// 阴影的颜色
     }else{
         self.layer.shadowColor = UIColorFromHEXA(0xF0F0F0,1.0).CGColor;
@@ -95,7 +95,7 @@ static char leftNameKey;
     nu.textColor = [UIColor whiteColor];
     nu.textAlignment = NSTextAlignmentCenter;
     nu.font = [UIFont systemFontOfSize:11];
-    if (num>99) {
+    if (num>99){
         nu.text = @"...";
     }else{
         nu.text = [NSString stringWithFormat:@"%ld",(long)num];

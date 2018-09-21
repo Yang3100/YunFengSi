@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2016 forkingdog ( https://github.com/forkingdog )
+// Copyright (c)2015-2016 forkingdog ( https://github.com/forkingdog )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,5 +36,5 @@
 @interface UITableView (FDKeyedHeightCache)
 
 /// Height cache by key. Generally, you don't need to use it directly.
-@property (nonatomic, strong, readonly) FDKeyedHeightCache *fd_keyedHeightCache;
+@property (nonatomic, strong, readonly)FDKeyedHeightCache *fd_keyedHeightCache;
 @end

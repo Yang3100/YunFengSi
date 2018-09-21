@@ -15,7 +15,7 @@ typedef NS_ENUM (NSInteger, HNRequestMethodType){
 };
 
 // 请求数据返回的状态码
-typedef NS_ENUM(NSUInteger, KJHTTPResponseCode) {
+typedef NS_ENUM(NSUInteger, KJHTTPResponseCode){
     // CODE 对应值  (PS：根据自身项目去设置)
     KJHTTPResponseCodeSuccess  = 000,           // 请求成功
     KJHTTPResponseCodeNotLogin = 402,           // 用户尚未登录,或者Token失效
@@ -26,7 +26,7 @@ typedef void(^FaildBlock)(NSError *error);
 
 @interface HNRequestManager : NSObject
 
-@property (nonatomic,copy) NSString *UrlStr;
+@property (nonatomic,copy)NSString *UrlStr;
 
 /**
  *  图片上传API

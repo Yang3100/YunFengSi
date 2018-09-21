@@ -27,16 +27,14 @@ static char labHeightKey;
     @try {
         [self removeObserver:self forKeyPath:@"layer.borderWidth"];
         [self removeObserver:self forKeyPath:@"text"];
-    } @catch (NSException *exception) {
-        
+    } @catch (NSException *exception){
     } @finally {
-        
     }
     [self zwlimitCounter_swizzled_dealloc];
 }
 - (void)zwlimitCounter_swizzling_layoutSubviews {
     [self zwlimitCounter_swizzling_layoutSubviews];
-    if (self.zw_limitCount) {
+    if (self.zw_limitCount){
         UIEdgeInsets textContainerInset = self.textContainerInset;
         textContainerInset.bottom = self.zw_labHeight;
         self.contentInset = textContainerInset;
@@ -45,7 +43,7 @@ static char labHeightKey;
         CGFloat width = CGRectGetWidth(self.bounds)-self.layer.borderWidth*2;
         CGFloat height = self.zw_labHeight;
         self.zw_inputLimitLabel.frame = CGRectMake(x, y, width, height);
-        if ([self.superview.subviews containsObject:self.zw_inputLimitLabel]) {
+        if ([self.superview.subviews containsObject:self.zw_inputLimitLabel]){
             return;
         }
         [self.superview insertSubview:self.zw_inputLimitLabel aboveSubview:self];
@@ -53,21 +51,21 @@ static char labHeightKey;
 }
 #pragma mark - associated
 -(NSInteger)zw_limitCount{
-    return [objc_getAssociatedObject(self, &limitCountKey) integerValue];
+    return [objc_getAssociatedObject(self, &limitCountKey)integerValue];
 }
 - (void)setZw_limitCount:(NSInteger)zw_limitCount{
     objc_setAssociatedObject(self, &limitCountKey, @(zw_limitCount), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self updateLimitCount];
 }
 -(CGFloat)zw_labMargin{
-    return [objc_getAssociatedObject(self, &labMarginKey) floatValue];
+    return [objc_getAssociatedObject(self, &labMarginKey)floatValue];
 }
 -(void)setZw_labMargin:(CGFloat)zw_labMargin{
     objc_setAssociatedObject(self, &labMarginKey, @(zw_labMargin), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self updateLimitCount];
 }
 -(CGFloat)zw_labHeight{
-    return [objc_getAssociatedObject(self, &labHeightKey) floatValue];
+    return [objc_getAssociatedObject(self, &labHeightKey)floatValue];
 }
 -(void)setZw_labHeight:(CGFloat)zw_labHeight{
     objc_setAssociatedObject(self, &labHeightKey, @(zw_labHeight), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -84,9 +82,9 @@ static char labHeightKey;
 }
 #pragma mark - update
 - (void)updateLimitCount{
-    if (self.text.length > self.zw_limitCount) {
+    if (self.text.length > self.zw_limitCount){
         UITextRange *markedRange = [self markedTextRange];
-        if (markedRange) {
+        if (markedRange){
             return;
         }
         NSRange range = [self.text rangeOfComposedCharacterSequenceAtIndex:self.zw_limitCount];
@@ -106,14 +104,14 @@ static char labHeightKey;
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
     if ([keyPath isEqualToString:@"layer.borderWidth"]||
-        [keyPath isEqualToString:@"text"]) {
+        [keyPath isEqualToString:@"text"]){
         [self updateLimitCount];
     }
 }
 #pragma mark - lazzing
 -(UILabel *)zw_inputLimitLabel{
     UILabel *label = objc_getAssociatedObject(self, @selector(zw_inputLimitLabel));
-    if (!label) {
+    if (!label){
         label = [[UILabel alloc] init];
         label.backgroundColor = self.backgroundColor;
         label.textColor = [UIColor lightGrayColor];

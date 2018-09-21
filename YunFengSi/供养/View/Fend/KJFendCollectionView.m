@@ -14,8 +14,8 @@
     __block CGFloat h;
 }
 
-@property (nonatomic, strong) UICollectionView *mainCollectionView;
-@property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong)UICollectionView *mainCollectionView;
+@property (nonatomic, strong)NSMutableArray *dataArray;
 
 @end
 
@@ -84,22 +84,17 @@
     if (!_mainCollectionView){
         //1.初始化layout
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        
         //该方法也可以设置itemSize
         layout.itemSize = CGSizeMake((SCREEN_WIDTH-60)/3, (SCREEN_WIDTH-60)/3*1.5);
-        
         //2.初始化collectionView
-        _mainCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, h) collectionViewLayout:layout];
+        _mainCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, h)collectionViewLayout:layout];
         _mainCollectionView.backgroundColor = [UIColor clearColor];
-        
         //3.注册collectionViewCell
         //注意，此处的ReuseIdentifier 必须和 cellForItemAtIndexPath 方法中一致
         [_mainCollectionView registerClass:[KJFendCollectionViewCell class] forCellWithReuseIdentifier:@"KJFendCollectionViewCell"];
-        
         //4.设置代理
         _mainCollectionView.delegate = self;
         _mainCollectionView.dataSource = self;
-        
     }
     return _mainCollectionView;
 }
@@ -107,8 +102,7 @@
 - (NSMutableArray *)dataArray{
     if (!_dataArray){
         _dataArray = [NSMutableArray array];
-        
-        for (NSInteger i=0; i<10; i++) {
+        for (NSInteger i=0; i<10; i++){
             [_dataArray addObject:@(i)];
         }
     }

@@ -17,7 +17,7 @@
 @implementation KJDisplayCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
-    if (self = [super initWithFrame:frame]) {
+    if (self = [super initWithFrame:frame]){
         self.contentView.layer.masksToBounds = YES;
         self.contentView.layer.cornerRadius = Handle(4);
         self.contentView.layer.borderWidth = Handle(1);
@@ -31,14 +31,14 @@
 - (void)creatCollView{
     _priceLab = InsertLabel(self.contentView, CGRectZero, NSTextAlignmentCenter, @"100元", SystemBoldFontSize(12), [UIColor blackColor]);
     
-    [_priceLab mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_priceLab mas_makeConstraints:^(MASConstraintMaker *make){
         make.centerY.mas_equalTo(self.contentView);
         make.centerX.mas_equalTo(self.contentView);
     }];
 }
 
 - (void)setIsCellSelect:(BOOL)isCellSelect{
-    if (isCellSelect) {
+    if (isCellSelect){
         self.contentView.layer.borderColor = MainColor.CGColor;
         _priceLab.textColor = MainColor;
     }else{

@@ -38,7 +38,7 @@
 @interface GTMBase64 : NSObject
 
 //
-// Standard Base64 (RFC) handling
+// Standard Base64 (RFC)handling
 //
 
 // encodeData:

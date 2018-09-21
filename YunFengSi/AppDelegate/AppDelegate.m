@@ -40,7 +40,7 @@
     BOOL firstInstallation = [[NSUserDefaults standardUserDefaults] boolForKey:@"firstInstallation"];
     BOOL loggedOut = [[NSUserDefaults standardUserDefaults] boolForKey:@"loggedOut"];
 //    if (!firstInstallation){  // 第一次启动
-//        if (loggedOut) {
+//        if (loggedOut){
 //            KJLoginVC *vc = [[KJLoginVC alloc] init];
 //            self.window.rootViewController = vc;
 //        }else{
@@ -62,7 +62,7 @@
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message)or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
 }
 
@@ -79,7 +79,7 @@
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    // Restart any tasks that were paused (or not yet started)while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 
@@ -96,15 +96,14 @@
 
 - (NSPersistentContainer *)persistentContainer {
     // The persistent container for the application. This implementation creates and returns a container, having loaded the store for the application to it.
-    @synchronized (self) {
-        if (_persistentContainer == nil) {
+    @synchronized (self){
+        if (_persistentContainer == nil){
             _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"YunFengSi"];
-            [_persistentContainer loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error) {
-                if (error != nil) {
+            [_persistentContainer loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error){
+                if (error != nil){
                     // Replace this implementation with code to handle the error appropriately.
-                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    
-                    /*
+                    // abort()causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                                /*
                      Typical reasons for an error here include:
                      * The parent directory does not exist, cannot be created, or disallows writing.
                      * The persistent store is not accessible, due to permissions or data protection when the device is locked.
@@ -127,9 +126,9 @@
 - (void)saveContext {
     NSManagedObjectContext *context = self.persistentContainer.viewContext;
     NSError *error = nil;
-    if ([context hasChanges] && ![context save:&error]) {
+    if ([context hasChanges] && ![context save:&error]){
         // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        // abort()causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         NSLog(@"Unresolved error %@, %@", error, error.userInfo);
         abort();
     }

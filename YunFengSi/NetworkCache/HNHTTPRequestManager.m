@@ -11,8 +11,7 @@
 //#import "HNLoginViewController.h"
 
 @implementation HNHTTPRequestManager
-+ (instancetype)shareInstance
-{
++ (instancetype)shareInstance{
     static HNHTTPRequestManager *manager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -55,10 +54,10 @@
            success:(httpSuccess)success
               fail:(httpFailure)fail{
     NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:@"Cookie"];
-    if([cookiesdata length]) {
+    if([cookiesdata length]){
         NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookiesdata];
         NSHTTPCookie *cookie;
-        for (cookie in cookies) {
+        for (cookie in cookies){
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
         }
     }
@@ -66,23 +65,20 @@
     [HNNetworking getWithUrl:url
                 refreshCache:refreshCache
                       params:params
-                     success:^(id response) {
-                         
-//                         if (![response isKindOfClass:[NSDictionary class]]) {
+                     success:^(id response){
+                 //                         if (![response isKindOfClass:[NSDictionary class]]){
 //                             [[UIApplication sharedApplication].keyWindow makeToast:noNetWorkTitle duration:1.5 position:CSToastPositionCenter];
 //                             DLog(@"网络故障:URL = %@",url);
 //                             return ;
 //                         }
-//                         
-//                         NSArray* array = [response allKeys];
-//                         if (![array containsObject:@"result"]) {
+//                 //                         NSArray* array = [response allKeys];
+//                         if (![array containsObject:@"result"]){
 //                             [[UIApplication sharedApplication].keyWindow makeToast:noNetWorkTitle duration:1.5 position:CSToastPositionCenter];
 //                             DLog(@"网络故障:URL = %@",url);
 //                             return ;
 //                         }
-//                         
-                         success(response);
-                     } fail:^(NSError *error) {
+//                                          success(response);
+                     } fail:^(NSError *error){
 //                         [[UIApplication sharedApplication].keyWindow makeToast:noNetWorkTitle duration:1.5 position:CSToastPositionCenter];
 //                         DLog(@"网络故障:URL = %@",url);
                          fail(error);
@@ -95,14 +91,13 @@
             requestHeader:(NSDictionary *)headerParameters
            success:(httpSuccess)success
               fail:(httpFailure)fail;
-
 {
     
     NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:@"Cookie"];
-    if([cookiesdata length]) {
+    if([cookiesdata length]){
         NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookiesdata];
         NSHTTPCookie *cookie;
-        for (cookie in cookies) {
+        for (cookie in cookies){
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
         }
     }
@@ -111,9 +106,9 @@
                 refreshCache:refreshCache
                       params:params
                requestHeader:headerParameters
-                     success:^(id response) {
+                     success:^(id response){
         success(response);
-    } fail:^(NSError *error) {
+    } fail:^(NSError *error){
         fail(error);
     }];
     
@@ -127,13 +122,12 @@
        refreshCache:(BOOL)refreshCache
              params:(NSDictionary *)params
             success:(httpSuccess)success
-               fail:(httpFailure)fail
-{
+               fail:(httpFailure)fail{
     NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:@"Cookie"];
-    if([cookiesdata length]) {
+    if([cookiesdata length]){
         NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookiesdata];
         NSHTTPCookie *cookie;
-        for (cookie in cookies) {
+        for (cookie in cookies){
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
         }
     }
@@ -141,39 +135,29 @@
     [HNNetworking postWithUrl:url
                  refreshCache:refreshCache
                        params:params
-                      success:^(id response) {
-                          
-                          //回调
+                      success:^(id response){
+                                            //回调
                           success(response);
-                          
-                          if ([response isKindOfClass:[NSDictionary class]]) {
+                                            if ([response isKindOfClass:[NSDictionary class]]){
                               //无效签名
-                              if ([[response objectForKey:@"result"] integerValue] == 3002) {
-                                  
-                                  NSMutableDictionary *dicM = [[NSMutableDictionary alloc]init];
-                                  
-                                  NSData *data = [NSJSONSerialization dataWithJSONObject:params options:0 error:nil];
+                              if ([[response objectForKey:@"result"] integerValue] == 3002){
+                                                            NSMutableDictionary *dicM = [[NSMutableDictionary alloc]init];
+                                                            NSData *data = [NSJSONSerialization dataWithJSONObject:params options:0 error:nil];
                                   NSString *content = @"";
-                                  if (data) {
+                                  if (data){
                                       content = [[NSString alloc] initWithData:data
                                                                       encoding:NSUTF8StringEncoding];
                                   }
                                   [dicM setValue:content forKey:@"params"];
                                   [dicM setValue:url forKey:@"api"];
                                   [dicM setValue:[response objectForKey:@"result"] forKey:@"state_code"];
-//                                  
-//                                  [[HNHTTPRequestManager shareInstance] postWithUrl:APIError refreshCache:YES params:dicM success:^(id responseObject) {
-//                                      
-//                                  } fail:^(NSError *error) {
-//                                      
-//                                  }];
+//                          //                                  [[HNHTTPRequestManager shareInstance] postWithUrl:APIError refreshCache:YES params:dicM success:^(id responseObject){
+//                              //                                  } fail:^(NSError *error){
+//                              //                                  }];
                               }
                           }
-                          
-                          
-                      } fail:^(NSError *error) {
-                          
-                          fail(error);
+                                                          } fail:^(NSError *error){
+                                            fail(error);
                       }];
     
     
@@ -183,30 +167,26 @@
               params:(NSDictionary *)params
        requestHeader:(NSDictionary *)headerParameters
              success:(httpSuccess)success
-                fail:(httpFailure)fail;
-{
+                fail:(httpFailure)fail;{
     
     NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:@"Cookie"];
-    if([cookiesdata length]) {
+    if([cookiesdata length]){
         NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookiesdata];
         NSHTTPCookie *cookie;
-        for (cookie in cookies) {
+        for (cookie in cookies){
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
         }
     }
-    [HNNetworking postWithUrl:url refreshCache:refreshCache params:params requestHeader:headerParameters success:^(id response) {
+    [HNNetworking postWithUrl:url refreshCache:refreshCache params:params requestHeader:headerParameters success:^(id response){
         //回调
         success(response);
-        
-        if ([response isKindOfClass:[NSDictionary class]]) {
+        if ([response isKindOfClass:[NSDictionary class]]){
             //无效签名
-            if ([[response objectForKey:@"result"] integerValue] == 3002) {
-                
-                NSMutableDictionary *dicM = [[NSMutableDictionary alloc]init];
-                
-                NSData *data = [NSJSONSerialization dataWithJSONObject:params options:0 error:nil];
+            if ([[response objectForKey:@"result"] integerValue] == 3002){
+                        NSMutableDictionary *dicM = [[NSMutableDictionary alloc]init];
+                        NSData *data = [NSJSONSerialization dataWithJSONObject:params options:0 error:nil];
                 NSString *content = @"";
-                if (data) {
+                if (data){
                     content = [[NSString alloc] initWithData:data
                                                     encoding:NSUTF8StringEncoding];
                 }
@@ -214,15 +194,15 @@
                 [dicM setValue:url forKey:@"api"];
                 [dicM setValue:[response objectForKey:@"result"] forKey:@"state_code"];
                 //
-                //                                  [[HNHTTPRequestManager shareInstance] postWithUrl:APIError refreshCache:YES params:dicM success:^(id responseObject) {
+                //                                  [[HNHTTPRequestManager shareInstance] postWithUrl:APIError refreshCache:YES params:dicM success:^(id responseObject){
                 //
-                //                                  } fail:^(NSError *error) {
+                //                                  } fail:^(NSError *error){
                 //
                 //                                  }];
             }
         }
 
-    } fail:^(NSError *error) {
+    } fail:^(NSError *error){
         fail(error);
     }];
     
@@ -231,19 +211,16 @@
 //    [HNNetworking postWithUrl:url
 //                 refreshCache:refreshCache
 //                       params:params
-//                      success:^(id response) {
+//                      success:^(id response){
 //                          //回调
 //                          success(response);
-//                          
-//                          if ([response isKindOfClass:[NSDictionary class]]) {
+//                  //                          if ([response isKindOfClass:[NSDictionary class]]){
 //                              //无效签名
-//                              if ([[response objectForKey:@"result"] integerValue] == 3002) {
-//                                  
-//                                  NSMutableDictionary *dicM = [[NSMutableDictionary alloc]init];
-//                                  
-//                                  NSData *data = [NSJSONSerialization dataWithJSONObject:params options:0 error:nil];
+//                              if ([[response objectForKey:@"result"] integerValue] == 3002){
+//                          //                                  NSMutableDictionary *dicM = [[NSMutableDictionary alloc]init];
+//                          //                                  NSData *data = [NSJSONSerialization dataWithJSONObject:params options:0 error:nil];
 //                                  NSString *content = @"";
-//                                  if (data) {
+//                                  if (data){
 //                                      content = [[NSString alloc] initWithData:data
 //                                                                      encoding:NSUTF8StringEncoding];
 //                                  }
@@ -251,18 +228,15 @@
 //                                  [dicM setValue:url forKey:@"api"];
 //                                  [dicM setValue:[response objectForKey:@"result"] forKey:@"state_code"];
 //                                  //
-//                                  //                                  [[HNHTTPRequestManager shareInstance] postWithUrl:APIError refreshCache:YES params:dicM success:^(id responseObject) {
+//                                  //                                  [[HNHTTPRequestManager shareInstance] postWithUrl:APIError refreshCache:YES params:dicM success:^(id responseObject){
 //                                  //
-//                                  //                                  } fail:^(NSError *error) {
+//                                  //                                  } fail:^(NSError *error){
 //                                  //
 //                                  //                                  }];
 //                              }
 //                          }
-//                          
-//                          
-//                      } fail:^(NSError *error) {
-//                          
-//                          fail(error);
+//                  //                  //                      } fail:^(NSError *error){
+//                  //                          fail(error);
 //                      }];
 //
     
@@ -292,11 +266,10 @@
 //                success:(httpSuccess)success
 //                   fail:(httpFailure)fail
 //{
-//    [HNNetworking uploadWithImage:image url:url filename:filename name:name mimeType:mimeType parameters:parameters progress:^(int64_t bytesWritten, int64_t totalBytesWritten) {
-//        
-//    } success:^(id response) {
+//    [HNNetworking uploadWithImage:image url:url filename:filename name:name mimeType:mimeType parameters:parameters progress:^(int64_t bytesWritten, int64_t totalBytesWritten){
+////    } success:^(id response){
 //        success(response);
-//    } fail:^(NSError *error) {
+//    } fail:^(NSError *error){
 //        fail(error);
 //    }];
 //}

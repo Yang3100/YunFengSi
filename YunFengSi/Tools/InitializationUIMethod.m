@@ -211,7 +211,7 @@ UITextField *InsertTextFieldWithBorderAndCorRadius(id superView, id delegate, CG
     myTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     myTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     
-    if (!textFieldColor) {
+    if (!textFieldColor){
         myTextField.textColor = [UIColor whiteColor];
     }
     else{
@@ -223,7 +223,7 @@ UITextField *InsertTextFieldWithBorderAndCorRadius(id superView, id delegate, CG
         myTextField.layer.borderColor = bordercolor.CGColor;
     }
     
-    if (0.0 != cornerRadius) {
+    if (0.0 != cornerRadius){
         myTextField.layer.cornerRadius = cornerRadius;
     }
     

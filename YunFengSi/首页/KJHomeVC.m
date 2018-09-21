@@ -21,13 +21,13 @@ static BOOL statusBarHidden_ = NO;
 @interface KJHomeVC ()
 
 /// 滚动到顶部的按钮
-@property (nonatomic, readwrite, weak) UIButton *scrollToTopButton;
+@property (nonatomic, readwrite, weak)UIButton *scrollToTopButton;
 /// 自定义的导航条
-@property (nonatomic, readwrite, weak) UIView *navBar;
+@property (nonatomic, readwrite, weak)UIView *navBar;
 /// searchBar
-@property (nonatomic, readwrite, weak) SUSearchBarView *titleView;
+@property (nonatomic, readwrite, weak)SUSearchBarView *titleView;
 /// headerView
-@property (nonatomic, readwrite, weak) SDCycleScrollView *headerView;
+@property (nonatomic, readwrite, weak)SDCycleScrollView *headerView;
 
 @end
 
@@ -86,14 +86,14 @@ static BOOL statusBarHidden_ = NO;
         [self.navigationController pushViewController:vc animated:YES];
     };
     /// banner 视图被点击
-    self.headerView.clickItemOperationBlock = ^(NSInteger currentIndex) {
+    self.headerView.clickItemOperationBlock = ^(NSInteger currentIndex){
         @strongify(self);
         NSLog(@"banner 视图被点击");
     };
 }
 /// 滚动到顶部
 - (void)_scrollToTop {
-    [self.tableView setContentOffset:CGPointMake(0, 0) animated:YES];
+    [self.tableView setContentOffset:CGPointMake(0, 0)animated:YES];
 }
 
 #pragma mark - Override
@@ -102,7 +102,7 @@ static BOOL statusBarHidden_ = NO;
     /// config param
     NSInteger page = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setValue:@(page) forKey:@"page"];
+    [param setValue:@(page)forKey:@"page"];
     /// 请求banner数据 模拟网络请求
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSArray *imageNames = @[@"tu1",
@@ -122,7 +122,7 @@ static BOOL statusBarHidden_ = NO;
 //        SUGoodsData *goodsData = [SUGoodsData modelWithJSON:data];
 //        /// 转化数据
 //        NSArray *dataSource = [self _dataSourceWithGoodsData:goodsData];
-        for (NSInteger i = 0; i<10; i++) {
+        for (NSInteger i = 0; i<10; i++){
             /// 添加数据
             [self.dataSource addObject:@(i)];
         }
@@ -135,13 +135,13 @@ static BOOL statusBarHidden_ = NO;
     /// config param
     NSInteger page = self.page+1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setValue:@(page) forKey:@"page"];
+    [param setValue:@(page)forKey:@"page"];
     
     /// 请求商品数据
     /// 请求商品数据 模拟网络请求
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.75f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         /// 获取数据
-        for (NSInteger i = 0; i<10; i++) {
+        for (NSInteger i = 0; i<10; i++){
             /// 添加数据
             [self.dataSource addObject:@(i)];
         }
@@ -156,7 +156,7 @@ static BOOL statusBarHidden_ = NO;
     /// 处理事件
     @weakify(self);
     /// 头像
-//    cell.avatarClickedHandler = ^(SUGoodsCell *goodsCell) {
+//    cell.avatarClickedHandler = ^(SUGoodsCell *goodsCell){
 //        @strongify(self);
 //        SUGoodsItemViewModel *viewModel = self.viewModel.dataSource[indexPath.row];
 //        [self _pushToPublicViewControllerWithTitle:viewModel.goods.nickName];
@@ -184,22 +184,22 @@ static BOOL statusBarHidden_ = NO;
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offsetY = scrollView.contentOffset.y;
-    self.scrollToTopButton.hidden = (offsetY < scrollView.mh_height);
+    self.scrollToTopButton.hidden = (offsetY < scrollView.height);
     
     CGFloat duration = 0.65;
     CGFloat titleViewAlpha = (offsetY >= 0)?1.0:0.;
-    CGFloat navBarAlhpa = (offsetY >= self.headerView.mh_height)?1.0:0.0;
+    CGFloat navBarAlhpa = (offsetY >= self.headerView.height)?1.0:0.0;
     
-    navBarAlhpa = (offsetY - self.headerView.mh_height) / self.headerView.mh_height + 1;
+    navBarAlhpa = (offsetY - self.headerView.height)/ self.headerView.height + 1;
     
     [UIView animateWithDuration:duration animations:^{
         self.navBar.backgroundColor = UIColorFromHEXA(0xfea43b, navBarAlhpa);
         self.titleView.alpha = titleViewAlpha;
     }];
     
-    UIStatusBarStyle tempStyle = (offsetY >= self.headerView.mh_height)?UIStatusBarStyleLightContent:UIStatusBarStyleDefault;
+    UIStatusBarStyle tempStyle = (offsetY >= self.headerView.height)?UIStatusBarStyleLightContent:UIStatusBarStyleDefault;
     BOOL tempStatusBarHidden = (offsetY >= 0)?NO:YES;
-    if ((tempStyle == style_) && (tempStatusBarHidden == statusBarHidden_)) {
+    if ((tempStyle == style_)&& (tempStatusBarHidden == statusBarHidden_)){
     } else {
         style_ = tempStyle;
         statusBarHidden_ = tempStatusBarHidden;
@@ -220,7 +220,7 @@ static BOOL statusBarHidden_ = NO;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     /// FIXED : when data is empty ，show nothing
-    if (self.dataSource.count==0) return nil;
+    if (self.dataSource.count==0)return nil;
 
     UILabel *la = InsertLabel(nil, CGRectMake(0, 0, SCREEN_WIDTH, 30), NSTextAlignmentLeft, @"  最新动态", SystemFontSize(12), [UIColor blackColor]);
     la.backgroundColor = self.view.backgroundColor;
@@ -237,7 +237,7 @@ static BOOL statusBarHidden_ = NO;
 #pragma mark - 初始化子控件
 - (void)setUI{
     /// Create NavBar;
-    UIView *navBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, self.navigationController.navigationBar.mh_height+20)];
+    UIView *navBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, self.navigationController.navigationBar.height+20)];
     navBar.backgroundColor = UIColorFromHEXA(0xfea43b,.0f);
     self.navBar = navBar;
     [self.view addSubview:navBar];
@@ -245,7 +245,7 @@ static BOOL statusBarHidden_ = NO;
     /// 搜索框View
     CGFloat titleViewX = 26;
     CGFloat titleViewH = 28;
-    CGFloat titleViewY = 20 + floor((navBar.mh_height - 20 - titleViewH)/2);
+    CGFloat titleViewY = 20 + floor((navBar.height - 20 - titleViewH)/2);
     CGFloat titleViewW = kScreenW - 2 * titleViewX;
     SUSearchBarView *titleView = [[SUSearchBarView alloc] initWithFrame:CGRectMake(titleViewX, titleViewY, titleViewW, titleViewH)];
     titleView.backgroundColor = [UIColor whiteColor];
@@ -255,18 +255,18 @@ static BOOL statusBarHidden_ = NO;
     /// 滚动到顶部的按钮
     CGFloat scrollToTopButtonW = 52;
     CGFloat scrollToTopButtonH = 90;
-    CGFloat scrollToTopButtonX = (kScreenW - scrollToTopButtonW) - 12;
-    CGFloat scrollToTopButtonY = (kScreenH - scrollToTopButtonH) - 60;
+    CGFloat scrollToTopButtonX = (kScreenW - scrollToTopButtonW)- 12;
+    CGFloat scrollToTopButtonY = (kScreenH - scrollToTopButtonH)- 60;
     UIButton *scrollToTopButton = [[UIButton alloc] initWithFrame:CGRectMake(scrollToTopButtonX, scrollToTopButtonY, scrollToTopButtonW, scrollToTopButtonH)];
     [scrollToTopButton setImage:[UIImage imageNamed:@"zuixindongtai"] forState:UIControlStateNormal];
     scrollToTopButton.hidden = YES;
     self.scrollToTopButton = scrollToTopButton;
     [self.view addSubview:scrollToTopButton];
     //// 添加事件处理
-    [scrollToTopButton addTarget:self action:@selector(_scrollToTop) forControlEvents:UIControlEventTouchUpInside];
+    [scrollToTopButton addTarget:self action:@selector(_scrollToTop)forControlEvents:UIControlEventTouchUpInside];
     
     /// 头视图 banner
-    SDCycleScrollView *headerView = [[SDCycleScrollView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.mh_width, self.tableView.mh_width/2)];
+    SDCycleScrollView *headerView = [[SDCycleScrollView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, self.tableView.width/2)];
     headerView.autoScrollTimeInterval = 2.0f;
     headerView.pageControlStyle = SDCycleScrollViewPageContolStyleClassic;
     headerView.placeholderImage = DefaultCoverImage;

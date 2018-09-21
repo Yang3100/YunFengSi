@@ -11,6 +11,6 @@
 
 @interface KJDetailsHeaderCell : KJBaseTableViewCell
 
-@property(nonatomic,strong) KJDetailHeaderModel *model;
+@property(nonatomic,strong)KJDetailHeaderModel *model;
 
 @end

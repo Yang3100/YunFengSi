@@ -10,16 +10,16 @@
 #import "KJDisplayCollectionViewCell.h"
 
 @interface KJDisplayCollectionView()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
-@property(nonatomic,strong) UICollectionView *collectionView;
-@property(nonatomic,strong) NSIndexPath  *selectPath;
-@property(nonatomic,strong) NSMutableArray *dataArray;
+@property(nonatomic,strong)UICollectionView *collectionView;
+@property(nonatomic,strong)NSIndexPath  *selectPath;
+@property(nonatomic,strong)NSMutableArray *dataArray;
 
 @end
 
 @implementation KJDisplayCollectionView
 
 - (instancetype)initWithFrame:(CGRect)frame{
-    if (self=[super initWithFrame:frame]) {
+    if (self=[super initWithFrame:frame]){
         [self setUI];
     }
     return self;
@@ -43,7 +43,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     KJDisplayCollectionViewCell *cell = (KJDisplayCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"KJDisplayCollectionViewCell" forIndexPath:indexPath];
     //        cell.priceModel = self.comboArray[indexPath.row];
-    if (indexPath.row==0) {
+    if (indexPath.row==0){
         cell.isCellSelect = YES;
         self.selectPath = indexPath;
     }else{
@@ -70,12 +70,12 @@
 
 //点击item方法
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-        if (self.selectPath==nil) {
+        if (self.selectPath==nil){
             KJDisplayCollectionViewCell  *cell = (KJDisplayCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
             cell.isCellSelect = YES;
             self.selectPath = indexPath;
         }else{
-            if (self.selectPath!=indexPath) {
+            if (self.selectPath!=indexPath){
                 KJDisplayCollectionViewCell  *oldCell = (KJDisplayCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:self.selectPath];
                 oldCell.isCellSelect = NO;
                 KJDisplayCollectionViewCell  *newCell = (KJDisplayCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
@@ -93,24 +93,19 @@
     if (!_collectionView){
         //1.初始化layout
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        
         //该方法也可以设置itemSize
         layout.itemSize = CGSizeMake((SCREEN_WIDTH-60)/3, Handle(40));
-        
         //2.初始化collectionView
-        CGFloat h = (self.dataArray.count/3 + 1) * Handle(50) + Handle(10);
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, h) collectionViewLayout:layout];
+        CGFloat h = (self.dataArray.count/3 + 1)* Handle(50)+ Handle(10);
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, h)collectionViewLayout:layout];
         _collectionView.backgroundColor = [UIColor clearColor];
         _collectionView.scrollEnabled = NO;
-        
         //3.注册collectionViewCell
         //注意，此处的ReuseIdentifier 必须和 cellForItemAtIndexPath 方法中一致
         [_collectionView registerClass:[KJDisplayCollectionViewCell class] forCellWithReuseIdentifier:@"KJDisplayCollectionViewCell"];
-        
         //4.设置代理
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
-        
     }
     return _collectionView;
 }
@@ -118,8 +113,7 @@
 - (NSMutableArray *)dataArray{
     if (!_dataArray){
         _dataArray = [NSMutableArray array];
-        
-        for (NSInteger i=0; i<5; i++) {
+        for (NSInteger i=0; i<5; i++){
             [_dataArray addObject:@(i)];
         }
     }

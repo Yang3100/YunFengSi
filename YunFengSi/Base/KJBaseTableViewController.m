@@ -1,6 +1,6 @@
 //
 //  SUTableViewController0.m
-//  MHDevelopExample
+//  KJDevelopExample
 //
 //  Created by senba on 2017/6/12.
 //  Copyright © 2017年 CoderMikeHe. All rights reserved.
@@ -10,11 +10,11 @@
 
 @interface KJBaseTableViewController ()<UIScrollViewDelegate>
 /** tableView */
-@property (nonatomic, readwrite, weak) UITableView *tableView;
-/** contentInset defaul is (64 , 0 , 0 , 0) */
-@property (nonatomic, readwrite, assign) UIEdgeInsets contentInset;
+@property (nonatomic, readwrite, weak)UITableView *tableView;
+/** contentInset defaul is (64 , 0 , 0 , 0)*/
+@property (nonatomic, readwrite, assign)UIEdgeInsets contentInset;
 /// 数据源
-@property (nonatomic, readwrite, strong) NSMutableArray *dataSource;
+@property (nonatomic, readwrite, strong)NSMutableArray *dataSource;
 @end
 
 @implementation KJBaseTableViewController
@@ -27,7 +27,7 @@
 
 - (instancetype)initWithStyle:(UITableViewStyle)style{
     self = [super init];
-    if (self) {
+    if (self){
         _style = style;
     }
     return self;
@@ -68,10 +68,10 @@
     [self.view layoutIfNeeded];
     
     /// 添加加载和刷新控件
-    if (self.shouldPullDownToRefresh) {
+    if (self.shouldPullDownToRefresh){
         /// 下拉刷新
         @weakify(self);
-        [self.tableView mh_addHeaderRefresh:^(MJRefreshNormalHeader *header) {
+        [self.tableView kj_addHeaderRefresh:^(MJRefreshNormalHeader *header){
             /// 加载下拉刷新的数据
             @strongify(self);
             [self tableViewDidTriggerHeaderRefresh];
@@ -79,10 +79,10 @@
         [self.tableView.mj_header beginRefreshing];
     }
     
-    if (self.shouldPullUpToLoadMore) {
+    if (self.shouldPullUpToLoadMore){
         /// 上拉加载
         @weakify(self);
-        [self.tableView mh_addFooterRefresh:^(MJRefreshAutoNormalFooter *footer) {
+        [self.tableView kj_addFooterRefresh:^(MJRefreshAutoNormalFooter *footer){
             /// 加载上拉刷新的数据
             @strongify(self);
             [self tableViewDidTriggerFooterRefresh];
@@ -90,7 +90,7 @@
     }
     
 #ifdef __IPHONE_11_0
-    MHAdjustsScrollViewInsets_Never(tableView);
+    KJAdjustsScrollViewInsets_Never(tableView);
     tableView.estimatedRowHeight = 0;
     tableView.estimatedSectionHeaderHeight = 0;
     tableView.estimatedSectionFooterHeight = 0;
@@ -115,17 +115,15 @@
 - (void)tableViewDidFinishTriggerHeader:(BOOL)isHeader reload:(BOOL)reload{
     __weak KJBaseTableViewController *weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (reload) {
+        if (reload){
             [weakSelf.tableView reloadData];
         }
-        
-        if (isHeader) {
+        if (isHeader){
             [weakSelf.tableView.mj_header endRefreshing];
         }
         else{
             [weakSelf.tableView.mj_footer endRefreshing];
         }
-        
         /// 最后一页隐藏加载控件
         self.tableView.mj_footer.hidden = (self.page>=self.lastPage);
     });
@@ -156,12 +154,12 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.shouldMultiSections) return self.dataSource ? self.dataSource.count : 1;
+    if (self.shouldMultiSections)return self.dataSource ? self.dataSource.count : 1;
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.shouldMultiSections) return [self.dataSource[section] count];
+    if (self.shouldMultiSections)return [self.dataSource[section] count];
     return self.dataSource.count;
 }
 
@@ -171,8 +169,8 @@
     
     // fetch object
     id object = nil;
-    if (self.shouldMultiSections) object = self.dataSource[indexPath.section][indexPath.row];
-    if (!self.shouldMultiSections) object = self.dataSource[indexPath.row];
+    if (self.shouldMultiSections)object = self.dataSource[indexPath.section][indexPath.row];
+    if (!self.shouldMultiSections)object = self.dataSource[indexPath.row];
     
     /// bind model
     [self configureCell:cell atIndexPath:indexPath withObject:(id)object];
@@ -183,7 +181,7 @@
 
 #pragma mark - Getter & Setter
 - (NSMutableArray *)dataSource{
-    if (_dataSource == nil) {
+    if (_dataSource == nil){
         _dataSource = [[NSMutableArray alloc] init];
     }
     return _dataSource;
@@ -191,30 +189,27 @@
 
 
 - (void)setShouldPullDownToRefresh:(BOOL)shouldPullDownToRefresh{
-    if (_shouldPullDownToRefresh != shouldPullDownToRefresh) {
+    if (_shouldPullDownToRefresh != shouldPullDownToRefresh){
         _shouldPullDownToRefresh = shouldPullDownToRefresh;
-        if (!_shouldPullDownToRefresh) return;
-        
+        if (!_shouldPullDownToRefresh)return;
         /// 下拉刷新
         @weakify(self);
-        [self.tableView mh_addHeaderRefresh:^(MJRefreshNormalHeader *header) {
+        [self.tableView kj_addHeaderRefresh:^(MJRefreshNormalHeader *header){
             /// 加载下拉刷新的数据
             @strongify(self);
             [self tableViewDidTriggerHeaderRefresh];
         }];
         [self.tableView.mj_header beginRefreshing];
-        
     }
 }
 
 - (void)setShouldPullUpToLoadMore:(BOOL)shouldPullUpToLoadMore{
-    if (_shouldPullUpToLoadMore != shouldPullUpToLoadMore) {
+    if (_shouldPullUpToLoadMore != shouldPullUpToLoadMore){
         _shouldPullUpToLoadMore = shouldPullUpToLoadMore;
-        if (!_shouldPullUpToLoadMore) return;
-        
+        if (!_shouldPullUpToLoadMore)return;
         /// 上拉加载
         @weakify(self);
-        [self.tableView mh_addFooterRefresh:^(MJRefreshAutoNormalFooter *footer) {
+        [self.tableView kj_addFooterRefresh:^(MJRefreshAutoNormalFooter *footer){
             /// 加载上拉刷新的数据
             @strongify(self);
             [self tableViewDidTriggerFooterRefresh];

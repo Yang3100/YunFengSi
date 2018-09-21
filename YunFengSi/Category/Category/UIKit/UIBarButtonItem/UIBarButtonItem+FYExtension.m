@@ -16,8 +16,8 @@
     [button setBackgroundImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
     [button setBackgroundImage:[UIImage imageNamed:highImage] forState:UIControlStateHighlighted];
     [button setTitle:title forState:UIControlStateNormal];
-    if (titleColor == nil) {
-        [button setTitleColor:UIColorFromHEXA(0x333333, 1.0) forState:UIControlStateNormal];
+    if (titleColor == nil){
+        [button setTitleColor:UIColorFromHEXA(0x333333, 1.0)forState:UIControlStateNormal];
     }
     else{
         [button setTitleColor:titleColor forState:UIControlStateNormal];

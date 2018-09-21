@@ -21,17 +21,17 @@
 
 @interface KJScrollTextView : UIView
 
-@property (nonatomic,assign) id <KJScrollTextViewDelegate>delegate;
+@property (nonatomic,assign)id <KJScrollTextViewDelegate>delegate;
 
 // textDataArr 支持 NSString 和 NSAttributedString类型
-@property (nonatomic,copy)   NSArray *textDataArr; // 显示内容
-@property (nonatomic,assign) CGFloat textStayTime;// 文字停留时间，默认为3s。
-@property (nonatomic,assign) CGFloat scrollAnimationTime;// 文字滚动动画时间，默认为1s。
+@property (nonatomic,copy)  NSArray *textDataArr; // 显示内容
+@property (nonatomic,assign)CGFloat textStayTime;// 文字停留时间，默认为3s。
+@property (nonatomic,assign)CGFloat scrollAnimationTime;// 文字滚动动画时间，默认为1s。
 
-@property (nonatomic,copy)   UIFont  *textFont;
-@property (nonatomic,copy)   UIColor *textColor;
-@property (nonatomic)        NSTextAlignment textAlignment;
-@property (nonatomic,assign) BOOL touchEnable; // defualt is YES
+@property (nonatomic,copy)  UIFont  *textFont;
+@property (nonatomic,copy)  UIColor *textColor;
+@property (nonatomic)       NSTextAlignment textAlignment;
+@property (nonatomic,assign)BOOL touchEnable; // defualt is YES
 
 - (void)startScrollBottomToTopWithSpace;
 - (void)startScrollTopToBottomWithSpace;

@@ -16,7 +16,7 @@
     __block CGFloat h;
 }
 
-@property(nonatomic,strong) UITableView *mainTable;
+@property(nonatomic,strong)UITableView *mainTable;
 
 @end
 
@@ -29,7 +29,7 @@
 
 - (void)setUI{
     [self addSubview:self.mainTable];
-    [self.mainTable mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.mainTable mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.left.right.mas_equalTo(self);
         make.height.mas_equalTo(self->h);
     }];
@@ -38,7 +38,7 @@
     [self.mainTable registerClass:[KJHelpSecondCell class] forCellReuseIdentifier:@"KJHelpSecondCell"];
 }
 - (UITableView*)mainTable{
-    if (!_mainTable) {
+    if (!_mainTable){
         _mainTable = [[UITableView alloc]initWithFrame:CGRectZero style:(UITableViewStylePlain)];
         //去掉自带分割线
         [_mainTable setSeparatorStyle:(UITableViewCellSeparatorStyleNone)];
@@ -51,7 +51,7 @@
 
 
 #pragma mark - UITableViewDelegate , UITableViewDataSource
-- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 
@@ -59,19 +59,19 @@
     return 10;
 }
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row==0) {
-        return [self.mainTable fd_heightForCellWithIdentifier:@"KJHelpFristCell" cacheByKey:indexPath configuration:^(KJHelpFristCell *cell) {
+    if (indexPath.row==0){
+        return [self.mainTable fd_heightForCellWithIdentifier:@"KJHelpFristCell" cacheByKey:indexPath configuration:^(KJHelpFristCell *cell){
         }];
     }else{
-        return [self.mainTable fd_heightForCellWithIdentifier:@"KJHelpSecondCell" cacheByKey:indexPath configuration:^(KJHelpSecondCell *cell) {
+        return [self.mainTable fd_heightForCellWithIdentifier:@"KJHelpSecondCell" cacheByKey:indexPath configuration:^(KJHelpSecondCell *cell){
         }];
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewAutomaticDimension;
 }
-- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row==0) {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row==0){
         KJHelpFristCell *cell = [KJHelpFristCell cellWithTableView:tableView];
 //        cell.model = @"";
         return cell;
@@ -88,7 +88,6 @@
     vc.navigationItem.title = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
     KJBaseNavigationController *nav = [[KJBaseNavigationController alloc]initWithRootViewController:vc];
     [[KJTools currentViewController] presentViewController:nav animated:YES completion:^{
-        
     }];
 }
 

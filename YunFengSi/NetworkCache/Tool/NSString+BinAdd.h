@@ -180,15 +180,15 @@ NS_ASSUME_NONNULL_BEGIN
 ///=============================================================================
 
 // Now you can use NSString as a NSNumber.
-@property (readonly) char charValue;
-@property (readonly) unsigned char unsignedCharValue;
-@property (readonly) short shortValue;
-@property (readonly) unsigned short unsignedShortValue;
-@property (readonly) unsigned int unsignedIntValue;
-@property (readonly) long longValue;
-@property (readonly) unsigned long unsignedLongValue;
-@property (readonly) unsigned long long unsignedLongLongValue;
-@property (readonly) NSUInteger unsignedIntegerValue;
+@property (readonly)char charValue;
+@property (readonly)unsigned char unsignedCharValue;
+@property (readonly)short shortValue;
+@property (readonly)unsigned short unsignedShortValue;
+@property (readonly)unsigned int unsignedIntValue;
+@property (readonly)long longValue;
+@property (readonly)unsigned long unsignedLongValue;
+@property (readonly)unsigned long long unsignedLongLongValue;
+@property (readonly)NSUInteger unsignedIntegerValue;
 
 
 #pragma mark - Utilities
@@ -220,13 +220,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable NSString *)stringWithUTF32Chars:(const UTF32Char *)char32 length:(NSUInteger)length;
 
 /**
- Enumerates the unicode characters (UTF-32) in the specified range of the string.
+ Enumerates the unicode characters (UTF-32)in the specified range of the string.
  
  @param range The range within the string to enumerate substrings.
  @param block The block executed for the enumeration. The block takes four arguments:
  char32: The unicode character.
  range: The range in receiver. If the range.length is 1, the character is in BMP;
- otherwise (range.length is 2) the character is in none-BMP Plane and stored
+ otherwise (range.length is 2)the character is in none-BMP Plane and stored
  by a surrogate pair in the receiver.
  stop: A reference to a Boolean value that the block can use to stop the enumeration
  by setting *stop = YES; it should not touch *stop otherwise.
@@ -234,7 +234,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)enumerateUTF32CharInRange:(NSRange)range usingBlock:(void (^)(UTF32Char char32, NSRange range, BOOL *stop))block;
 
 /**
- Trim blank characters (space and newline) in head and tail.
+ Trim blank characters (space and newline)in head and tail.
  @return the trimmed string.
  */
 - (NSString *)stringByTrim;

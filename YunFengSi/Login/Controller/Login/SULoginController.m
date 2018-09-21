@@ -1,6 +1,6 @@
 //
 //  SULoginController0.m
-//  MHDevelopExample
+//  KJDevelopExample
 //
 //  Created by senba on 2017/6/12.
 //  Copyright © 2017年 CoderMikeHe. All rights reserved.
@@ -14,15 +14,15 @@
 
 @interface SULoginController ()
 /// 输入款的父类
-@property (weak, nonatomic) IBOutlet UIView *inputBaseView;
+@property (weak, nonatomic)IBOutlet UIView *inputBaseView;
 
 /// 登录按钮
-@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
+@property (weak, nonatomic)IBOutlet UIButton *loginBtn;
 
 /// 输入框
-@property (nonatomic, readwrite, weak) SULoginInputView *inputView;
+@property (nonatomic, readwrite, weak)SULoginInputView *inputView;
 /// 用户头像
-@property (weak, nonatomic) IBOutlet UIImageView *userAvatar;
+@property (weak, nonatomic)IBOutlet UIImageView *userAvatar;
 
 
 
@@ -34,13 +34,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-//    [(MHNavigationController *)self.navigationController hideNavgationSystemLine];
+//    [(KJNavigationController *)self.navigationController hideNavgationSystemLine];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-//    [(MHNavigationController *)self.navigationController showNavgationSystemLine];
+//    [(KJNavigationController *)self.navigationController showNavgationSystemLine];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -67,14 +67,14 @@
 /// 登录按钮被点击
 - (IBAction)_loginBtnDidClicked:(UIButton *)sender {
     /// 验证手机号码 正确的手机号码
-    if (![NSString mh_isValidMobile:self.inputView.phoneTextField.text]){
-        [MBProgressHUD mh_showTips:@"请输入正确的手机号码"];
+    if (![NSString kj_isValidMobile:self.inputView.phoneTextField.text]){
+        [MBProgressHUD kj_showTips:@"请输入正确的手机号码"];
         return;
     }
     
     /// 验证验证码 四位数字
-    if (self.inputView.verifyTextField.text.length < 6 ) {
-        [MBProgressHUD mh_showTips:@"密码位数错误"];
+    if (self.inputView.verifyTextField.text.length < 6 ){
+        [MBProgressHUD kj_showTips:@"密码位数错误"];
         return;
     }
     
@@ -82,7 +82,7 @@
     [self.view endEditing:YES];
     
     /// show loading
-    [MBProgressHUD mh_showProgressHUD:@"Loading..."];
+    [MBProgressHUD kj_showProgressHUD:@"Loading..."];
     
     NSString *str = [KJEncryptTool get16Num];
     NSString *key = [KJEncryptTool RSAEncrypt:str];
@@ -99,21 +99,19 @@
                                  @"msg":msg
                                  };
     //Ggaoye
-    [HNRequestManager sendRequestWithRequestMethodType:HNRequestMethodTypePOST requestAPICode:@"Dzlogin" refreshCache:YES requestParameters:parameters success:^(id responseObject) {
+    [HNRequestManager sendRequestWithRequestMethodType:HNRequestMethodTypePOST requestAPICode:@"Dzlogin" refreshCache:YES requestParameters:parameters success:^(id responseObject){
         NSLog(@"%@",responseObject);
         /// hid hud
-        [MBProgressHUD mh_hideHUD];
-        
+        [MBProgressHUD kj_hideHUD];
         /// 登录成功 保存数据 简单起见 随便存了哈
         [[NSUserDefaults standardUserDefaults] setValue:self.inputView.phoneTextField.text forKey:@"account"];
         [[NSUserDefaults standardUserDefaults] setValue:self.inputView.verifyTextField.text forKey:@"password"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
         /// 跳转主界面
         KJBaseTabBarController *vc = [[KJBaseTabBarController alloc] init];
         AppDelegate *delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         delegate.window.rootViewController = vc;
-    } faild:^(NSError *error) {
+    } faild:^(NSError *error){
         NSLog(@"%@",error);
     }];
     
@@ -123,7 +121,7 @@
     self.loginBtn.enabled = (self.inputView.phoneTextField.hasText && self.inputView.verifyTextField.hasText);
     
     /// 这里是假数据 模拟用户输入去本地数据库拉去数据
-    if(![NSString mh_isValidMobile:self.inputView.phoneTextField.text]){
+    if(![NSString kj_isValidMobile:self.inputView.phoneTextField.text]){
         self.userAvatar.image = GetImage(@"timg1");
         return;
     }
@@ -135,8 +133,8 @@
     NSString *account = [[NSUserDefaults standardUserDefaults] objectForKey:@"account"];
     NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
     
-    if ([account isEqualToString:@""] || [password isEqualToString:@""]) {
-        [MBProgressHUD mh_showErrorTips:@"请输入账号密码"];
+    if ([account isEqualToString:@""] || [password isEqualToString:@""]){
+        [MBProgressHUD kj_showErrorTips:@"请输入账号密码"];
         [self.inputView.phoneTextField becomeFirstResponder];
         return;
     }
@@ -160,7 +158,7 @@
 - (void)_setupSubViews{
     /// 设置圆角
 //    [self.userAvatar cornerRadiusRoundingRect];
-//    [self.userAvatar zy_attachBorderWidth:.5f color:MHColorFromHexString(@"#EBEBEB")];
+//    [self.userAvatar zy_attachBorderWidth:.5f color:KJColorFromHexString(@"#EBEBEB")];
     
     /// 输入框
     SULoginInputView *inputView = [SULoginInputView inputView];
@@ -168,12 +166,12 @@
     [self.inputBaseView addSubview:inputView];
     
     /// 布局
-    [inputView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [inputView mas_makeConstraints:^(MASConstraintMaker *make){
         make.edges.mas_equalTo(UIEdgeInsetsZero);
     }];
     
     /// 登录按钮
-    [self.loginBtn setTitleColor:UIColorFromRGBA(255.0f, 255.0f, 255.0f, .5f) forState:UIControlStateDisabled];
+    [self.loginBtn setTitleColor:UIColorFromRGBA(255.0f, 255.0f, 255.0f, .5f)forState:UIControlStateDisabled];
     /// 从沙盒中取出数据
     inputView.phoneTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"account"];
     inputView.verifyTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
@@ -181,8 +179,8 @@
     [self _textFieldValueDidChanged:nil];
     
     /// 添加事件
-    [inputView.phoneTextField addTarget:self action:@selector(_textFieldValueDidChanged:) forControlEvents:UIControlEventEditingChanged];
-    [inputView.verifyTextField addTarget:self action:@selector(_textFieldValueDidChanged:) forControlEvents:UIControlEventEditingChanged];
+    [inputView.phoneTextField addTarget:self action:@selector(_textFieldValueDidChanged:)forControlEvents:UIControlEventEditingChanged];
+    [inputView.verifyTextField addTarget:self action:@selector(_textFieldValueDidChanged:)forControlEvents:UIControlEventEditingChanged];
 }
 
 #pragma mark - Override

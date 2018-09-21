@@ -11,8 +11,8 @@
 
 @interface KJHelpDetailHeaderView()<SDCycleScrollViewDelegate>
 
-@property(nonatomic,strong) SDCycleScrollView *bannerView;
-@property(nonatomic,strong) KJAnnularProgressView *annularProgressView;
+@property(nonatomic,strong)SDCycleScrollView *bannerView;
+@property(nonatomic,strong)KJAnnularProgressView *annularProgressView;
 
 @end
 
@@ -22,7 +22,7 @@
     KJHelpDetailHeaderView *backView = [[self alloc] init];
     backView.backgroundColor = [UIColor whiteColor];
     
-    if (block) {
+    if (block){
         block([backView getViewSizeFrom:model]);
     }
     return backView;
@@ -35,7 +35,7 @@
     
     // 先调用superView的layoutIfNeeded方法再获取frame
     [self layoutIfNeeded];
-    CGFloat h = Handle(10) + CGRectGetHeight(self.bannerView.frame) + Handle(10) + CGRectGetHeight(self.annularProgressView.frame);
+    CGFloat h = Handle(10)+ CGRectGetHeight(self.bannerView.frame)+ Handle(10)+ CGRectGetHeight(self.annularProgressView.frame);
     return CGSizeMake(SCREEN_WIDTH, h);
 }
 
@@ -48,7 +48,7 @@
 
 #pragma mark - setUI
 - (void)setUI{
-    [self.bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.bannerView mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.mas_equalTo(self).mas_offset(Handle(10));
         make.left.mas_equalTo(self).mas_offset(Handle(10));
         make.right.mas_equalTo(self).mas_offset(Handle(-10));
@@ -56,11 +56,11 @@
     }];
     
     __block CGSize ViewSize;
-    self.annularProgressView = [KJAnnularProgressView createViewFromData:nil Size:^(CGSize size) {
+    self.annularProgressView = [KJAnnularProgressView createViewFromData:nil Size:^(CGSize size){
         ViewSize = size;
     }];
     [self addSubview:_annularProgressView];
-    [_annularProgressView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_annularProgressView mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.mas_equalTo(self.bannerView.mas_bottom).mas_offset(Handle(10));
         make.left.mas_equalTo(self);
         make.width.mas_equalTo(ViewSize.width);
@@ -71,7 +71,7 @@
 }
 
 - (SDCycleScrollView *)bannerView{
-    if (!_bannerView) {
+    if (!_bannerView){
         // 情景一：采用本地图片实现
         NSArray *imageNames = @[@"tu1",
                                 @"tu2",

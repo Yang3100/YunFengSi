@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface NSDateFormatter (Extension)
-+ (instancetype)mh_dateFormatter;
++ (instancetype)kj_dateFormatter;
 
-+ (instancetype)mh_dateFormatterWithFormat:(NSString *)dateFormat;
++ (instancetype)kj_dateFormatterWithFormat:(NSString *)dateFormat;
 
-+ (instancetype)mh_defaultDateFormatter;/*yyyy/MM/dd HH:mm:ss*/
++ (instancetype)kj_defaultDateFormatter;/*yyyy/MM/dd HH:mm:ss*/
 @end

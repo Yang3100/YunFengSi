@@ -12,7 +12,7 @@
 @interface KJBaseViewController ()
 
 /// The `params` parameter in `-initWithParams:` method.
-@property (nonatomic, readwrite, copy) NSDictionary *params;
+@property (nonatomic, readwrite, copy)NSDictionary *params;
 
 @end
 
@@ -38,7 +38,7 @@
 //    self.navigationItem.leftBarButtonItem  = [UIBarButtonItem leftItemWithImage:@"login_goBack" higthImage:@"" title:nil target:self action:@selector(NavBack)];
 //}
 //- (void)NavBack{
-//    if ([KJTools kj_judgeCurrentVCIsPushOrPrsent:self]) {  // push方式进入
+//    if ([KJTools kj_judgeCurrentVCIsPushOrPrsent:self]){  // push方式进入
 //        [self.navigationController popViewControllerAnimated:YES];
 //    }else{
 //        [self dismissViewControllerAnimated:YES completion:nil];
@@ -50,18 +50,18 @@
 }
 
 
-// when `CMHViewController ` created and call `viewDidLoad` method , execute `requestRemoteData` Or `configure` method
+// when `KJViewController ` created and call `viewDidLoad` method , execute `requestRemoteData` Or `configure` method
 + (instancetype)allocWithZone:(struct _NSZone *)zone {
     KJBaseViewController *viewController = [super allocWithZone:zone];
 //    @weakify(viewController)
 //    [[viewController
 //      rac_signalForSelector:@selector(viewDidLoad)]
-//     subscribeNext:^(id x) {
+//     subscribeNext:^(id x){
 //         @strongify(viewController)
 //         [viewController configure];
 //
 //         /// 请求数据
-//         if (viewController.shouldRequestRemoteDataOnViewDidLoad) {
+//         if (viewController.shouldRequestRemoteDataOnViewDidLoad){
 //             [viewController requestRemoteData];
 //         }
 //     }];
@@ -71,7 +71,7 @@
 
 - (instancetype)initWithParams:(NSDictionary *)params{
     /// CoderMikeHe Fixed Bug: 这里调用self init ,便于其他开发人员直接采用 [xxx alloc] init]创建控制器，向下兼容吧
-    if (self = [self init]) {
+    if (self = [self init]){
         _params = params;
     }
     return self;
@@ -79,19 +79,15 @@
 
 - (instancetype)init{
     self = [super init];
-    if (self) {
-        
+    if (self){
         /// 基础配置
         /// 默认在viewDidLoad里面服务器的数据
         _shouldRequestRemoteDataOnViewDidLoad = YES;
-        
         /// FDFullscreenPopGesture
         _interactivePopDisabled = NO;
         _prefersNavigationBarHidden = NO;
-        
         /// custom
         _prefersNavigationBarBottomLineHidden = NO;
-        
         /// 允许IQKeyboardMananger接管键盘弹出事件
         _keyboardEnable = YES;
         _shouldResignOnTouchOutside = YES;
@@ -105,8 +101,8 @@
     [super viewWillAppear:animated];
     
 //    /// 隐藏导航栏细线
-//    CMHNavigationController *nav = (CMHNavigationController *)self.navigationController;
-//    if ([nav isKindOfClass:[CMHNavigationController class]]) { /// 容错
+//    KJNavigationController *nav = (KJNavigationController *)self.navigationController;
+//    if ([nav isKindOfClass:[KJNavigationController class]]){ /// 容错
 //        /// 显示或隐藏
 //        self.prefersNavigationBarBottomLineHidden?[nav hideNavigationBottomLine]:[nav showNavigationBottomLine];
 //    }
@@ -116,7 +112,7 @@
 //    IQKeyboardManager.sharedManager.shouldResignOnTouchOutside = self.shouldResignOnTouchOutside;
 //    IQKeyboardManager.sharedManager.keyboardDistanceFromTextField = self.keyboardDistanceFromTextField;
 //
-//    if (nav) {
+//    if (nav){
 //        /**
 //         原因：
 //         viewController.navigationItem.backBarButtonItem = nil;
@@ -124,10 +120,10 @@
 //         CoderMikeHe: Fixed Bug 上面这个方法，会导致侧滑取消时，导航栏出现三个蓝点，系统层面的BUg
 //         这种方法也不是最完美的，第一次侧滑取消 也会复现
 //         */
-//        for (UIView *subView in nav.navigationBar.subviews) {
+//        for (UIView *subView in nav.navigationBar.subviews){
 //            /// 隐藏掉蓝点
-//            if ([subView isKindOfClass:NSClassFromString(@"_UINavigationItemButtonView")]) {
-//                subView.mh_size = CGSizeZero;
+//            if ([subView isKindOfClass:NSClassFromString(@"_UINavigationItemButtonView")]){
+//                subView.kj_size = CGSizeZero;
 //                subView.hidden = YES;
 //            }
 //        }
@@ -138,25 +134,24 @@
     [super viewWillDisappear:animated];
     
     // Being popped, take a snapshot
-    if ([self isMovingFromParentViewController]) {
+    if ([self isMovingFromParentViewController]){
         self.snapshot = [self.navigationController.view snapshotViewAfterScreenUpdates:NO];
     }
     
-    if (self.navigationController) {
+    if (self.navigationController){
         /**
          viewController.navigationItem.backBarButtonItem = nil;
          [viewController.navigationItem setHidesBackButton:YES];
          CoderMikeHe: Fixed Bug 上面这个方法，会导致侧滑取消时，导航栏出现三个蓝点，系统层面的BUg
          */
-        for (UIView *subView in self.navigationController.navigationBar.subviews) {
+        for (UIView *subView in self.navigationController.navigationBar.subviews){
             /// 隐藏掉蓝点
-            if ([subView isKindOfClass:NSClassFromString(@"_UINavigationItemButtonView")]) {
-                subView.mh_size = CGSizeZero;
+            if ([subView isKindOfClass:NSClassFromString(@"_UINavigationItemButtonView")]){
+                subView.size = CGSizeZero;
                 subView.hidden = YES;
             }
         }
     }
-    
 }
 
 
@@ -169,7 +164,7 @@
     /// iOS 11新增：adjustContentInset 和 contentInsetAdjustmentBehavior 来处理滚动区域
     /// CoderMikeHe Fixed : __IPHONE_11_0 只是说明Xcode定义了这个宏，但不能说明这个支持11.0，所以需要@available(iOS 11.0, *)
 #ifdef __IPHONE_11_0
-    if (@available(iOS 11.0, *)) {
+    if (@available(iOS 11.0, *)){
         self.automaticallyAdjustsScrollViewInsets = YES;
     }else{
         self.automaticallyAdjustsScrollViewInsets = NO;
@@ -195,7 +190,7 @@
 //    /// ... subclass override , but must use `[super configure]`
 //    /// 动态改变
 //    @weakify(self);
-//    [[[RACObserve(self, interactivePopDisabled) distinctUntilChanged] deliverOnMainThread] subscribeNext:^(NSNumber * x) {
+//    [[[RACObserve(self, interactivePopDisabled)distinctUntilChanged] deliverOnMainThread] subscribeNext:^(NSNumber * x){
 //        @strongify(self);
 //        self.fd_interactivePopDisabled = x.boolValue;
 //    }];
@@ -232,7 +227,5 @@
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
     return UIStatusBarAnimationFade;
 }
-
-
 
 @end

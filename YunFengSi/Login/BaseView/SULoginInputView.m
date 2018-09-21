@@ -1,6 +1,6 @@
 //
 //  SULoginInputView.m
-//  MHDevelopExample
+//  KJDevelopExample
 //
 //  Created by senba on 2017/6/11.
 //  Copyright © 2017年 CoderMikeHe. All rights reserved.
@@ -11,7 +11,7 @@
 @implementation SULoginInputView
 
 + (instancetype)inputView{
-    return [self mh_viewFromXib];
+    return [self kj_viewFromXib];
 }
 
 @end

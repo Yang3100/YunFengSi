@@ -12,7 +12,7 @@
 
 @interface KJHelpStudyVC ()
 
-@property(nonatomic,strong) UIView *changeView;
+@property(nonatomic,strong)UIView *changeView;
 
 @end
 
@@ -32,19 +32,19 @@
 
 - (void)setUI{
     __block CGSize HeaderViewSize;
-    KJNewDynamicView *headerView = [KJNewDynamicView createNewDynamicViewFromData:nil Size:^(CGSize size) {
+    KJNewDynamicView *headerView = [KJNewDynamicView createNewDynamicViewFromData:nil Size:^(CGSize size){
         HeaderViewSize = size;
     }];
     
     [self.view addSubview:headerView];
-    [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [headerView mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.mas_equalTo(self.view).mas_offset(Handle(64));
         make.left.mas_equalTo(self.view);
         make.width.mas_equalTo(HeaderViewSize.width);
         make.height.mas_equalTo(HeaderViewSize.height);
     }];
     
-    [self.changeView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.changeView mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.mas_equalTo(headerView.mas_bottom).mas_offset(Handle(10));
         make.left.right.mas_equalTo(self.view);
         make.height.mas_equalTo(30);
@@ -52,7 +52,7 @@
     
     KJHelpStudyTableView *helpTableView = [[KJHelpStudyTableView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:helpTableView];
-    [helpTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [helpTableView mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.mas_equalTo(self.changeView.mas_bottom);
         make.left.mas_equalTo(self.view).mas_offset(Handle(5));
         make.right.mas_equalTo(self.view).mas_offset(-Handle(5));
@@ -66,16 +66,15 @@
 }
 
 - (UIView*)changeView{
-    if (!_changeView) {
+    if (!_changeView){
         _changeView = InsertView(self.view, CGRectZero, self.view.backgroundColor);
-        
         UIButton*_moreButton = InsertImageButton(_changeView, CGRectZero, 520, nil, nil, self, @selector(btnClick:));
         _moreButton.adjustsImageWhenHighlighted = NO;
         _moreButton.backgroundColor = DefaultBackgroudColor;
         [_moreButton setTitle:@"换一换" forState:UIControlStateNormal];
         _moreButton.titleLabel.font = [UIFont systemFontOfSize:15];
-        [_moreButton setTitleColor:UIColorFromHEXA(0x888888,1.0) forState:UIControlStateNormal];
-        [_moreButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        [_moreButton setTitleColor:UIColorFromHEXA(0x888888,1.0)forState:UIControlStateNormal];
+        [_moreButton mas_makeConstraints:^(MASConstraintMaker *make){
             make.centerX.mas_equalTo(self->_changeView);
             make.centerY.mas_equalTo(self->_changeView);
         }];

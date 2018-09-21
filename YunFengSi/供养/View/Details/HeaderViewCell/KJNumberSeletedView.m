@@ -10,46 +10,42 @@
 
 @interface KJNumberSeletedView()
 
-@property (nonatomic, weak) UIButton *leftBtn; //减小按钮
-@property (nonatomic, weak) UIButton *rightBtn;// 增加按钮
-@property (nonatomic, weak) UIView *topView;// N人以上区域
-@property (nonatomic, weak) UILabel *lable;// N人以上文字
+@property (nonatomic, weak)UIButton *leftBtn; //减小按钮
+@property (nonatomic, weak)UIButton *rightBtn;// 增加按钮
+@property (nonatomic, weak)UIView *topView;// N人以上区域
+@property (nonatomic, weak)UILabel *lable;// N人以上文字
 
 @end
 
 @implementation KJNumberSeletedView
 
 -(instancetype)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
+    if (self = [super initWithFrame:frame]){
         //设置背景
         UIImageView *comeView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
         comeView.image = [UIImage imageNamed:@"bespeakBG"];
         [self addSubview:comeView];
-        
         //设置显示内容
         UILabel *timeLable = [[UILabel alloc] initWithFrame:comeView.frame];
         self.timeLable = timeLable;
         timeLable.textAlignment = NSTextAlignmentCenter;
         timeLable.font = [UIFont systemFontOfSize:12];
         [self addSubview:timeLable];
-        
         //设置减小按钮
         UIButton *leftBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 31, 30)];
         self.leftBtn = leftBtn;
         leftBtn.userInteractionEnabled = NO;
         [leftBtn setImage:[UIImage imageNamed:@"delect_gragy"] forState:UIControlStateNormal];
         [leftBtn setImage:[UIImage imageNamed:@"delect_gragy"] forState:UIControlStateHighlighted];
-        [leftBtn addTarget:self action:@selector(leftBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [leftBtn addTarget:self action:@selector(leftBtn:)forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:leftBtn];
-        
         //设置增大按钮
         UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.width - 31, 0, 31, 30)];
         self.rightBtn = rightBtn;
         [rightBtn setImage:[UIImage imageNamed:@"add_gragy"] forState:UIControlStateNormal];
         [rightBtn setImage:[UIImage imageNamed:@"add_gragy"] forState:UIControlStateHighlighted];
-        [rightBtn addTarget:self action:@selector(rightBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [rightBtn addTarget:self action:@selector(rightBtn:)forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:rightBtn];
-        
         UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(leftBtn.width, 0, self.width - leftBtn.width, self.height)];
         self.topView = topView;
         UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.topView.width, self.topView.height)];
@@ -57,7 +53,6 @@
         [self.topView addSubview:imgView];
         UILabel * lable = [[UILabel alloc] initWithFrame:imgView.frame];
         self.lable = lable;
-        
         lable.font = [UIFont systemFontOfSize:14];
         lable.textAlignment = NSTextAlignmentCenter;
         [self.topView addSubview:lable];
@@ -77,12 +72,12 @@
 #pragma mark - 点击减
 - (void)leftBtn:(UIButton *)btn{
     self.i --;
-    if (self.HighType == YES) {
-        if (self.i <= self.HighI) {
+    if (self.HighType == YES){
+        if (self.i <= self.HighI){
             self.topView.hidden = YES;
         }
     }
-    if (self.i <= self.lowI) {
+    if (self.i <= self.lowI){
         btn.userInteractionEnabled = NO;
         [btn setImage:[UIImage imageNamed:@"delect_gragy"] forState:UIControlStateNormal];
     } else {
@@ -96,12 +91,12 @@
 #pragma mark - 点击加
 - (void)rightBtn:(UIButton *)btn{
     self.i ++;
-    if (self.HighType == YES) {
-        if (self.i >= self.HighI) {
+    if (self.HighType == YES){
+        if (self.i >= self.HighI){
             self.topView.hidden = NO;
         }
     }
-    if (self.i >= self.HighI) {
+    if (self.i >= self.HighI){
         btn.userInteractionEnabled = NO;
         [btn setImage:[UIImage imageNamed:@"add_gragy"] forState:UIControlStateNormal];
     } else {

@@ -12,14 +12,14 @@
 /** 
  *  UITextView+placeholder
  */
-@property (nonatomic, copy) NSString *zw_placeHolder;
+@property (nonatomic, copy)NSString *zw_placeHolder;
 /** 
  *  IQKeyboardManager等第三方框架会读取placeholder属性并创建UIToolbar展示
  */
-@property (nonatomic, copy) NSString *placeholder;
+@property (nonatomic, copy)NSString *placeholder;
 /** 
  *  placeHolder颜色
  */
-@property (nonatomic, strong) UIColor *zw_placeHolderColor;
+@property (nonatomic, strong)UIColor *zw_placeHolderColor;
 
 @end

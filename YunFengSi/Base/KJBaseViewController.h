@@ -32,40 +32,40 @@
 
 /// ------------ Property ------------
 /// The `params` parameter in `-initWithParams:` method.
-/// The `params` Key's `CMHViewControllerIDKey`
-@property (nonatomic, readonly, copy) NSDictionary *params;
+/// The `params` Key's `KJViewControllerIDKey`
+@property (nonatomic, readonly, copy)NSDictionary *params;
 
 /// The callback block. 当Push/Present时，通过block反向传值
-@property (nonatomic, readwrite, copy) void (^callback)(id);
+@property (nonatomic, readwrite, copy)void (^callback)(id);
 
 /** should request data when viewController videwDidLoad . default is YES*/
 /** 是否需要在控制器viewDidLoad后调用`requestRemoteData` default is YES*/
-@property (nonatomic, readwrite, assign) BOOL shouldRequestRemoteDataOnViewDidLoad;
+@property (nonatomic, readwrite, assign)BOOL shouldRequestRemoteDataOnViewDidLoad;
 
 /// FDFullscreenPopGesture
 /// Whether the interactive pop gesture is disabled when contained in a navigation
 /// stack. (是否取消掉左滑pop到上一层的功能（栈底控制器无效），默认为NO，不取消)
-@property (nonatomic, readwrite, assign) BOOL interactivePopDisabled;
+@property (nonatomic, readwrite, assign)BOOL interactivePopDisabled;
 /// Indicate this view controller prefers its navigation bar hidden or not,
 /// checked when view controller based navigation bar's appearance is enabled.
 /// Default to NO, bars are more likely to show.
 /// 是否隐藏该控制器的导航栏 默认是不隐藏 (NO)
-@property (nonatomic, readwrite, assign) BOOL prefersNavigationBarHidden;
+@property (nonatomic, readwrite, assign)BOOL prefersNavigationBarHidden;
 /// 是否隐藏该控制器的导航栏底部的分割线 默认不隐藏 （NO）
-@property (nonatomic, readwrite, assign) BOOL prefersNavigationBarBottomLineHidden;
+@property (nonatomic, readwrite, assign)BOOL prefersNavigationBarBottomLineHidden;
 
 
 /// IQKeyboardManager
 /// 是否让IQKeyboardManager的管理键盘的事件 默认是YES（键盘管理）
-@property (nonatomic, readwrite, assign) BOOL keyboardEnable;
+@property (nonatomic, readwrite, assign)BOOL keyboardEnable;
 /// 是否键盘弹起的时候，点击其他区域键盘掉下 默认是 YES
-@property (nonatomic, readwrite, assign) BOOL shouldResignOnTouchOutside;
+@property (nonatomic, readwrite, assign)BOOL shouldResignOnTouchOutside;
 /// To set keyboard distance from textField. can't be less than zero. Default is 10.0.
 /// keyboardDistanceFromTextField
-@property (nonatomic, readwrite, assign) CGFloat keyboardDistanceFromTextField;
+@property (nonatomic, readwrite, assign)CGFloat keyboardDistanceFromTextField;
 
 /// 截图（Push/Pop Present/Dismiss 过度过程中的缩略图）主要用在过渡动画里面
-@property (nonatomic, readwrite, strong) UIView *snapshot;
+@property (nonatomic, readwrite, strong)UIView *snapshot;
 
 
 @end

@@ -32,12 +32,12 @@
 
 - (void)setUI{
     __block CGSize HeaderViewSize;
-    KJNewDynamicView *headerView = [KJNewDynamicView createNewDynamicViewFromData:nil Size:^(CGSize size) {
+    KJNewDynamicView *headerView = [KJNewDynamicView createNewDynamicViewFromData:nil Size:^(CGSize size){
         HeaderViewSize = size;
     }];
     
     [self.view addSubview:headerView];
-    [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [headerView mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.mas_equalTo(self.view).mas_offset(Handle(64));
         make.left.mas_equalTo(self.view);
         make.width.mas_equalTo(HeaderViewSize.width);
@@ -46,7 +46,7 @@
     
     KJFendCollectionView *fendCollectionView = [[KJFendCollectionView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:fendCollectionView];
-    [fendCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [fendCollectionView mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.mas_equalTo(headerView.mas_bottom);
         make.left.mas_equalTo(self.view);
         make.width.mas_equalTo(SCREEN_WIDTH);

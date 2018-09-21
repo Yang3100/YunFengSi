@@ -10,6 +10,6 @@
 
 @interface KJDisplayCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic,assign) BOOL isCellSelect;
+@property (nonatomic,assign)BOOL isCellSelect;
 
 @end

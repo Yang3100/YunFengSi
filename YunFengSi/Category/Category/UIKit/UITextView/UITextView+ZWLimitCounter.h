@@ -10,13 +10,13 @@
 
 @interface UITextView (ZWLimitCounter)
 /** 限制字数*/
-@property (nonatomic, assign) NSInteger zw_limitCount;
+@property (nonatomic, assign)NSInteger zw_limitCount;
 /** lab的右边距(默认10)*/
-@property (nonatomic, assign) CGFloat zw_labMargin;
+@property (nonatomic, assign)CGFloat zw_labMargin;
 /** lab的高度(默认20)*/
-@property (nonatomic, assign) CGFloat zw_labHeight;
+@property (nonatomic, assign)CGFloat zw_labHeight;
 /** lab的文字大小(默认12)*/
-@property (nonatomic, strong) UIFont *zw_labFont;
+@property (nonatomic, strong)UIFont *zw_labFont;
 /** 统计限制字数Label*/
-@property (nonatomic, readonly) UILabel *zw_inputLimitLabel;
+@property (nonatomic, readonly)UILabel *zw_inputLimitLabel;
 @end

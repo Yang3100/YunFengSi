@@ -13,12 +13,12 @@
 
 - (void)setModel:(KJDetailHeaderModel *)model{
     __block CGSize HeaderViewSize;
-    KJDetailsHeaderView *headerView = [KJDetailsHeaderView createDetailsHeaderViewFromData:nil Size:^(CGSize size) {
+    KJDetailsHeaderView *headerView = [KJDetailsHeaderView createDetailsHeaderViewFromData:nil Size:^(CGSize size){
         HeaderViewSize = size;
     }];
 
     [self.contentView addSubview:headerView];
-    [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [headerView mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.mas_equalTo(self.contentView);
         make.left.mas_equalTo(self.contentView);
         make.width.mas_equalTo(HeaderViewSize.width);

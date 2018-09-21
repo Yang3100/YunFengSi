@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2016 forkingdog ( https://github.com/forkingdog )
+// Copyright (c)2015-2016 forkingdog ( https://github.com/forkingdog )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@
 @implementation UITableView (FDTemplateLayoutCellDebug)
 
 - (BOOL)fd_debugLogEnabled {
-    return [objc_getAssociatedObject(self, _cmd) boolValue];
+    return [objc_getAssociatedObject(self, _cmd)boolValue];
 }
 
 - (void)setFd_debugLogEnabled:(BOOL)debugLogEnabled {
@@ -34,7 +34,7 @@
 }
 
 - (void)fd_debugLog:(NSString *)message {
-    if (self.fd_debugLogEnabled) {
+    if (self.fd_debugLogEnabled){
         NSLog(@"** FDTemplateLayoutCell ** %@", message);
     }
 }

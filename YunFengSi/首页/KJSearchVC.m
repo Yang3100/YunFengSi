@@ -7,22 +7,22 @@
 //
 
 #import "KJSearchVC.h"
-#import "CMHSearchTitleView.h"
-#import "CMHSearchHistoryCell.h"
-#import "CMHSearchHistoryHeaderView.h"
+#import "KJSearchTitleView.h"
+#import "KJSearchHistoryCell.h"
+#import "KJSearchHistoryHeaderView.h"
 // UICollectionView左对齐布局
 #import "UICollectionViewLeftAlignedLayout.h"
 
 // 缓存
-#import "YYCache+CMHHelper.h"
+#import "YYCache+KJHelper.h"
 
 /// 最多只能出现30个历史数据
-static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
+static NSUInteger const KJSearchGoodsHistoryMaxCount  = 30;
 
-@interface KJSearchVC ()<UITextFieldDelegate,CMHSearchHistoryHeaderViewDelegate>
+@interface KJSearchVC ()<UITextFieldDelegate,KJSearchHistoryHeaderViewDelegate>
 
 /// titleView
-@property (nonatomic , readwrite , weak) CMHSearchTitleView *titleView;
+@property (nonatomic , readwrite , weak)KJSearchTitleView *titleView;
 
 @end
 
@@ -30,13 +30,13 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
 /// 重写init方法，配置你想要的属性
 - (instancetype)init{
     self = [super init];
-    if (self) {
+    if (self){
         /// 左对齐布局
         UICollectionViewLeftAlignedLayout *flow = [[UICollectionViewLeftAlignedLayout alloc] init];
         flow.minimumInteritemSpacing = 10;
         flow.minimumLineSpacing = 10;
         flow.sectionInset = UIEdgeInsetsMake(15, 10, 15, 10);
-        flow.headerReferenceSize = CGSizeMake(MH_SCREEN_WIDTH, 44.0f);
+        flow.headerReferenceSize = CGSizeMake(KJ_SCREEN_WIDTH, 44.0f);
         self.collectionViewLayout = flow;
     }
     return self;
@@ -71,8 +71,8 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
     [self _makeSubViewsConstraints];
     
     /// 注册cell
-    [self.collectionView registerClass:CMHSearchHistoryCell.class forCellWithReuseIdentifier:@"CMHSearchHistoryCell"];
-    [self.collectionView registerClass:[CMHSearchHistoryHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([CMHSearchHistoryHeaderView class])];
+    [self.collectionView registerClass:KJSearchHistoryCell.class forCellWithReuseIdentifier:@"KJSearchHistoryCell"];
+    [self.collectionView registerClass:[KJSearchHistoryHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([KJSearchHistoryHeaderView class])];
     
     /// 获取本地数据
     [self fetchLocalData];
@@ -81,7 +81,7 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
 #pragma mark - Override
 - (id)fetchLocalData{
     @weakify(self);
-    [[YYCache sharedCache] objectForKey:CMHSearchFarmsHistoryCacheKey withBlock:^(NSString * _Nonnull key, NSArray <NSCoding>   * _Nullable  object) {
+    [[YYCache sharedCache] objectForKey:KJSearchFarmsHistoryCacheKey withBlock:^(NSString * _Nonnull key, NSArray <NSCoding>   * _Nullable  object){
         @strongify(self);
         // 子线程执行任务（比如获取较大数据）
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -94,10 +94,10 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView dequeueReusableCellWithIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath{
-    return [collectionView dequeueReusableCellWithReuseIdentifier:@"CMHSearchHistoryCell" forIndexPath:indexPath];
+    return [collectionView dequeueReusableCellWithReuseIdentifier:@"KJSearchHistoryCell" forIndexPath:indexPath];
 }
 
-- (void)configureCell:(CMHSearchHistoryCell *)cell atIndexPath:(NSIndexPath *)indexPath withObject:(id)object{
+- (void)configureCell:(KJSearchHistoryCell *)cell atIndexPath:(NSIndexPath *)indexPath withObject:(id)object{
     [cell configureModel:object];
 }
 
@@ -108,7 +108,7 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         /// 判断 是Push还是Present进来的，
-        if (self.presentingViewController) {
+        if (self.presentingViewController){
             [self dismissViewControllerAnimated:YES completion:NULL];
         } else {
             [self.navigationController popViewControllerAnimated:YES];
@@ -122,30 +122,28 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
     
     /// 先判断是否已经在之前的历史列表中
     NSString *findKeyword = nil;
-    for (NSString *tempStr in tempArray) {
-        if ([tempStr isEqualToString:searchText]) {
+    for (NSString *tempStr in tempArray){
+        if ([tempStr isEqualToString:searchText]){
             findKeyword = searchText;
             break;
         }
     }
-    if (findKeyword) {
+    if (findKeyword){
         /// 删除
         [tempArray removeObject:findKeyword];
-        
         /// 插入到最前面
         [tempArray prependObject:findKeyword];
-        
     }else{
         /// 插入到最前面
         [tempArray prependObject:searchText];
     }
     
     /// 只允许20个历史记录
-    if (tempArray.count > CMHSearchGoodsHistoryMaxCount) {
-        tempArray = [tempArray subarrayWithRange:NSMakeRange(0, CMHSearchGoodsHistoryMaxCount)].mutableCopy;
+    if (tempArray.count > KJSearchGoodsHistoryMaxCount){
+        tempArray = [tempArray subarrayWithRange:NSMakeRange(0, KJSearchGoodsHistoryMaxCount)].mutableCopy;
     }
     /// 缓存
-    [[YYCache sharedCache] setObject:tempArray.copy forKey:CMHSearchFarmsHistoryCacheKey withBlock:^{
+    [[YYCache sharedCache] setObject:tempArray.copy forKey:KJSearchFarmsHistoryCacheKey withBlock:^{
         NSLog(@" --- insert search searchText success --- ");
     }];
     
@@ -161,7 +159,7 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
     [self.dataSource removeAllObjects];
     
     /// 删除
-    [[YYCache sharedCache] removeObjectForKey:CMHSearchFarmsHistoryCacheKey withBlock:^(NSString * _Nullable key) {
+    [[YYCache sharedCache] removeObjectForKey:KJSearchFarmsHistoryCacheKey withBlock:^(NSString * _Nullable key){
         NSLog(@"--- delete all search history success ---");
     }];
     
@@ -172,15 +170,15 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString *text = self.dataSource[indexPath.item];
-    CGFloat itemW = [text mh_sizeWithFont:MHRegularFont_12].width + 24;
+    CGFloat itemW = [text kj_sizeWithFont:KJRegularFont_12].width + 24;
     return CGSizeMake(itemW, 30);
 }
 
 #pragma mark - UICollectionViewDelegate
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        CMHSearchHistoryHeaderView *historyView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([CMHSearchHistoryHeaderView class]) forIndexPath:indexPath];
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]){
+        KJSearchHistoryHeaderView *historyView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([KJSearchHistoryHeaderView class])forIndexPath:indexPath];
         /// 事件处理
         historyView.delegate = self;
         return historyView;
@@ -202,8 +200,8 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
     [self.titleView.textField resignFirstResponder];
 }
 
-#pragma mark - CMHSearchHistoryHeaderViewDelegate
-- (void)searchHistoryHeaderViewDidClickedDeleteItem:(CMHSearchHistoryHeaderView *)searchHistoryHeaderView{
+#pragma mark - KJSearchHistoryHeaderViewDelegate
+- (void)searchHistoryHeaderViewDidClickedDeleteItem:(KJSearchHistoryHeaderView *)searchHistoryHeaderView{
     /// 删除历史条件
     [self _deleteSearchHistory];
 }
@@ -212,7 +210,7 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
 #pragma mark - UITextFieldDelegate
 // called when text changes (including clear)
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    if ([string isEqualToString:@"\n"]) {
+    if ([string isEqualToString:@"\n"]){
         [textField resignFirstResponder];
         return NO;
     }
@@ -220,7 +218,7 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    if (MHStringIsNotEmpty(textField.text)) {
+    if (KJStringIsNotEmpty(textField.text)){
         [self _addSearchHistorySearchText:textField.text];
     }else{
         textField.text = textField.placeholder;
@@ -244,13 +242,13 @@ static NSUInteger const CMHSearchGoodsHistoryMaxCount  = 30;
     /// 去掉左侧按钮
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem itemWithImage:nil highImage:nil title:@"取消" titleColor:[UIColor whiteColor] target:self action:@selector(_closeAction)];
-    CMHSearchTitleView *titleView = [[CMHSearchTitleView alloc] initWithFrame:CGRectMake(0, 0, (MH_SCREEN_WIDTH - 26 - 44), 28)];
+    KJSearchTitleView *titleView = [[KJSearchTitleView alloc] initWithFrame:CGRectMake(0, 0, (KJ_SCREEN_WIDTH - 26 - 44), 28)];
     titleView.textField.delegate = self;
     self.navigationItem.titleView = titleView;
     self.titleView = titleView;
     
     NSArray *placeholders = @[@"CoderMikeHe",@"勒布朗.詹姆斯",@"凯里.欧文",@"斯蒂芬.库里",@"威少",@"詹姆斯.哈登",@"克里斯.保罗"];
-    self.titleView.textField.placeholder = placeholders[[NSObject mh_randomNumber:0 to:6]];
+    self.titleView.textField.placeholder = placeholders[[NSObject kj_randomNumber:0 to:6]];
     
 }
 

@@ -43,20 +43,19 @@
 #import "KJEncryptTool.h"  // 加密解密
 
 // Category
-#import "UIView+MH.h"    // UIView扩展
+#import "UIView+KJ.h"    // UIView扩展
+#import "UITextView+KJ.h"
+#import "NSString+KJ.h"   // 字符串扩展
 #import "UITableView+FDTemplateLayoutCell.h" // cell自适应相关
 #import "UIButton+EnlargeEdge.h"   // 关于button的扩展
 #import "UIBarButtonItem+FYExtension.h" // 关于navigationBarItem
 #import "UINavigationBar+Awesome.h"// 设置navigation的背景颜色
-#import "UITextView+ZWPlaceHolder.h"  // 输入框扩展
-#import "UITextView+ZWLimitCounter.h" // 限制字数
-#import "NSObject+MHRandom.h"    // 随机数
-#import "UIFont+MHExtension.h"   // 字体大小
-#import "NSString+MH.h"   // 字符串扩展
+#import "NSObject+KJRandom.h"    // 随机数
+#import "UIFont+KJExtension.h"   // 字体大小
 #import "NSDate+Extension.h"
 #import "NSDateFormatter+Extension.h"
 #import "UINavigationController+FDFullscreenPopGesture.h"
-#import "MBProgressHUD+MHExtension.h"  // 指示器
+#import "MBProgressHUD+KJExtension.h"  // 指示器
 
 #import "Macros.h"                 // 全局宏
 #import "RequestHeader.h"          // 网络请求头文件

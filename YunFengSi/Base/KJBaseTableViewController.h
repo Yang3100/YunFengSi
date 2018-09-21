@@ -1,41 +1,41 @@
 //
 //  SUTableViewController0.h
-//  MHDevelopExample
+//  KJDevelopExample
 //
 //  Created by senba on 2017/6/12.
 //  Copyright © 2017年 CoderMikeHe. All rights reserved.
 //  tableView
 
-#import "UIScrollView+MHRefresh.h"
+#import "UIScrollView+KJRefresh.h"
 
 @interface KJBaseTableViewController : KJBaseViewController
 <UITableViewDataSource,UITableViewDelegate>
 
 /// 表格视图样式
-@property (nonatomic, readonly , assign) UITableViewStyle style;
+@property (nonatomic, readonly , assign)UITableViewStyle style;
 
 /// 数据源
-@property (nonatomic, readonly, strong) NSMutableArray *dataSource;
+@property (nonatomic, readonly, strong)NSMutableArray *dataSource;
 
 /// The table view for tableView controller.
 /// tableView
-@property (nonatomic, readonly, weak) UITableView *tableView;
+@property (nonatomic, readonly, weak)UITableView *tableView;
 /// 内容缩进
-@property (nonatomic, readonly, assign) UIEdgeInsets contentInset;
+@property (nonatomic, readonly, assign)UIEdgeInsets contentInset;
 
 /** 下来刷新 defalut is NO*/
-@property (nonatomic, readwrite, assign) BOOL shouldPullDownToRefresh;
+@property (nonatomic, readwrite, assign)BOOL shouldPullDownToRefresh;
 /** 上拉加载 defalut is NO*/
-@property (nonatomic, readwrite, assign) BOOL shouldPullUpToLoadMore;
-/// 是否数据是多段 (It's effect tableView's dataSource 'numberOfSectionsInTableView:') defalut is NO
-@property (nonatomic, readwrite, assign) BOOL shouldMultiSections;
+@property (nonatomic, readwrite, assign)BOOL shouldPullUpToLoadMore;
+/// 是否数据是多段 (It's effect tableView's dataSource 'numberOfSectionsInTableView:')defalut is NO
+@property (nonatomic, readwrite, assign)BOOL shouldMultiSections;
 
 /// 当前页 defalut is 1
-@property (nonatomic, readwrite, assign) NSUInteger page;
+@property (nonatomic, readwrite, assign)NSUInteger page;
 /// 每一页的数据 defalut is 20
-@property (nonatomic, readwrite, assign) NSUInteger perPage;
+@property (nonatomic, readwrite, assign)NSUInteger perPage;
 /// 最后一页 defalut is 1
-@property (nonatomic, readwrite, assign) NSUInteger lastPage;
+@property (nonatomic, readwrite, assign)NSUInteger lastPage;
 
 
 /// 通过这个初始化Controller

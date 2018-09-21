@@ -11,6 +11,6 @@
 @interface AppDelegate (KJCustom)
 
 - (void)configSystem:(NSDictionary *)options;
-@property (nonatomic, readonly, getter=isOnline) BOOL online;
+@property (nonatomic, readonly, getter=isOnline)BOOL online;
 
 @end

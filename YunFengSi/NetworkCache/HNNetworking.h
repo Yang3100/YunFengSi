@@ -11,7 +11,7 @@
 
 // 项目打包上线都不会打印日志，因此可放心。
 #ifdef DEBUG
-#define HNAppLog(s, ... ) NSLog( @"[%@ in line %d] ===============>%@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#define HNAppLog(s, ... )NSLog( @"[%@ in line %d] ===============>%@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
 #else
 #define HNAppLog(s, ... )
 #endif
@@ -38,19 +38,19 @@ typedef HNDownloadProgress HNPostProgress;
  */
 typedef void (^HNUploadProgress)(int64_t bytesWritten, int64_t totalBytesWritten);
 
-typedef NS_ENUM(NSUInteger, HNResponseType) {
+typedef NS_ENUM(NSUInteger, HNResponseType){
     kHNResponseTypeJSON = 1, // 默认
     kHNResponseTypeXML  = 2, // XML
     // 特殊情况下，一转换服务器就无法识别的，默认会尝试转换成JSON，若失败则需要自己去转换
     kHNResponseTypeData = 3
 };
 
-typedef NS_ENUM(NSUInteger, HNRequestType) {
+typedef NS_ENUM(NSUInteger, HNRequestType){
     kHNRequestTypeJSON = 1, // 默认
     kHNRequestTypePlainText  = 2 // 普通text/html
 };
 
-typedef NS_ENUM(NSInteger, HNNetworkStatus) {
+typedef NS_ENUM(NSInteger, HNNetworkStatus){
     kHNNetworkStatusUnknown          = -1,//未知网络
     kHNNetworkStatusNotReachable     = 0,//网络无连接
     kHNNetworkStatusReachableViaWWAN = 1,//2，3，4G网络

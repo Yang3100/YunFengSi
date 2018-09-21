@@ -11,7 +11,7 @@
 static const void *zw_placeHolderKey;
 
 @interface UITextView ()
-@property (nonatomic, readonly) UILabel *zw_placeHolderLabel;
+@property (nonatomic, readonly)UILabel *zw_placeHolderLabel;
 @end
 @implementation UITextView (ZWPlaceHolder)
 +(void)load{
@@ -29,12 +29,12 @@ static const void *zw_placeHolderKey;
     [self zwPlaceHolder_swizzled_dealloc];
 }
 - (void)zwPlaceHolder_swizzling_layoutSubviews {
-    if (self.zw_placeHolder) {
+    if (self.zw_placeHolder){
         UIEdgeInsets textContainerInset = self.textContainerInset;
         CGFloat lineFragmentPadding = self.textContainer.lineFragmentPadding;
         CGFloat x = lineFragmentPadding + textContainerInset.left + self.layer.borderWidth;
         CGFloat y = textContainerInset.top + self.layer.borderWidth;
-        CGFloat width = CGRectGetWidth(self.bounds) - x - textContainerInset.right - 2*self.layer.borderWidth;
+        CGFloat width = CGRectGetWidth(self.bounds)- x - textContainerInset.right - 2*self.layer.borderWidth;
         CGFloat height = [self.zw_placeHolderLabel sizeThatFits:CGSizeMake(width, 0)].height;
         self.zw_placeHolderLabel.frame = CGRectMake(x, y, width, height);
     }
@@ -42,7 +42,7 @@ static const void *zw_placeHolderKey;
 }
 - (void)zwPlaceHolder_swizzled_setText:(NSString *)text{
     [self zwPlaceHolder_swizzled_setText:text];
-    if (self.zw_placeHolder) {
+    if (self.zw_placeHolder){
         [self updatePlaceHolder];
     }
 }
@@ -68,7 +68,7 @@ static const void *zw_placeHolderKey;
 }
 #pragma mark - update
 - (void)updatePlaceHolder{
-    if (self.text.length) {
+    if (self.text.length){
         [self.zw_placeHolderLabel removeFromSuperview];
         return;
     }
@@ -80,12 +80,12 @@ static const void *zw_placeHolderKey;
 #pragma mark - lazzing
 -(UILabel *)zw_placeHolderLabel{
     UILabel *placeHolderLab = objc_getAssociatedObject(self, @selector(zw_placeHolderLabel));
-    if (!placeHolderLab) {
+    if (!placeHolderLab){
         placeHolderLab = [[UILabel alloc] init];
         placeHolderLab.numberOfLines = 0;
         placeHolderLab.textColor = [UIColor lightGrayColor];
         objc_setAssociatedObject(self, @selector(zw_placeHolderLabel), placeHolderLab, OBJC_ASSOCIATION_RETAIN);
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlaceHolder) name:UITextViewTextDidChangeNotification object:self];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlaceHolder)name:UITextViewTextDidChangeNotification object:self];
     }
     return placeHolderLab;
 }

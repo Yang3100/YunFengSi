@@ -47,7 +47,7 @@
 // a few different actual definitions, so we're based off of the foundation
 // one.
 #if !defined(GTM_INLINE)
-#if defined (__GNUC__) && (__GNUC__ == 4)
+#if defined (__GNUC__)&& (__GNUC__ == 4)
 #define GTM_INLINE static __inline__ __attribute__((always_inline))
 #else
 #define GTM_INLINE static __inline__
@@ -93,9 +93,9 @@
 #ifndef _GTMDevLog
 
 #ifdef DEBUG
-#define _GTMDevLog(...) NSLog(__VA_ARGS__)
+#define _GTMDevLog(...)NSLog(__VA_ARGS__)
 #else
-#define _GTMDevLog(...) do { } while (0)
+#define _GTMDevLog(...)do { } while (0)
 #endif
 
 #endif // _GTMDevLog
@@ -109,9 +109,9 @@ GTM_EXTERN void _GTMUnitTestDevLog(NSString *format, ...);
 // we directly invoke the NSAssert handler so we can pass on the varargs
 // (NSAssert doesn't have a macro we can use that takes varargs)
 #if !defined(NS_BLOCK_ASSERTIONS)
-#define _GTMDevAssert(condition, ...)                                       \
+#define _GTMDevAssert(condition, ...)                                      \
 do {                                                                      \
-if (!(condition)) {                                                     \
+if (!(condition)){                                                     \
 [[NSAssertionHandler currentHandler]                                  \
 handleFailureInFunction:[NSString stringWithUTF8String:__PRETTY_FUNCTION__] \
 file:[NSString stringWithUTF8String:__FILE__]  \
@@ -120,7 +120,7 @@ description:__VA_ARGS__];                             \
 }                                                                       \
 } while(0)
 #else // !defined(NS_BLOCK_ASSERTIONS)
-#define _GTMDevAssert(condition, ...) do { } while (0)
+#define _GTMDevAssert(condition, ...)do { } while (0)
 #endif // !defined(NS_BLOCK_ASSERTIONS)
 
 #endif // _GTMDevAssert
@@ -129,7 +129,7 @@ description:__VA_ARGS__];                             \
 // _GTMCompileAssert is an assert that is meant to fire at compile time if you
 // want to check things at compile instead of runtime. For example if you
 // want to check that a wchar is 4 bytes instead of 2 you would use
-// _GTMCompileAssert(sizeof(wchar_t) == 4, wchar_t_is_4_bytes_on_OS_X)
+// _GTMCompileAssert(sizeof(wchar_t)== 4, wchar_t_is_4_bytes_on_OS_X)
 // Note that the second "arg" is not in quotes, and must be a valid processor
 // symbol in it's own right (no spaces, punctuation etc).
 
@@ -139,10 +139,10 @@ description:__VA_ARGS__];                             \
 // We got this technique from here:
 // http://unixjunkie.blogspot.com/2007/10/better-compile-time-asserts_29.html
 
-#define _GTMCompileAssertSymbolInner(line, msg) _GTMCOMPILEASSERT ## line ## __ ## msg
-#define _GTMCompileAssertSymbol(line, msg) _GTMCompileAssertSymbolInner(line, msg)
-#define _GTMCompileAssert(test, msg) \
-typedef char _GTMCompileAssertSymbol(__LINE__, msg) [ ((test) ? 1 : -1) ]
+#define _GTMCompileAssertSymbolInner(line, msg)_GTMCOMPILEASSERT ## line ## __ ## msg
+#define _GTMCompileAssertSymbol(line, msg)_GTMCompileAssertSymbolInner(line, msg)
+#define _GTMCompileAssert(test, msg)\
+typedef char _GTMCompileAssertSymbol(__LINE__, msg)[ ((test)? 1 : -1)]
 #endif // _GTMCompileAssert
 
 // Macro to allow fast enumeration when building for 10.5 or later, and
@@ -151,19 +151,19 @@ typedef char _GTMCompileAssertSymbol(__LINE__, msg) [ ((test) ? 1 : -1) ]
 // side to be sure you're getting what you wanted.
 #ifndef GTM_FOREACH_OBJECT
 #if TARGET_OS_IPHONE || !(MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5)
-#define GTM_FOREACH_ENUMEREE(element, enumeration) \
+#define GTM_FOREACH_ENUMEREE(element, enumeration)\
 for (element in enumeration)
-#define GTM_FOREACH_OBJECT(element, collection) \
+#define GTM_FOREACH_OBJECT(element, collection)\
 for (element in collection)
-#define GTM_FOREACH_KEY(element, collection) \
+#define GTM_FOREACH_KEY(element, collection)\
 for (element in collection)
 #else
-#define GTM_FOREACH_ENUMEREE(element, enumeration) \
+#define GTM_FOREACH_ENUMEREE(element, enumeration)\
 for (NSEnumerator *_ ## element ## _enum = enumeration; \
-(element = [_ ## element ## _enum nextObject]) != nil; )
-#define GTM_FOREACH_OBJECT(element, collection) \
+(element = [_ ## element ## _enum nextObject])!= nil; )
+#define GTM_FOREACH_OBJECT(element, collection)\
 GTM_FOREACH_ENUMEREE(element, [collection objectEnumerator])
-#define GTM_FOREACH_KEY(element, collection) \
+#define GTM_FOREACH_KEY(element, collection)\
 GTM_FOREACH_ENUMEREE(element, [collection keyEnumerator])
 #endif
 #endif
@@ -236,18 +236,18 @@ typedef unsigned int NSUInteger;
 #endif  // NSINTEGER_DEFINED
 // CGFloat
 #ifndef CGFLOAT_DEFINED
-#if defined(__LP64__) && __LP64__
+#if defined(__LP64__)&& __LP64__
 // This really is an untested path (64bit on Tiger?)
 typedef double CGFloat;
 #define CGFLOAT_MIN DBL_MIN
 #define CGFLOAT_MAX DBL_MAX
 #define CGFLOAT_IS_DOUBLE 1
-#else /* !defined(__LP64__) || !__LP64__ */
+#else /* !defined(__LP64__)|| !__LP64__ */
 typedef float CGFloat;
 #define CGFLOAT_MIN FLT_MIN
 #define CGFLOAT_MAX FLT_MAX
 #define CGFLOAT_IS_DOUBLE 0
-#endif /* !defined(__LP64__) || !__LP64__ */
+#endif /* !defined(__LP64__)|| !__LP64__ */
 #define CGFLOAT_DEFINED 1
 #endif // CGFLOAT_DEFINED
 #endif  // MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5

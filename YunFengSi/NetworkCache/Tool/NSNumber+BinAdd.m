@@ -12,7 +12,7 @@
 + (NSNumber *)numberWithString:(NSString *)string {
     NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     NSString *str = [[string stringByTrimmingCharactersInSet:set] lowercaseString];
-    if (!str || !str.length) {
+    if (!str || !str.length){
         return nil;
     }
     
@@ -28,16 +28,16 @@
                 @"<null>" : [NSNull null]};
     });
     id num = dic[str];
-    if (num) {
-        if (num == [NSNull null]) return nil;
+    if (num){
+        if (num == [NSNull null])return nil;
         return num;
     }
     
     // hex number
     int sign = 0;
-    if ([str hasPrefix:@"0x"]) sign = 1;
-    else if ([str hasPrefix:@"-0x"]) sign = -1;
-    if (sign != 0) {
+    if ([str hasPrefix:@"0x"])sign = 1;
+    else if ([str hasPrefix:@"-0x"])sign = -1;
+    if (sign != 0){
         NSScanner *scan = [NSScanner scannerWithString:str];
         unsigned num = -1;
         BOOL suc = [scan scanHexInt:&num];

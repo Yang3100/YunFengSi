@@ -22,7 +22,7 @@
 @implementation NSString (md5)
 
 + (NSString *)HNnetworking_md5:(NSString *)string {
-    if (string == nil || [string length] == 0) {
+    if (string == nil || [string length] == 0){
         return nil;
     }
     
@@ -30,7 +30,7 @@
     CC_MD5([string UTF8String], (int)[string lengthOfBytesUsingEncoding:NSUTF8StringEncoding], digest);
     NSMutableString *ms = [NSMutableString string];
     
-    for (i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
+    for (i = 0; i < CC_MD5_DIGEST_LENGTH; i++){
         [ms appendFormat:@"%02x", (int)(digest[i])];
     }
     
@@ -62,7 +62,7 @@ static NSUInteger sg_maxCacheSize = 0;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         // 尝试清除缓存
-        if (sg_maxCacheSize > 0 && [self totalCacheSize] > 1024 * 1024 * sg_maxCacheSize) {
+        if (sg_maxCacheSize > 0 && [self totalCacheSize] > 1024 * 1024 * sg_maxCacheSize){
             [self clearCaches];
         }
     });
@@ -78,7 +78,7 @@ static NSUInteger sg_maxCacheSize = 0;
 }
 
 + (void)updateBaseUrl:(NSString *)baseUrl {
-    if (![baseUrl isEqualToString:sg_privateNetworkBaseUrl] && baseUrl && baseUrl.length) {
+    if (![baseUrl isEqualToString:sg_privateNetworkBaseUrl] && baseUrl && baseUrl.length){
         sg_isBaseURLChanged = YES;
     } else {
         sg_isBaseURLChanged = NO;
@@ -97,7 +97,7 @@ static NSUInteger sg_maxCacheSize = 0;
 
 + (void)obtainDataFromLocalWhenNetworkUnconnected:(BOOL)shouldObtain {
     sg_shoulObtainLocalWhenUnconnected = shouldObtain;
-    if (sg_shoulObtainLocalWhenUnconnected && (sg_cacheGet || sg_cachePost)) {
+    if (sg_shoulObtainLocalWhenUnconnected && (sg_cacheGet || sg_cachePost)){
         [self detectNetwork];
     }
 }
@@ -110,18 +110,17 @@ static NSUInteger sg_maxCacheSize = 0;
     return sg_isEnableInterfaceDebug;
 }
 
-static inline NSString *cachePath() {
-    return [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/HNNetworkingCaches"];
+static inline NSString *cachePath(){
+    return [NSHomeDirectory()stringByAppendingPathComponent:@"Documents/HNNetworkingCaches"];
 }
 
 + (void)clearCaches {
     NSString *directoryPath = cachePath();
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:directoryPath isDirectory:nil]) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:directoryPath isDirectory:nil]){
         NSError *error = nil;
         [[NSFileManager defaultManager] removeItemAtPath:directoryPath error:&error];
-        
-        if (error) {
+        if (error){
             NSLog(@"HNNetworking clear caches error: %@", error);
         } else {
             NSLog(@"HNNetworking clear caches ok");
@@ -134,17 +133,16 @@ static inline NSString *cachePath() {
     BOOL isDir = NO;
     unsigned long long total = 0;
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:directoryPath isDirectory:&isDir]) {
-        if (isDir) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:directoryPath isDirectory:&isDir]){
+        if (isDir){
             NSError *error = nil;
             NSArray *array = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPath error:&error];
-            
-            if (error == nil) {
-                for (NSString *subpath in array) {
+                if (error == nil){
+                for (NSString *subpath in array){
                     NSString *path = [directoryPath stringByAppendingPathComponent:subpath];
                     NSDictionary *dict = [[NSFileManager defaultManager] attributesOfItemAtPath:path
                                                                                           error:&error];
-                    if (!error) {
+                    if (!error){
                         total += [dict[NSFileSize] unsignedIntegerValue];
                     }
                 }
@@ -158,7 +156,7 @@ static inline NSString *cachePath() {
 + (NSMutableArray *)allTasks {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        if (sg_requestTasks == nil) {
+        if (sg_requestTasks == nil){
             sg_requestTasks = [[NSMutableArray alloc] init];
         }
     });
@@ -167,26 +165,25 @@ static inline NSString *cachePath() {
 }
 
 + (void)cancelAllRequest {
-    @synchronized(self) {
-        [[self allTasks] enumerateObjectsUsingBlock:^(HNURLSessionTask * _Nonnull task, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([task isKindOfClass:[HNURLSessionTask class]]) {
+    @synchronized(self){
+        [[self allTasks] enumerateObjectsUsingBlock:^(HNURLSessionTask * _Nonnull task, NSUInteger idx, BOOL * _Nonnull stop){
+            if ([task isKindOfClass:[HNURLSessionTask class]]){
                 [task cancel];
             }
         }];
-        
         [[self allTasks] removeAllObjects];
     };
 }
 
 + (void)cancelRequestWithURL:(NSString *)url {
-    if (url == nil) {
+    if (url == nil){
         return;
     }
     
-    @synchronized(self) {
-        [[self allTasks] enumerateObjectsUsingBlock:^(HNURLSessionTask * _Nonnull task, NSUInteger idx, BOOL * _Nonnull stop) {
+    @synchronized(self){
+        [[self allTasks] enumerateObjectsUsingBlock:^(HNURLSessionTask * _Nonnull task, NSUInteger idx, BOOL * _Nonnull stop){
             if ([task isKindOfClass:[HNURLSessionTask class]]
-                && [task.currentRequest.URL.absoluteString hasSuffix:url]) {
+                && [task.currentRequest.URL.absoluteString hasSuffix:url]){
                 [task cancel];
                 [[self allTasks] removeObject:task];
                 return;
@@ -269,7 +266,7 @@ static inline NSString *cachePath() {
 
 
 + (HNURLSessionTask *)getWithUrl:(NSString *)url refreshCache:(BOOL)refreshCache params:(NSDictionary *)params requestHeader:(NSDictionary *)headerParameters progress:(HNGetProgress)progress success:(HNResponseSuccess)success fail:(HNResponseFail)fail {
-    if (headerParameters!=nil) {
+    if (headerParameters!=nil){
         return [self _requestWithUrl:url refreshCache:refreshCache httpMedth:1 params:params requestHeader:headerParameters progress:progress success:success fail:fail];
     }else{
         return [self _requestWithUrl:url refreshCache:refreshCache httpMedth:1 params:params progress:progress success:success fail:fail];
@@ -294,18 +291,16 @@ static inline NSString *cachePath() {
 + (HNURLSessionTask *)postWithUrl:(NSString *)url refreshCache:(BOOL)refreshCache params:(NSDictionary *)params requestHeader:(NSDictionary *)headerParameters progress:(HNPostProgress)progress success:(HNResponseSuccess)success fail:(HNResponseFail)fail {
     
     
-    if (headerParameters!=nil) {
+    if (headerParameters!=nil){
         return [self _requestWithUrl:url refreshCache:refreshCache httpMedth:2 params:params requestHeader:headerParameters progress:progress success:success fail:fail];
-        
     }else{
         return [self _requestWithUrl:url refreshCache:refreshCache httpMedth:2 params:params progress:progress success:success fail:fail];
-        
     }
 }
 
 //  多一个请求头的设置的数据请求
 + (HNURLSessionTask *)_requestWithUrl:(NSString *)url refreshCache:(BOOL)refreshCache httpMedth:(NSUInteger)httpMethod params:(NSDictionary *)params requestHeader:(NSDictionary *)headerParameters progress:(HNDownloadProgress)progress success:(HNResponseSuccess)success fail:(HNResponseFail)fail {
-    if ([self shouldEncode]) {
+    if ([self shouldEncode]){
         url = [self encodeUrl:url];
     }
     
@@ -313,7 +308,7 @@ static inline NSString *cachePath() {
     
     if (headerParameters != nil){
         // 有自定义的请求头
-        for (NSString *httpHeaderField in headerParameters.allKeys) {
+        for (NSString *httpHeaderField in headerParameters.allKeys){
             NSString *value = headerParameters[httpHeaderField];
             [manager.requestSerializer setValue:value forHTTPHeaderField:httpHeaderField];
         }
@@ -321,15 +316,14 @@ static inline NSString *cachePath() {
 
     NSString *absolute = [self absoluteUrlWithPath:url];
     
-    if ([self baseUrl] == nil) {
-        if ([NSURL URLWithString:url] == nil) {
+    if ([self baseUrl] == nil){
+        if ([NSURL URLWithString:url] == nil){
             HNAppLog(@"URLString无效，无法生成URL。可能是URL中有中文，请尝试Encode URL");
             return nil;
         }
     } else {
         NSURL *absoluteURL = [NSURL URLWithString:absolute];
-        
-        if (absoluteURL == nil) {
+        if (absoluteURL == nil){
             HNAppLog(@"URLString无效，无法生成URL。可能是URL中有中文，请尝试Encode URL");
             return nil;
         }
@@ -337,16 +331,15 @@ static inline NSString *cachePath() {
     
     HNURLSessionTask *session = nil;
     
-    if (httpMethod == 1) {
-        if (sg_cacheGet) {
-            if (sg_shoulObtainLocalWhenUnconnected) {
-                if (sg_networkStatus == kHNNetworkStatusNotReachable ||  sg_networkStatus == kHNNetworkStatusUnknown ) {
+    if (httpMethod == 1){
+        if (sg_cacheGet){
+            if (sg_shoulObtainLocalWhenUnconnected){
+                if (sg_networkStatus == kHNNetworkStatusNotReachable ||  sg_networkStatus == kHNNetworkStatusUnknown ){
                     id response = [HNNetworking cahceResponseWithURL:absolute parameters:params];
-                    if (response) {
-                        if (success) {
+                    if (response){
+                        if (success){
                             [self successResponse:response callback:success];
-                            
-                            if ([self isDebug]) {
+                                                if ([self isDebug]){
                                 [self logWithSuccessResponse:response url:absolute params:params];
                             }
                         }
@@ -354,12 +347,12 @@ static inline NSString *cachePath() {
                     }
                 }
             }
-            if (!refreshCache) {// 获取缓存
+            if (!refreshCache){// 获取缓存
                 id response = [HNNetworking cahceResponseWithURL:absolute parameters:params];
-                if (response) {
-                    if (success) {
+                if (response){
+                    if (success){
                         [self successResponse:response callback:success];
-                        if ([self isDebug]) {
+                        if ([self isDebug]){
                             [self logWithSuccessResponse:response url:absolute params:params];
                         }
                     }
@@ -367,62 +360,54 @@ static inline NSString *cachePath() {
                 }
             }
         }
-        
-        session = [manager GET:url parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
-            if (progress) {
+        session = [manager GET:url parameters:params progress:^(NSProgress * _Nonnull downloadProgress){
+            if (progress){
                 progress(downloadProgress.completedUnitCount, downloadProgress.totalUnitCount);
             }
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
             [self successResponse:responseObject callback:success];
 
-            if (sg_cacheGet) {
+            if (sg_cacheGet){
                 [self cacheResponseObject:responseObject request:task.currentRequest parameters:params];
             }
-            
-            [[self allTasks] removeObject:task];
-            
-            if ([self isDebug]) {
+                [[self allTasks] removeObject:task];
+                if ([self isDebug]){
                 [self logWithSuccessResponse:responseObject url:absolute params:params];
             }
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
             [[self allTasks] removeObject:task];
-            
-            if ([error code] < 0 && sg_cacheGet && sg_shoulObtainLocalWhenUnconnected) { // 获取缓存
+                if ([error code] < 0 && sg_cacheGet && sg_shoulObtainLocalWhenUnconnected){ // 获取缓存
                 id response = [HNNetworking cahceResponseWithURL:absolute parameters:params];
-                if (response) {
-                    if (success) {
+                if (response){
+                    if (success){
                         [self successResponse:response callback:success];
-                        
-                        if ([self isDebug]) {
+                                        if ([self isDebug]){
                             [self logWithSuccessResponse:response url:absolute params:params];
                         }
                     }
                 } else {
                     [self handleCallbackWithError:error fail:fail];
-                    
-                    if ([self isDebug]) {
+                                if ([self isDebug]){
                         [self logWithFailError:error url:absolute params:params];
                     }
                 }
             } else {
                 [self handleCallbackWithError:error fail:fail];
-                
-                if ([self isDebug]) {
+                        if ([self isDebug]){
                     [self logWithFailError:error url:absolute params:params];
                 }
             }
         }];
     }
-    else if (httpMethod == 2) {
-        if (sg_cachePost ) { // 获取缓存
-            if (sg_shoulObtainLocalWhenUnconnected) {
-                if (sg_networkStatus == kHNNetworkStatusNotReachable ||  sg_networkStatus == kHNNetworkStatusUnknown ) {
+    else if (httpMethod == 2){
+        if (sg_cachePost ){ // 获取缓存
+            if (sg_shoulObtainLocalWhenUnconnected){
+                if (sg_networkStatus == kHNNetworkStatusNotReachable ||  sg_networkStatus == kHNNetworkStatusUnknown ){
                     id response = [HNNetworking cahceResponseWithURL:absolute  parameters:params];
-                    if (response) {
-                        if (success) {
+                    if (response){
+                        if (success){
                             [self successResponse:response callback:success];
-                            
-                            if ([self isDebug]) {
+                                                if ([self isDebug]){
                                 [self logWithSuccessResponse:response url:absolute params:params];
                             }
                         }
@@ -430,13 +415,12 @@ static inline NSString *cachePath() {
                     }
                 }
             }
-            if (!refreshCache) {
+            if (!refreshCache){
                 id response = [HNNetworking cahceResponseWithURL:absolute parameters:params];
-                if (response) {
-                    if (success) {
+                if (response){
+                    if (success){
                         [self successResponse:response callback:success];
-                        
-                        if ([self isDebug]) {
+                                        if ([self isDebug]){
                             [self logWithSuccessResponse:response url:absolute params:params];
                         }
                     }
@@ -444,60 +428,49 @@ static inline NSString *cachePath() {
                 }
             }
         }
-        
-        session = [manager POST:url parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
-            if (progress) {
+        session = [manager POST:url parameters:params progress:^(NSProgress * _Nonnull downloadProgress){
+            if (progress){
                 progress(downloadProgress.completedUnitCount, downloadProgress.totalUnitCount);
             }
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            
-            [self successResponse:responseObject callback:success];
-            
-            if (sg_cachePost) {
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
+                [self successResponse:responseObject callback:success];
+                if (sg_cachePost){
                 [self cacheResponseObject:responseObject request:task.currentRequest  parameters:params];
             }
-            
-            [[self allTasks] removeObject:task];
-            
-            if ([self isDebug]) {
+                [[self allTasks] removeObject:task];
+                if ([self isDebug]){
                 [self logWithSuccessResponse:responseObject url:absolute params:params];
             }
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
             //NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
             //通讯协议状态码
             //NSInteger statusCode = response.statusCode;
-            
-            [[self allTasks] removeObject:task];
-            
-            if ([error code] < 0 && sg_cachePost && sg_shoulObtainLocalWhenUnconnected) {// 获取缓存
+                [[self allTasks] removeObject:task];
+                if ([error code] < 0 && sg_cachePost && sg_shoulObtainLocalWhenUnconnected){// 获取缓存
                 id response = [HNNetworking cahceResponseWithURL:absolute parameters:params];
-                
-                if (response) {
-                    if (success) {
+                        if (response){
+                    if (success){
                         [self successResponse:response callback:success];
-                        
-                        if ([self isDebug]) {
+                                        if ([self isDebug]){
                             [self logWithSuccessResponse:response url:absolute params:params];
                         }
                     }
                 } else {
                     [self handleCallbackWithError:error fail:fail];
-                    
-                    if ([self isDebug]) {
+                                if ([self isDebug]){
                         [self logWithFailError:error url:absolute params:params];
                     }
                 }
             } else {
                 [self handleCallbackWithError:error fail:fail];
-                
-                if ([self isDebug]) {
+                        if ([self isDebug]){
                     [self logWithFailError:error url:absolute params:params];
                 }
             }
         }];
     }
     
-    if (session) {
+    if (session){
         [[self allTasks] addObject:session];
     }
     
@@ -509,7 +482,7 @@ static inline NSString *cachePath() {
 
 // 实现网络请求,带有下载进度HNDownloadProgress
 + (HNURLSessionTask *)_requestWithUrl:(NSString *)url refreshCache:(BOOL)refreshCache httpMedth:(NSUInteger)httpMethod params:(NSDictionary *)params progress:(HNDownloadProgress)progress success:(HNResponseSuccess)success fail:(HNResponseFail)fail {
-    if ([self shouldEncode]) {
+    if ([self shouldEncode]){
         url = [self encodeUrl:url];
     }
     
@@ -517,15 +490,14 @@ static inline NSString *cachePath() {
     
     NSString *absolute = [self absoluteUrlWithPath:url];
     
-    if ([self baseUrl] == nil) {
-        if ([NSURL URLWithString:url] == nil) {
+    if ([self baseUrl] == nil){
+        if ([NSURL URLWithString:url] == nil){
             HNAppLog(@"URLString无效，无法生成URL。可能是URL中有中文，请尝试Encode URL");
             return nil;
         }
     } else {
         NSURL *absoluteURL = [NSURL URLWithString:absolute];
-        
-        if (absoluteURL == nil) {
+        if (absoluteURL == nil){
             HNAppLog(@"URLString无效，无法生成URL。可能是URL中有中文，请尝试Encode URL");
             return nil;
         }
@@ -533,16 +505,15 @@ static inline NSString *cachePath() {
     
     HNURLSessionTask *session = nil;
     
-    if (httpMethod == 1) {
-        if (sg_cacheGet) {
-            if (sg_shoulObtainLocalWhenUnconnected) {
-                if (sg_networkStatus == kHNNetworkStatusNotReachable ||  sg_networkStatus == kHNNetworkStatusUnknown ) {
+    if (httpMethod == 1){
+        if (sg_cacheGet){
+            if (sg_shoulObtainLocalWhenUnconnected){
+                if (sg_networkStatus == kHNNetworkStatusNotReachable ||  sg_networkStatus == kHNNetworkStatusUnknown ){
                     id response = [HNNetworking cahceResponseWithURL:absolute parameters:params];
-                    if (response) {
-                        if (success) {
+                    if (response){
+                        if (success){
                             [self successResponse:response callback:success];
-                            
-                            if ([self isDebug]) {
+                                                if ([self isDebug]){
                                 [self logWithSuccessResponse:response url:absolute params:params];
                             }
                         }
@@ -550,13 +521,12 @@ static inline NSString *cachePath() {
                     }
                 }
             }
-            if (!refreshCache) {// 获取缓存
+            if (!refreshCache){// 获取缓存
                 id response = [HNNetworking cahceResponseWithURL:absolute parameters:params];
-                if (response) {
-                    if (success) {
+                if (response){
+                    if (success){
                         [self successResponse:response callback:success];
-                        
-                        if ([self isDebug]) {
+                                        if ([self isDebug]){
                             [self logWithSuccessResponse:response url:absolute params:params];
                         }
                     }
@@ -564,62 +534,53 @@ static inline NSString *cachePath() {
                 }
             }
         }
-        
-        session = [manager GET:url parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
-            if (progress) {
+        session = [manager GET:url parameters:params progress:^(NSProgress * _Nonnull downloadProgress){
+            if (progress){
                 progress(downloadProgress.completedUnitCount, downloadProgress.totalUnitCount);
             }
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
             [self successResponse:responseObject callback:success];
-            
-            if (sg_cacheGet) {
+                if (sg_cacheGet){
                 [self cacheResponseObject:responseObject request:task.currentRequest parameters:params];
             }
-            
-            [[self allTasks] removeObject:task];
-            
-            if ([self isDebug]) {
+                [[self allTasks] removeObject:task];
+                if ([self isDebug]){
                 [self logWithSuccessResponse:responseObject url:absolute params:params];
             }
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
             [[self allTasks] removeObject:task];
-            
-            if ([error code] < 0 && sg_cacheGet && sg_shoulObtainLocalWhenUnconnected) {// 获取缓存
+                if ([error code] < 0 && sg_cacheGet && sg_shoulObtainLocalWhenUnconnected){// 获取缓存
                 id response = [HNNetworking cahceResponseWithURL:absolute parameters:params];
-                if (response) {
-                    if (success) {
+                if (response){
+                    if (success){
                         [self successResponse:response callback:success];
-                        
-                        if ([self isDebug]) {
+                                        if ([self isDebug]){
                             [self logWithSuccessResponse:response url:absolute params:params];
                         }
                     }
                 } else {
                     [self handleCallbackWithError:error fail:fail];
-                    
-                    if ([self isDebug]) {
+                                if ([self isDebug]){
                         [self logWithFailError:error url:absolute params:params];
                     }
                 }
             } else {
                 [self handleCallbackWithError:error fail:fail];
-                
-                if ([self isDebug]) {
+                        if ([self isDebug]){
                     [self logWithFailError:error url:absolute params:params];
                 }
             }
         }];
-    } else if (httpMethod == 2) {
-        if (sg_cachePost ) {// 获取缓存
-            if (sg_shoulObtainLocalWhenUnconnected) {
-                if (sg_networkStatus == kHNNetworkStatusNotReachable ||  sg_networkStatus == kHNNetworkStatusUnknown ) {
+    } else if (httpMethod == 2){
+        if (sg_cachePost ){// 获取缓存
+            if (sg_shoulObtainLocalWhenUnconnected){
+                if (sg_networkStatus == kHNNetworkStatusNotReachable ||  sg_networkStatus == kHNNetworkStatusUnknown ){
                     id response = [HNNetworking cahceResponseWithURL:absolute
                                                           parameters:params];
-                    if (response) {
-                        if (success) {
+                    if (response){
+                        if (success){
                             [self successResponse:response callback:success];
-                            
-                            if ([self isDebug]) {
+                                                if ([self isDebug]){
                                 [self logWithSuccessResponse:response url:absolute params:params];
                             }
                         }
@@ -627,13 +588,12 @@ static inline NSString *cachePath() {
                     }
                 }
             }
-            if (!refreshCache) {
+            if (!refreshCache){
                 id response = [HNNetworking cahceResponseWithURL:absolute parameters:params];
-                if (response) {
-                    if (success) {
+                if (response){
+                    if (success){
                         [self successResponse:response callback:success];
-                        
-                        if ([self isDebug]) {
+                                        if ([self isDebug]){
                             [self logWithSuccessResponse:response url:absolute params:params];
                         }
                     }
@@ -641,44 +601,34 @@ static inline NSString *cachePath() {
                 }
             }
         }
-        
-        session = [manager POST:url parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
-            if (progress) {
+        session = [manager POST:url parameters:params progress:^(NSProgress * _Nonnull downloadProgress){
+            if (progress){
                 progress(downloadProgress.completedUnitCount, downloadProgress.totalUnitCount);
             }
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            
-            [self successResponse:responseObject callback:success];
-            
-            if (sg_cachePost) {
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
+                [self successResponse:responseObject callback:success];
+                if (sg_cachePost){
                 [self cacheResponseObject:responseObject request:task.currentRequest  parameters:params];
             }
-            
-            [[self allTasks] removeObject:task];
-            
-            if ([self isDebug]) {
+                [[self allTasks] removeObject:task];
+                if ([self isDebug]){
                 [self logWithSuccessResponse:responseObject
                                          url:absolute
                                       params:params];
             }
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
             //NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
             //通讯协议状态码
             //NSInteger statusCode = response.statusCode;
-            
-            
-
+        
             [[self allTasks] removeObject:task];
-            
-            if ([error code] < 0 && sg_cachePost && sg_shoulObtainLocalWhenUnconnected) {// 获取缓存
+                if ([error code] < 0 && sg_cachePost && sg_shoulObtainLocalWhenUnconnected){// 获取缓存
                 id response = [HNNetworking cahceResponseWithURL:absolute
                                                       parameters:params];
-                
-                if (response) {
-                    if (success) {
+                        if (response){
+                    if (success){
                         [self successResponse:response callback:success];
-                        
-                        if ([self isDebug]) {
+                                        if ([self isDebug]){
                             [self logWithSuccessResponse:response
                                                      url:absolute
                                                   params:params];
@@ -686,22 +636,20 @@ static inline NSString *cachePath() {
                     }
                 } else {
                     [self handleCallbackWithError:error fail:fail];
-                    
-                    if ([self isDebug]) {
+                                if ([self isDebug]){
                         [self logWithFailError:error url:absolute params:params];
                     }
                 }
             } else {
                 [self handleCallbackWithError:error fail:fail];
-                
-                if ([self isDebug]) {
+                        if ([self isDebug]){
                     [self logWithFailError:error url:absolute params:params];
                 }
             }
         }];
     }
     
-    if (session) {
+    if (session){
         [[self allTasks] addObject:session];
     }
     
@@ -709,19 +657,19 @@ static inline NSString *cachePath() {
 }
 
 + (HNURLSessionTask *)uploadFileWithUrl:(NSString *)url uploadingFile:(NSString *)uploadingFile progress:(HNUploadProgress)progress success:(HNResponseSuccess)success fail:(HNResponseFail)fail {
-    if ([NSURL URLWithString:uploadingFile] == nil) {
+    if ([NSURL URLWithString:uploadingFile] == nil){
         HNAppLog(@"uploadingFile无效，无法生成URL。请检查待上传文件是否存在");
         return nil;
     }
     
     NSURL *uploadURL = nil;
-    if ([self baseUrl] == nil) {
+    if ([self baseUrl] == nil){
         uploadURL = [NSURL URLWithString:url];
     } else {
         uploadURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [self baseUrl], url]];
     }
     
-    if (uploadURL == nil) {
+    if (uploadURL == nil){
         HNAppLog(@"URLString无效，无法生成URL。可能是URL中有中文或特殊字符，请尝试Encode URL");
         return nil;
     }
@@ -730,23 +678,20 @@ static inline NSString *cachePath() {
     NSURLRequest *request = [NSURLRequest requestWithURL:uploadURL];
     HNURLSessionTask *session = nil;
     
-    [manager uploadTaskWithRequest:request fromFile:[NSURL URLWithString:uploadingFile] progress:^(NSProgress * _Nonnull uploadProgress) {
-        if (progress) {
+    [manager uploadTaskWithRequest:request fromFile:[NSURL URLWithString:uploadingFile] progress:^(NSProgress * _Nonnull uploadProgress){
+        if (progress){
             progress(uploadProgress.completedUnitCount, uploadProgress.totalUnitCount);
         }
-    } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+    } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error){
         [[self allTasks] removeObject:session];
-        
         [self successResponse:responseObject callback:success];
-        
-        if (error) {
+        if (error){
             [self handleCallbackWithError:error fail:fail];
-            
-            if ([self isDebug]) {
+                if ([self isDebug]){
                 [self logWithFailError:error url:response.URL.absoluteString params:nil];
             }
         } else {
-            if ([self isDebug]) {
+            if ([self isDebug]){
                 [self logWithSuccessResponse:responseObject
                                          url:response.URL.absoluteString
                                       params:nil];
@@ -754,7 +699,7 @@ static inline NSString *cachePath() {
         }
     }];
     
-    if (session) {
+    if (session){
         [[self allTasks] addObject:session];
     }
     
@@ -762,30 +707,30 @@ static inline NSString *cachePath() {
 }
 
 //+ (HNURLSessionTask *)uploadWithImage:(UIImage *)image url:(NSString *)url filename:(NSString *)filename name:(NSString *)name mimeType:(NSString *)mimeType parameters:(NSDictionary *)parameters progress:(HNUploadProgress)progress success:(HNResponseSuccess)success fail:(HNResponseFail)fail {
-//    if ([self baseUrl] == nil) {
-//        if ([NSURL URLWithString:url] == nil) {
+//    if ([self baseUrl] == nil){
+//        if ([NSURL URLWithString:url] == nil){
 //            HNAppLog(@"URLString无效，无法生成URL。可能是URL中有中文，请尝试Encode URL");
 //            return nil;
 //        }
 //    } else {
-//        if ([NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [self baseUrl], url]] == nil) {
+//        if ([NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [self baseUrl], url]] == nil){
 //            HNAppLog(@"URLString无效，无法生成URL。可能是URL中有中文，请尝试Encode URL");
 //            return nil;
 //        }
 //    }
 //
-//    if ([self shouldEncode]) {
+//    if ([self shouldEncode]){
 //        url = [self encodeUrl:url];
 //    }
 //
 //    NSString *absolute = [self absoluteUrlWithPath:url];
 //
 //    AFHTTPSessionManager *manager = [self manager];
-//    HNURLSessionTask *session = [manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//    HNURLSessionTask *session = [manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData){
 //        NSData *imageData = UIImageJPEGRepresentation(image, 1);
 //
 //        NSString *imageFileName = filename;
-//        if (filename == nil || ![filename isKindOfClass:[NSString class]] || filename.length == 0) {
+//        if (filename == nil || ![filename isKindOfClass:[NSString class]] || filename.length == 0){
 //            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 //            formatter.dateFormat = @"yyyyMMddHHmmss";
 //            NSString *str = [formatter stringFromDate:[NSDate date]];
@@ -794,31 +739,31 @@ static inline NSString *cachePath() {
 //
 //        // 上传图片，以文件流的格式
 //        [formData appendPartWithFileData:imageData name:name fileName:imageFileName mimeType:mimeType];
-//    } progress:^(NSProgress * _Nonnull uploadProgress) {
-//        if (progress) {
+//    } progress:^(NSProgress * _Nonnull uploadProgress){
+//        if (progress){
 //            progress(uploadProgress.completedUnitCount, uploadProgress.totalUnitCount);
 //        }
-//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
 //        [[self allTasks] removeObject:task];
 //        [self successResponse:responseObject callback:success];
 //
-//        if ([self isDebug]) {
+//        if ([self isDebug]){
 //            [self logWithSuccessResponse:responseObject
 //                                     url:absolute
 //                                  params:parameters];
 //        }
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
 //        [[self allTasks] removeObject:task];
 //
 //        [self handleCallbackWithError:error fail:fail];
 //
-//        if ([self isDebug]) {
+//        if ([self isDebug]){
 //            [self logWithFailError:error url:absolute params:nil];
 //        }
 //    }];
 //
 //    [session resume];
-//    if (session) {
+//    if (session){
 //        [[self allTasks] addObject:session];
 //    }
 //
@@ -826,13 +771,13 @@ static inline NSString *cachePath() {
 //}
 
 + (HNURLSessionTask *)downloadWithUrl:(NSString *)url saveToPath:(NSString *)saveToPath progress:(HNDownloadProgress)progressBlock success:(HNResponseSuccess)success failure:(HNResponseFail)failure {
-    if ([self baseUrl] == nil) {
-        if ([NSURL URLWithString:url] == nil) {
+    if ([self baseUrl] == nil){
+        if ([NSURL URLWithString:url] == nil){
             HNAppLog(@"URLString无效，无法生成URL。可能是URL中有中文，请尝试Encode URL");
             return nil;
         }
     } else {
-        if ([NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [self baseUrl], url]] == nil) {
+        if ([NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [self baseUrl], url]] == nil){
             HNAppLog(@"URLString无效，无法生成URL。可能是URL中有中文，请尝试Encode URL");
             return nil;
         }
@@ -843,28 +788,25 @@ static inline NSString *cachePath() {
     
     HNURLSessionTask *session = nil;
     
-    session = [manager downloadTaskWithRequest:downloadRequest progress:^(NSProgress * _Nonnull downloadProgress) {
-        if (progressBlock) {
+    session = [manager downloadTaskWithRequest:downloadRequest progress:^(NSProgress * _Nonnull downloadProgress){
+        if (progressBlock){
             progressBlock(downloadProgress.completedUnitCount, downloadProgress.totalUnitCount);
         }
-    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response){
         return [NSURL fileURLWithPath:saveToPath];
-    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error){
         [[self allTasks] removeObject:session];
-        
-        if (error == nil) {
-            if (success) {
+        if (error == nil){
+            if (success){
                 success(filePath.absoluteString);
             }
-            
-            if ([self isDebug]) {
+                if ([self isDebug]){
                 HNAppLog(@"Download success for url %@",
                          [self absoluteUrlWithPath:url]);
             }
         } else {
             [self handleCallbackWithError:error fail:failure];
-            
-            if ([self isDebug]) {
+                if ([self isDebug]){
                 HNAppLog(@"Download fail for url %@, reason : %@",
                          [self absoluteUrlWithPath:url],
                          [error description]);
@@ -873,7 +815,7 @@ static inline NSString *cachePath() {
     }];
     
     [session resume];
-    if (session) {
+    if (session){
         [[self allTasks] addObject:session];
     }
     
@@ -882,20 +824,18 @@ static inline NSString *cachePath() {
 
 #pragma mark - Private
 + (AFHTTPSessionManager *)manager {
-    @synchronized (self) {
+    @synchronized (self){
         // 只要不切换baseurl，就一直使用同一个session manager
-        if (sg_sharedManager == nil || sg_isBaseURLChanged) {
+        if (sg_sharedManager == nil || sg_isBaseURLChanged){
             // 开启转圈圈
             [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-            
-            AFHTTPSessionManager *manager = nil;;
-            if ([self baseUrl] != nil) {
+                AFHTTPSessionManager *manager = nil;;
+            if ([self baseUrl] != nil){
                 manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:[self baseUrl]]];
             } else {
                 manager = [AFHTTPSessionManager manager];
             }
-            
-            switch (sg_requestType) {
+                switch (sg_requestType){
                 case kHNRequestTypeJSON: {
                     manager.requestSerializer = [AFJSONRequestSerializer serializer];
                     break;
@@ -908,8 +848,7 @@ static inline NSString *cachePath() {
                     break;
                 }
             }
-            
-            switch (sg_responseType) {
+                switch (sg_responseType){
                 case kHNResponseTypeJSON: {
                     manager.responseSerializer = [AFJSONResponseSerializer serializer];
                     break;
@@ -926,27 +865,21 @@ static inline NSString *cachePath() {
                     break;
                 }
             }
-            
-            manager.requestSerializer.stringEncoding = NSUTF8StringEncoding;
-            
-            
-            for (NSString *key in sg_httpHeaders.allKeys) {
-                if (sg_httpHeaders[key] != nil) {
+                manager.requestSerializer.stringEncoding = NSUTF8StringEncoding;
+                    for (NSString *key in sg_httpHeaders.allKeys){
+                if (sg_httpHeaders[key] != nil){
                     [manager.requestSerializer setValue:sg_httpHeaders[key] forHTTPHeaderField:key];
                 }
             }
-            
-            manager.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"application/json",
+                manager.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"application/json",
                                                                                       @"text/html",
                                                                                       @"text/json",
                                                                                       @"text/plain",
                                                                                       @"text/javascript",
                                                                                       @"text/xml",
                                                                                       @"image/*"]];
-            
-            manager.requestSerializer.timeoutInterval = sg_timeout;
-            
-            // 设置允许同时最大并发数量，过大容易出问题
+                manager.requestSerializer.timeoutInterval = sg_timeout;
+                // 设置允许同时最大并发数量，过大容易出问题
             manager.operationQueue.maxConcurrentOperationCount = 3;
             sg_sharedManager = manager;
         }
@@ -959,7 +892,7 @@ static inline NSString *cachePath() {
     AFNetworkReachabilityManager *reachabilityManager = [AFNetworkReachabilityManager sharedManager];
     
     [reachabilityManager startMonitoring];
-    [reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+    [reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status){
         if (status == AFNetworkReachabilityStatusNotReachable){
             sg_networkStatus = kHNNetworkStatusNotReachable;
         } else if (status == AFNetworkReachabilityStatusUnknown){
@@ -982,13 +915,13 @@ static inline NSString *cachePath() {
 
 + (void)logWithFailError:(NSError *)error url:(NSString *)url params:(id)params {
     NSString *format = @" params: ";
-    if (params == nil || ![params isKindOfClass:[NSDictionary class]]) {
+    if (params == nil || ![params isKindOfClass:[NSDictionary class]]){
         format = @"";
         params = @"";
     }
     
     HNAppLog(@"\n");
-    if ([error code] == NSURLErrorCancelled) {
+    if ([error code] == NSURLErrorCancelled){
         HNAppLog(@"\nRequest was canceled mannully, URL: %@ %@%@\n\n",
                  [self generateGETAbsoluteURL:url params:params],
                  format,
@@ -1004,19 +937,18 @@ static inline NSString *cachePath() {
 
 // 仅对一级字典结构起作用
 + (NSString *)generateGETAbsoluteURL:(NSString *)url params:(id)params {
-    if (params == nil || ![params isKindOfClass:[NSDictionary class]] || [params count] == 0) {
+    if (params == nil || ![params isKindOfClass:[NSDictionary class]] || [params count] == 0){
         return url;
     }
     
     NSString *queries = @"";
-    for (NSString *key in params) {
+    for (NSString *key in params){
         id value = [params objectForKey:key];
-        
-        if ([value isKindOfClass:[NSDictionary class]]) {
+        if ([value isKindOfClass:[NSDictionary class]]){
             continue;
-        } else if ([value isKindOfClass:[NSArray class]]) {
+        } else if ([value isKindOfClass:[NSArray class]]){
             continue;
-        } else if ([value isKindOfClass:[NSSet class]]) {
+        } else if ([value isKindOfClass:[NSSet class]]){
             continue;
         } else {
             queries = [NSString stringWithFormat:@"%@%@=%@&",
@@ -1026,13 +958,13 @@ static inline NSString *cachePath() {
         }
     }
     
-    if (queries.length > 1) {
+    if (queries.length > 1){
         queries = [queries substringToIndex:queries.length - 1];
     }
     
-    if (([url hasPrefix:@"http://"] || [url hasPrefix:@"https://"]) && queries.length > 1) {
+    if (([url hasPrefix:@"http://"] || [url hasPrefix:@"https://"])&& queries.length > 1){
         if ([url rangeOfString:@"?"].location != NSNotFound
-            || [url rangeOfString:@"#"].location != NSNotFound) {
+            || [url rangeOfString:@"#"].location != NSNotFound){
             url = [NSString stringWithFormat:@"%@%@", url, queries];
         } else {
             queries = [queries substringFromIndex:1];
@@ -1049,14 +981,14 @@ static inline NSString *cachePath() {
 }
 
 + (id)tryToParseData:(id)responseData {
-    if ([responseData isKindOfClass:[NSData class]]) {
+    if ([responseData isKindOfClass:[NSData class]]){
         // 尝试解析成JSON
-        if (responseData == nil) {
+        if (responseData == nil){
             return responseData;
         } else {
             NSError *error = nil;
             NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:&error];
-            if (error != nil) {
+            if (error != nil){
                 return responseData;
             } else {
                 return response;
@@ -1068,7 +1000,7 @@ static inline NSString *cachePath() {
 }
 
 + (void)successResponse:(id)responseData callback:(HNResponseSuccess)success {
-    if (success) {
+    if (success){
         success([self tryToParseData:responseData]);
     }
 }
@@ -1082,7 +1014,7 @@ static inline NSString *cachePath() {
     //                                                            (CFStringRef)url,
     //                                                            NULL,
     //                                                            CFSTR(":/?#[]@!$ &'()*+,;=\"<>%{}|\\^~`"), CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
-    //  if (newString) {
+    //  if (newString){
     //    return newString;
     //  }
     //
@@ -1092,22 +1024,19 @@ static inline NSString *cachePath() {
 + (id)cahceResponseWithURL:(NSString *)url parameters:params {
     id cacheData = nil;
     
-    if (url) {
+    if (url){
         // Try to get datas from disk
-        
 #warning 因为这个项目的sign每次都不一样，所以无法获得缓存，需要先把sign、time_stamp移除
         NSDictionary *dic = params;
         NSMutableDictionary *dicM = dic.mutableCopy;
         [dicM removeObjectForKey:@"sign"];
         [dicM removeObjectForKey:@"time_stamp"];
-        
         NSString *directoryPath = cachePath();
         NSString *absoluteURL = [self generateGETAbsoluteURL:url params:dicM];
         NSString *key = [NSString HNnetworking_md5:absoluteURL];
         NSString *path = [directoryPath stringByAppendingPathComponent:key];
-        
         NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
-        if (data) {
+        if (data){
             cacheData = data;
             HNAppLog(@"Read data from cache for url: %@\n", url);
         }
@@ -1117,45 +1046,39 @@ static inline NSString *cachePath() {
 }
 
 + (void)cacheResponseObject:(id)responseObject request:(NSURLRequest *)request parameters:params {
-    if (request && responseObject && ![responseObject isKindOfClass:[NSNull class]]) {
+    if (request && responseObject && ![responseObject isKindOfClass:[NSNull class]]){
         NSString *directoryPath = cachePath();
-        
         NSError *error = nil;
-        
-        if (![[NSFileManager defaultManager] fileExistsAtPath:directoryPath isDirectory:nil]) {
+        if (![[NSFileManager defaultManager] fileExistsAtPath:directoryPath isDirectory:nil]){
             [[NSFileManager defaultManager] createDirectoryAtPath:directoryPath
                                       withIntermediateDirectories:YES
                                                        attributes:nil
                                                             error:&error];
-            if (error) {
+            if (error){
                 HNAppLog(@"create cache dir error: %@\n", error);
                 return;
             }
         }
-        
 #warning 因为这个项目的sign每次都不一样，所以无法获得缓存，需要先把sign、time_stamp移除
         NSDictionary *dic = params;
         NSMutableDictionary *dicM = dic.mutableCopy;
         [dicM removeObjectForKey:@"sign"];
         [dicM removeObjectForKey:@"time_stamp"];
-        
         NSString *absoluteURL = [self generateGETAbsoluteURL:request.URL.absoluteString params:dicM];
         NSString *key = [NSString HNnetworking_md5:absoluteURL];
         NSString *path = [directoryPath stringByAppendingPathComponent:key];
         NSDictionary *dict = (NSDictionary *)responseObject;
-        
         NSData *data = nil;
-        if ([dict isKindOfClass:[NSData class]]) {
+        if ([dict isKindOfClass:[NSData class]]){
             data = responseObject;
         } else {
             data = [NSJSONSerialization dataWithJSONObject:dict
                                                    options:NSJSONWritingPrettyPrinted
                                                      error:&error];
         }
-        
-        if (data && error == nil) {
+        if (data && error == nil){
             BOOL isOk = [[NSFileManager defaultManager] createFileAtPath:path contents:data attributes:nil];
-            if (isOk) {
+            if (isOk){
                 //HNAppLog(@"cache file ok for request: %@\n", absoluteURL);
             } else {
                 //HNAppLog(@"cache file error for request: %@\n", absoluteURL);
@@ -1165,19 +1088,19 @@ static inline NSString *cachePath() {
 }
 
 + (NSString *)absoluteUrlWithPath:(NSString *)path {
-    if (path == nil || path.length == 0) {
+    if (path == nil || path.length == 0){
         return @"";
     }
     
-    if ([self baseUrl] == nil || [[self baseUrl] length] == 0) {
+    if ([self baseUrl] == nil || [[self baseUrl] length] == 0){
         return path;
     }
     
     NSString *absoluteUrl = path;
     
-    if (![path hasPrefix:@"http://"] && ![path hasPrefix:@"https://"]) {
-        if ([[self baseUrl] hasSuffix:@"/"]) {
-            if ([path hasPrefix:@"/"]) {
+    if (![path hasPrefix:@"http://"] && ![path hasPrefix:@"https://"]){
+        if ([[self baseUrl] hasSuffix:@"/"]){
+            if ([path hasPrefix:@"/"]){
                 NSMutableString * mutablePath = [NSMutableString stringWithString:path];
                 [mutablePath deleteCharactersInRange:NSMakeRange(0, 1)];
                 absoluteUrl = [NSString stringWithFormat:@"%@%@",
@@ -1186,7 +1109,7 @@ static inline NSString *cachePath() {
                 absoluteUrl = [NSString stringWithFormat:@"%@%@",[self baseUrl], path];
             }
         } else {
-            if ([path hasPrefix:@"/"]) {
+            if ([path hasPrefix:@"/"]){
                 absoluteUrl = [NSString stringWithFormat:@"%@%@",[self baseUrl], path];
             } else {
                 absoluteUrl = [NSString stringWithFormat:@"%@/%@",
@@ -1199,14 +1122,14 @@ static inline NSString *cachePath() {
 }
 
 + (void)handleCallbackWithError:(NSError *)error fail:(HNResponseFail)fail {
-    if ([error code] == NSURLErrorCancelled) {
-        if (sg_shouldCallbackOnCancelRequest) {
-            if (fail) {
+    if ([error code] == NSURLErrorCancelled){
+        if (sg_shouldCallbackOnCancelRequest){
+            if (fail){
                 fail(error);
             }
         }
     } else {
-        if (fail) {
+        if (fail){
             fail(error);
         }
     }

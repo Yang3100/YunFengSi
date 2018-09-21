@@ -17,7 +17,7 @@ static NSString *AESIV = @"AES_Pwd__AES_Pwd"; // 偏移量 16位长度的字符�
 static NSString *md5_secret =  @"yangkejun-735n197nxn(N′568GGS%d~~9naei';45vhhafdjkv]32rpks;lg,];:vjo(&**&^)";
 
 static NSString *RSAPublicKey = @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDPm0kFwUYRwzr/dKsjsjL0pEPgoMOpnLVSEt9UrNEyjN98omr9wN3QkuXJNXxgWSpfIfhTnbiiwX+UtYfODDmXD2EwkFOPriEOYKA3DvZgd8EAk8TLGFWHSqYuZsWo4tty6xATcpWYmsovsejg72fCryDxPs9BL3c/TGC0rZ5JFQIDAQAB";
-static NSString *RSAprivateKey = @"MIICeQIBADANBgkqhkiG9w0BAQEFAASCAmMwggJfAgEAAoGBAM+bSQXBRhHDOv90qyOyMvSkQ+Cgw6mctVIS31Ss0TKM33yiav3A3dCS5ck1fGBZKl8h+FOduKLBf5S1h84MOZcPYTCQU4+uIQ5goDcO9mB3wQCTxMsYVYdKpi5mxaji23LrEBNylZiayi+x6ODvZ8KvIPE+z0Evdz9MYLStnkkVAgMBAAECgYEAlfp3sWmj5hclGwE81YfZ2fSFeNSLJZApSYaKwpAqfRtaJJ7tLi5T0GcfC9HQ7YXc32caD8YEacfiFBtkZY1dWB+G0DsQnduEFg1z50q95TZQ6r1e6R3i80JKv/jeojkiOhHPY2VlNbDacy/PuLHdmgf4Ecu+OAk5NcbwI+gGyE0CQQDwhv0TBB7eB0cPnMienJac01oYVBACru6jnVUYKSR4CZpzR5Lx10NBnivM3qF1OZd91SFSxrmAanXd1iNCUjFDAkEA3PYoQRCl8qswasdPoCjSZxdHiBmt0QzgZfGR3Wj8prTeI8f58qxw1nhmvwdK/cLOODCOYiKw20om9/7+tPcqxwJBAKJ/UDKssf3mhMezcIZX3BkPYOrWwApQDMFU5cxw30aJlmMTk973Q2Tta0H5lrMPuZ01hFHcGC79vaulpCSGSukCQQDYiAU0lbr5zpaY3Q6Dtd1SFzcLAZca+JJidFNr9Pk56J6T0+F11VSSZ9TQOLZdbOynlbXCJ5rGmqkLeABkmJ57AkEAyawmfqGfm1615nSiPhhLZVEEN5+moUZcdZvfcnrcgRcWuZkHVlOf1uDEHQO/HUcVfNI2Xx36F4s1CZKGZorqmQ==";
+static NSString *RSAprivateKey = @"MIICeQIBADANBgkqhkiG9w0BAQEFAASCAmMwggJfAgEAAoGBAM+bSQXBRhHDOv90qyOyMvSkQ+Cgw6mctVIS31Ss0TKM33yiav3A3dCS5ck1fGBZKl8h+FOduKLBf5S1h84MOZcPYTCQU4+uIQ5goDcO9mB3wQCTxMsYVYdKpi5mxaji23LrEBNylZiayi+x6ODvZ8KvIPE+z0Evdz9MYLStnkkVAgMBAAECgYEAlfp3sWmj5hclGwE81YfZ2fSFeNSLJZApSYaKwpAqfRtaJJ7tLi5T0GcfC9HQ7YXc32caD8YEacfiFBtkZY1dWB+G0DsQnduEFg1z50q95TZQ6r1e6R3i80JKv/jeojkiOhHPY2VlNbDacy/PuLHdmgf4Ecu+OAk5NcbwI+gGyE0CQQDwhv0TBB7eB0cPnMienJac01oYVBACru6jnVUYKSR4CZpzR5Lx10NBnivM3qF1OZd91SFSxrmAanXd1iNCUjFDAkEA3PYoQRCl8qswasdPoCjSZxdHiBmt0QzgZfGR3Wj8prTeI8f58qxw1nhmvwdK/cLOODCOYiKw20om9/7+tPcqxwJBAKJ/UDKssf3kjMezcIZX3BkPYOrWwApQDMFU5cxw30aJlmMTk973Q2Tta0H5lrMPuZ01hFHcGC79vaulpCSGSukCQQDYiAU0lbr5zpaY3Q6Dtd1SFzcLAZca+JJidFNr9Pk56J6T0+F11VSSZ9TQOLZdbOynlbXCJ5rGmqkLeABkmJ57AkEAyawmfqGfm1615nSiPhhLZVEEN5+moUZcdZvfcnrcgRcWuZkHVlOf1uDEHQO/HUcVfNI2Xx36F4s1CZKGZorqmQ==";
 
 static NSString *base64_encode_data(NSData *data){
     data = [data base64EncodedDataWithOptions:0];
@@ -35,7 +35,7 @@ static NSData *base64_decode(NSString *str){
 // 6位随机数+10位时间戳（16位数）
 + (NSString*)get16Num{
     // 获取6位随机数
-    int six = arc4random() % 100000;
+    int six = arc4random()% 100000;
     NSString *sixStr = [NSString stringWithFormat:@"%06d", six];
     
     // 获取当前时间戳
@@ -112,14 +112,14 @@ static NSData *base64_decode(NSString *str){
     
     // Delete any old lingering key with the same tag
     NSMutableDictionary *publicKey = [[NSMutableDictionary alloc] init];
-    [publicKey setObject:(__bridge id) kSecClassKey forKey:(__bridge id)kSecClass];
-    [publicKey setObject:(__bridge id) kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
+    [publicKey setObject:(__bridge id)kSecClassKey forKey:(__bridge id)kSecClass];
+    [publicKey setObject:(__bridge id)kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
     [publicKey setObject:d_tag forKey:(__bridge id)kSecAttrApplicationTag];
     SecItemDelete((__bridge CFDictionaryRef)publicKey);
     
     // Add persistent version of the key to system keychain
     [publicKey setObject:data forKey:(__bridge id)kSecValueData];
-    [publicKey setObject:(__bridge id) kSecAttrKeyClassPublic forKey:(__bridge id)
+    [publicKey setObject:(__bridge id)kSecAttrKeyClassPublic forKey:(__bridge id)
      kSecAttrKeyClass];
     [publicKey setObject:[NSNumber numberWithBool:YES] forKey:(__bridge id)
      kSecReturnPersistentRef];
@@ -129,14 +129,14 @@ static NSData *base64_decode(NSString *str){
     if (persistKey != nil){
         CFRelease(persistKey);
     }
-    if ((status != noErr) && (status != errSecDuplicateItem)) {
+    if ((status != noErr)&& (status != errSecDuplicateItem)){
         return nil;
     }
     
     [publicKey removeObjectForKey:(__bridge id)kSecValueData];
     [publicKey removeObjectForKey:(__bridge id)kSecReturnPersistentRef];
     [publicKey setObject:[NSNumber numberWithBool:YES] forKey:(__bridge id)kSecReturnRef];
-    [publicKey setObject:(__bridge id) kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
+    [publicKey setObject:(__bridge id)kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
     
     // Now fetch the SecKeyRef version of the key
     SecKeyRef keyRef = nil;
@@ -149,43 +149,43 @@ static NSData *base64_decode(NSString *str){
 
 + (NSData *)stripPublicKeyHeader:(NSData *)d_key{
     // Skip ASN.1 public key header
-    if (d_key == nil) return(nil);
+    if (d_key == nil)return(nil);
     
     unsigned long len = [d_key length];
-    if (!len) return(nil);
+    if (!len)return(nil);
     
     unsigned char *c_key = (unsigned char *)[d_key bytes];
     unsigned int  idx     = 0;
     
-    if (c_key[idx++] != 0x30) return(nil);
+    if (c_key[idx++] != 0x30)return(nil);
     
-    if (c_key[idx] > 0x80) idx += c_key[idx] - 0x80 + 1;
+    if (c_key[idx] > 0x80)idx += c_key[idx] - 0x80 + 1;
     else idx++;
     
     // PKCS #1 rsaEncryption szOID_RSA_RSA
     static unsigned char seqiod[] =
     { 0x30,   0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01,
         0x01, 0x05, 0x00 };
-    if (memcmp(&c_key[idx], seqiod, 15)) return(nil);
+    if (memcmp(&c_key[idx], seqiod, 15))return(nil);
     
     idx += 15;
     
-    if (c_key[idx++] != 0x03) return(nil);
+    if (c_key[idx++] != 0x03)return(nil);
     
-    if (c_key[idx] > 0x80) idx += c_key[idx] - 0x80 + 1;
+    if (c_key[idx] > 0x80)idx += c_key[idx] - 0x80 + 1;
     else idx++;
     
-    if (c_key[idx++] != '\0') return(nil);
+    if (c_key[idx++] != '\0')return(nil);
     
     // Now make a new NSData from this buffer
     return ([NSData dataWithBytes:&c_key[idx] length:len - idx]);
 }
 
-+ (NSData *)encryptData:(NSData *)data withKeyRef:(SecKeyRef) keyRef{
++ (NSData *)encryptData:(NSData *)data withKeyRef:(SecKeyRef)keyRef{
     const uint8_t *srcbuf = (const uint8_t *)[data bytes];
     size_t srclen = (size_t)data.length;
     
-    size_t block_size = SecKeyGetBlockSize(keyRef) * sizeof(uint8_t);
+    size_t block_size = SecKeyGetBlockSize(keyRef)* sizeof(uint8_t);
     void *outbuf = malloc(block_size);
     size_t src_block_size = block_size - 11;
     
@@ -196,7 +196,6 @@ static NSData *base64_decode(NSString *str){
         if(data_len > src_block_size){
             data_len = src_block_size;
         }
-        
         size_t outlen = block_size;
         OSStatus status = noErr;
         status = SecKeyEncrypt(keyRef,
@@ -206,7 +205,7 @@ static NSData *base64_decode(NSString *str){
                                outbuf,
                                &outlen
                                );
-        if (status != 0) {
+        if (status != 0){
             NSLog(@"SecKeyEncrypt fail. Error Code: %d", status);
             ret = nil;
             break;
@@ -228,7 +227,7 @@ static NSData *base64_decode(NSString *str){
 
 //使用私钥字符串解密
 + (NSString *)decryptString:(NSString *)str privateKey:(NSString *)privKey{
-    if (!str) return nil;
+    if (!str)return nil;
     NSData *data = [[NSData alloc] initWithBase64EncodedString:str options:NSDataBase64DecodingIgnoreUnknownCharacters];
     data = [self decryptData:data privateKey:privKey];
     NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -273,14 +272,14 @@ static NSData *base64_decode(NSString *str){
     
     // Delete any old lingering key with the same tag
     NSMutableDictionary *privateKey = [[NSMutableDictionary alloc] init];
-    [privateKey setObject:(__bridge id) kSecClassKey forKey:(__bridge id)kSecClass];
-    [privateKey setObject:(__bridge id) kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
+    [privateKey setObject:(__bridge id)kSecClassKey forKey:(__bridge id)kSecClass];
+    [privateKey setObject:(__bridge id)kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
     [privateKey setObject:d_tag forKey:(__bridge id)kSecAttrApplicationTag];
     SecItemDelete((__bridge CFDictionaryRef)privateKey);
     
     // Add persistent version of the key to system keychain
     [privateKey setObject:data forKey:(__bridge id)kSecValueData];
-    [privateKey setObject:(__bridge id) kSecAttrKeyClassPrivate forKey:(__bridge id)
+    [privateKey setObject:(__bridge id)kSecAttrKeyClassPrivate forKey:(__bridge id)
      kSecAttrKeyClass];
     [privateKey setObject:[NSNumber numberWithBool:YES] forKey:(__bridge id)
      kSecReturnPersistentRef];
@@ -290,14 +289,14 @@ static NSData *base64_decode(NSString *str){
     if (persistKey != nil){
         CFRelease(persistKey);
     }
-    if ((status != noErr) && (status != errSecDuplicateItem)) {
+    if ((status != noErr)&& (status != errSecDuplicateItem)){
         return nil;
     }
     
     [privateKey removeObjectForKey:(__bridge id)kSecValueData];
     [privateKey removeObjectForKey:(__bridge id)kSecReturnPersistentRef];
     [privateKey setObject:[NSNumber numberWithBool:YES] forKey:(__bridge id)kSecReturnRef];
-    [privateKey setObject:(__bridge id) kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
+    [privateKey setObject:(__bridge id)kSecAttrKeyTypeRSA forKey:(__bridge id)kSecAttrKeyType];
     
     // Now fetch the SecKeyRef version of the key
     SecKeyRef keyRef = nil;
@@ -310,32 +309,32 @@ static NSData *base64_decode(NSString *str){
 
 + (NSData *)stripPrivateKeyHeader:(NSData *)d_key{
     // Skip ASN.1 private key header
-    if (d_key == nil) return(nil);
+    if (d_key == nil)return(nil);
     
     unsigned long len = [d_key length];
-    if (!len) return(nil);
+    if (!len)return(nil);
     
     unsigned char *c_key = (unsigned char *)[d_key bytes];
     unsigned int  idx     = 22; //magic byte at offset 22
     
-    if (0x04 != c_key[idx++]) return nil;
+    if (0x04 != c_key[idx++])return nil;
     
     //calculate length of the key
     unsigned int c_len = c_key[idx++];
     int det = c_len & 0x80;
-    if (!det) {
+    if (!det){
         c_len = c_len & 0x7f;
     } else {
         int byteCount = c_len & 0x7f;
-        if (byteCount + idx > len) {
+        if (byteCount + idx > len){
             //rsa length field longer than buffer
             return nil;
         }
         unsigned int accum = 0;
         unsigned char *ptr = &c_key[idx];
         idx += byteCount;
-        while (byteCount) {
-            accum = (accum << 8) + *ptr;
+        while (byteCount){
+            accum = (accum << 8)+ *ptr;
             ptr++;
             byteCount--;
         }
@@ -346,11 +345,11 @@ static NSData *base64_decode(NSString *str){
     return [d_key subdataWithRange:NSMakeRange(idx, c_len)];
 }
 
-+ (NSData *)decryptData:(NSData *)data withKeyRef:(SecKeyRef) keyRef{
++ (NSData *)decryptData:(NSData *)data withKeyRef:(SecKeyRef)keyRef{
     const uint8_t *srcbuf = (const uint8_t *)[data bytes];
     size_t srclen = (size_t)data.length;
     
-    size_t block_size = SecKeyGetBlockSize(keyRef) * sizeof(uint8_t);
+    size_t block_size = SecKeyGetBlockSize(keyRef)* sizeof(uint8_t);
     UInt8 *outbuf = malloc(block_size);
     size_t src_block_size = block_size;
     
@@ -361,7 +360,6 @@ static NSData *base64_decode(NSString *str){
         if(data_len > src_block_size){
             data_len = src_block_size;
         }
-        
         size_t outlen = block_size;
         OSStatus status = noErr;
         status = SecKeyDecrypt(keyRef,
@@ -371,7 +369,7 @@ static NSData *base64_decode(NSString *str){
                                outbuf,
                                &outlen
                                );
-        if (status != 0) {
+        if (status != 0){
             NSLog(@"SecKeyEncrypt fail. Error Code: %d", status);
             ret = nil;
             break;
@@ -379,9 +377,9 @@ static NSData *base64_decode(NSString *str){
             //the actual decrypted data is in the middle, locate it!
             int idxFirstZero = -1;
             int idxNextZero = (int)outlen;
-            for ( int i = 0; i < outlen; i++ ) {
-                if ( outbuf[i] == 0 ) {
-                    if ( idxFirstZero < 0 ) {
+            for ( int i = 0; i < outlen; i++ ){
+                if ( outbuf[i] == 0 ){
+                    if ( idxFirstZero < 0 ){
                         idxFirstZero = i;
                     } else {
                         idxNextZero = i;
@@ -389,8 +387,7 @@ static NSData *base64_decode(NSString *str){
                     }
                 }
             }
-            
-            [ret appendBytes:&outbuf[idxFirstZero+1] length:idxNextZero-idxFirstZero-1];
+                [ret appendBytes:&outbuf[idxFirstZero+1] length:idxNextZero-idxFirstZero-1];
         }
     }
     
@@ -437,9 +434,8 @@ static NSData *base64_decode(NSString *str){
                                           buffer,
                                           1024,
                                           &numBytesEncrypted);
-    if (cryptStatus == kCCSuccess) {
+    if (cryptStatus == kCCSuccess){
         NSData *data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesEncrypted];
-        
         ciphertext = [[NSString alloc] initWithData:[GTMBase64 encodeData:data] encoding:NSUTF8StringEncoding];
     }
     return ciphertext;
@@ -463,7 +459,7 @@ static NSData *base64_decode(NSString *str){
                                           1024,
                                           &numBytesDecrypted);
     NSString *plainText = nil;
-    if (cryptStatus == kCCSuccess) {
+    if (cryptStatus == kCCSuccess){
         NSData* data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesDecrypted];
         plainText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     }
@@ -487,11 +483,11 @@ static NSData *base64_decode(NSString *str){
     
     char keyPtr[kCCKeySizeAES128+1];
     memset(keyPtr, 0, sizeof(keyPtr));
-    [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
+    [key getCString:keyPtr maxLength:sizeof(keyPtr)encoding:NSUTF8StringEncoding];
     
     char ivPtr[kCCBlockSizeAES128+1];
     memset(ivPtr, 0, sizeof(ivPtr));
-    [AESIV getCString:ivPtr maxLength:sizeof(ivPtr) encoding:NSUTF8StringEncoding];
+    [AESIV getCString:ivPtr maxLength:sizeof(ivPtr)encoding:NSUTF8StringEncoding];
     
     NSData* data = [string dataUsingEncoding:NSUTF8StringEncoding];
     NSUInteger dataLength = [data length];
@@ -529,7 +525,7 @@ static NSData *base64_decode(NSString *str){
                                           bufferSize,
                                           &numBytesCrypted);
     
-    if (cryptStatus == kCCSuccess) {
+    if (cryptStatus == kCCSuccess){
         NSData *resultData = [NSData dataWithBytesNoCopy:buffer length:numBytesCrypted];
         return [GTMBase64 stringByEncodingData:resultData];
     }
@@ -546,11 +542,11 @@ static NSData *base64_decode(NSString *str){
     
     char keyPtr[kCCKeySizeAES128 + 1];
     memset(keyPtr, 0, sizeof(keyPtr));
-    [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
+    [key getCString:keyPtr maxLength:sizeof(keyPtr)encoding:NSUTF8StringEncoding];
     
     char ivPtr[kCCBlockSizeAES128 + 1];
     memset(ivPtr, 0, sizeof(ivPtr));
-    [AESIV getCString:ivPtr maxLength:sizeof(ivPtr) encoding:NSUTF8StringEncoding];
+    [AESIV getCString:ivPtr maxLength:sizeof(ivPtr)encoding:NSUTF8StringEncoding];
     
     NSData *data = [GTMBase64 decodeData:[string dataUsingEncoding:NSUTF8StringEncoding]];
     NSUInteger dataLength = [data length];
@@ -569,9 +565,8 @@ static NSData *base64_decode(NSString *str){
                                           buffer,
                                           bufferSize,
                                           &numBytesCrypted);
-    if (cryptStatus == kCCSuccess) {
+    if (cryptStatus == kCCSuccess){
         NSData *resultData = [NSData dataWithBytesNoCopy:buffer length:numBytesCrypted];
-        
         NSString *decoded=[[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
         return [self processDecodedString:decoded];
     }
@@ -612,7 +607,7 @@ static NSData *base64_decode(NSString *str){
     unsigned char digest[CC_MD5_DIGEST_LENGTH];
     CC_MD5(cStr, (CC_LONG)strlen(cStr), digest);
     NSMutableString *result = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
-    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++){
         [result appendFormat:@"%02X", digest[i]];
     }
     return result;

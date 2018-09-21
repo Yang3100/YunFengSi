@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2016 forkingdog ( https://github.com/forkingdog )
+// Copyright (c)2015-2016 forkingdog ( https://github.com/forkingdog )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 @interface FDIndexPathHeightCache : NSObject
 
 // Enable automatically if you're using index path driven height cache
-@property (nonatomic, assign) BOOL automaticallyInvalidateEnabled;
+@property (nonatomic, assign)BOOL automaticallyInvalidateEnabled;
 
 // Height cache
 - (BOOL)existsHeightAtIndexPath:(NSIndexPath *)indexPath;
@@ -38,7 +38,7 @@
 
 @interface UITableView (FDIndexPathHeightCache)
 /// Height cache by index path. Generally, you don't need to use it directly.
-@property (nonatomic, strong, readonly) FDIndexPathHeightCache *fd_indexPathHeightCache;
+@property (nonatomic, strong, readonly)FDIndexPathHeightCache *fd_indexPathHeightCache;
 @end
 
 @interface UITableView (FDIndexPathHeightCacheInvalidation)

@@ -11,7 +11,7 @@
 @interface KJBaseNavigationController ()<UIGestureRecognizerDelegate>
 
 // 导航栏分隔线
-@property(nonatomic,weak,readwrite) UIImageView *navigationBottomLine;
+@property(nonatomic,weak,readwrite)UIImageView *navigationBottomLine;
 
 @end
 
@@ -35,7 +35,7 @@
 
 // 查询最后一条数据
 - (UIImageView *)_findHairlineImageViewUnder:(UIView *)view{
-    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
+    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0){
         return (UIImageView *)view;
     }
     for (UIView *subview in view.subviews){
@@ -148,21 +148,19 @@
     // 如果现在push的不是栈底控制器(最先push进来的那个控制器)
     if (self.viewControllers.count > 0){
 //        /// 记录snapView
-//        CMHViewController *topViewController = (CMHViewController *)[self topViewController];
-//        if (topViewController.tabBarController) {
+//        KJViewController *topViewController = (KJViewController *)[self topViewController];
+//        if (topViewController.tabBarController){
 //            topViewController.snapshot = [topViewController.tabBarController.view snapshotViewAfterScreenUpdates:NO];
 //        } else {
 //            topViewController.snapshot = [self.view snapshotViewAfterScreenUpdates:NO];
 //        }
         // 统一隐藏底部tabbar
         viewController.hidesBottomBarWhenPushed = YES;
-        
-        // CoderMikeHe Fixed Bug: 隐藏掉系统的返回按钮，这种方法会导致, 侧滑返回取消，导航栏会 莫名显示三个蓝点，及其恶心。但是如果不隐藏返回按钮，则会出现，你在viewController里面设置其 navigationItem.leftBarButtonItem = nil; 就会显示出系统的返回按钮。当然，出现蓝点的解决方案，在CMHViewController.m 里面，欢迎大家踊跃讨论
+        // CoderMikeHe Fixed Bug: 隐藏掉系统的返回按钮，这种方法会导致, 侧滑返回取消，导航栏会 莫名显示三个蓝点，及其恶心。但是如果不隐藏返回按钮，则会出现，你在viewController里面设置其 navigationItem.leftBarButtonItem = nil; 就会显示出系统的返回按钮。当然，出现蓝点的解决方案，在KJViewController.m 里面，欢迎大家踊跃讨论
         viewController.navigationItem.backBarButtonItem = nil;
         [viewController.navigationItem setHidesBackButton:YES];
-        
         // 4.这里可以设置导航栏的左右按钮 统一管理方法
-//        viewController.navigationItem.leftBarButtonItem = [UIBarButtonItem mh_backItemWithTitle:@"返回" imageName:@"barbuttonicon_back_15x30" target:self action:@selector(_backItemDidClicked)];
+//        viewController.navigationItem.leftBarButtonItem = [UIBarButtonItem kj_backItemWithTitle:@"返回" imageName:@"barbuttonicon_back_15x30" target:self action:@selector(_backItemDidClicked)];
     }
     
     // push

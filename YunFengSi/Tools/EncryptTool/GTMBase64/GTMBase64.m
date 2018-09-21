@@ -35,10 +35,10 @@ static const char kBase64DecodeChars[] = {
 	//   char *pos;
 	//   int idx, i, j;
 	//   printf("    ");
-	//   for (i = 0; i < 255; i += 8) {
-	//     for (j = i; j < i + 8; j++) {
+	//   for (i = 0; i < 255; i += 8){
+	//     for (j = i; j < i + 8; j++){
 	//       pos = strchr(Base64, j);
-	//       if ((pos == NULL) || (j == 0))
+	//       if ((pos == NULL)|| (j == 0))
 	//         idx = 99;
 	//       else
 	//         idx = pos - Base64;
@@ -96,10 +96,10 @@ static const char kWebSafeBase64DecodeChars[] = {
 	//   char *pos;
 	//   int idx, i, j;
 	//   printf("    ");
-	//   for (i = 0; i < 255; i += 8) {
-	//     for (j = i; j < i + 8; j++) {
+	//   for (i = 0; i < 255; i += 8){
+	//     for (j = i; j < i + 8; j++){
 	//       pos = strchr(Base64, j);
-	//       if ((pos == NULL) || (j == 0))
+	//       if ((pos == NULL)|| (j == 0))
 	//         idx = 99;
 	//       else
 	//         idx = pos - Base64;
@@ -152,7 +152,7 @@ static const char kWebSafeBase64DecodeChars[] = {
 //   YES if the character is a whitespace character.
 //   NO if the character is not a whitespace character.
 //
-GTM_INLINE BOOL IsSpace(unsigned char c) {
+GTM_INLINE BOOL IsSpace(unsigned char c){
 	// we use our own mapping here because we don't want anything w/ locale
 	// support.
 	static BOOL kSpaces[256] = {
@@ -191,11 +191,11 @@ GTM_INLINE BOOL IsSpace(unsigned char c) {
 // Returns:
 //   The guessed encoded length for a source length
 //
-GTM_INLINE NSUInteger CalcEncodedLength(NSUInteger srcLen, BOOL padded) {
+GTM_INLINE NSUInteger CalcEncodedLength(NSUInteger srcLen, BOOL padded){
 	NSUInteger intermediate_result = 8 * srcLen + 5;
 	NSUInteger len = intermediate_result / 6;
-	if (padded) {
-		len = ((len + 3) / 4) * 4;
+	if (padded){
+		len = ((len + 3)/ 4)* 4;
 	}
 	return len;
 }
@@ -207,8 +207,8 @@ GTM_INLINE NSUInteger CalcEncodedLength(NSUInteger srcLen, BOOL padded) {
 // Returns:
 //   The guessed decoded length for a source length
 //
-GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
-	return (srcLen + 3) / 4 * 3;
+GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen){
+	return (srcLen + 3)/ 4 * 3;
 }
 
 
@@ -244,7 +244,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 @implementation GTMBase64
 
 //
-// Standard Base64 (RFC) handling
+// Standard Base64 (RFC)handling
 //
 
 +(NSData *)encodeData:(NSData *)data {
@@ -281,7 +281,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 								  length:[data length]
 								 charset:kBase64EncodeChars
 								  padded:YES];
-	if (converted) {
+	if (converted){
 		result = [[NSString alloc] initWithData:converted
 										encoding:NSASCIIStringEncoding];
 	}
@@ -294,7 +294,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 								  length:length
 								 charset:kBase64EncodeChars
 								  padded:YES];
-	if (converted) {
+	if (converted){
 		result = [[NSString alloc] initWithData:converted
 										encoding:NSASCIIStringEncoding];
 	}
@@ -304,7 +304,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 +(NSData *)decodeString:(NSString *)string {
 	NSData *result = nil;
 	NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
-	if (data) {
+	if (data){
 		result = [self baseDecode:[data bytes]
 						   length:[data length]
 						  charset:kBase64DecodeChars
@@ -360,7 +360,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 								  length:[data length]
 								 charset:kWebSafeBase64EncodeChars
 								  padded:padded];
-	if (converted) {
+	if (converted){
 		result = [[NSString alloc] initWithData:converted
 										encoding:NSASCIIStringEncoding];
 	}
@@ -375,7 +375,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 								  length:length
 								 charset:kWebSafeBase64EncodeChars
 								  padded:padded];
-	if (converted) {
+	if (converted){
 		result = [[NSString alloc] initWithData:converted
 										encoding:NSASCIIStringEncoding];
 	}
@@ -385,7 +385,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 +(NSData *)webSafeDecodeString:(NSString *)string {
 	NSData *result = nil;
 	NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
-	if (data) {
+	if (data){
 		result = [self baseDecode:[data bytes]
 						   length:[data length]
 						  charset:kWebSafeBase64DecodeChars
@@ -425,7 +425,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 									  destLen:[result length]
 									  charset:charset
 									   padded:padded];
-	if (finalLength) {
+	if (finalLength){
 		_GTMDevAssert(finalLength == maxLength, @"how did we calc the length wrong?");
 	} else {
 		// shouldn't happen, this means we ran out of space
@@ -461,8 +461,8 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 									  destLen:[result length]
 									  charset:charset
 							   requirePadding:requirePadding];
-	if (finalLength) {
-		if (finalLength != maxLength) {
+	if (finalLength){
+		if (finalLength != maxLength){
 			// resize down to how big it was
 			[result setLength:finalLength];
 		}
@@ -490,7 +490,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
                 destLen:(NSUInteger)destLen
                 charset:(const char *)charset
                  padded:(BOOL)padded {
-	if (!srcLen || !destLen || !srcBytes || !destBytes) {
+	if (!srcLen || !destLen || !srcBytes || !destBytes){
 		return 0;
 	}
     
@@ -499,14 +499,13 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
     
 	// Three bytes of data encodes to four characters of cyphertext.
 	// So we can pump through three-byte chunks atomically.
-	while (srcLen > 2) {
+	while (srcLen > 2){
 		// space?
 		_GTMDevAssert(destLen >= 4, @"our calc for encoded length was wrong");
 		curDest[0] = charset[curSrc[0] >> 2];
-		curDest[1] = charset[((curSrc[0] & 0x03) << 4) + (curSrc[1] >> 4)];
-		curDest[2] = charset[((curSrc[1] & 0x0f) << 2) + (curSrc[2] >> 6)];
+		curDest[1] = charset[((curSrc[0] & 0x03)<< 4)+ (curSrc[1] >> 4)];
+		curDest[2] = charset[((curSrc[1] & 0x0f)<< 2)+ (curSrc[2] >> 6)];
 		curDest[3] = charset[curSrc[2] & 0x3f];
-        
 		curDest += 4;
 		curSrc += 3;
 		srcLen -= 3;
@@ -514,7 +513,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 	}
     
 	// now deal with the tail (<=2 bytes)
-	switch (srcLen) {
+	switch (srcLen){
 		case 0:
 			// Nothing left; nothing more to do.
 			break;
@@ -523,10 +522,10 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 			// two pad characters to round out the four-character cypherblock.
 			_GTMDevAssert(destLen >= 2, @"our calc for encoded length was wrong");
 			curDest[0] = charset[curSrc[0] >> 2];
-			curDest[1] = charset[(curSrc[0] & 0x03) << 4];
+			curDest[1] = charset[(curSrc[0] & 0x03)<< 4];
 			curDest += 2;
 			destLen -= 2;
-			if (padded) {
+			if (padded){
 				_GTMDevAssert(destLen >= 2, @"our calc for encoded length was wrong");
 				curDest[0] = kBase64PaddingChar;
 				curDest[1] = kBase64PaddingChar;
@@ -538,11 +537,11 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 			// one pad character to round out the four-character cypherblock.
 			_GTMDevAssert(destLen >= 3, @"our calc for encoded length was wrong");
 			curDest[0] = charset[curSrc[0] >> 2];
-			curDest[1] = charset[((curSrc[0] & 0x03) << 4) + (curSrc[1] >> 4)];
-			curDest[2] = charset[(curSrc[1] & 0x0f) << 2];
+			curDest[1] = charset[((curSrc[0] & 0x03)<< 4)+ (curSrc[1] >> 4)];
+			curDest[2] = charset[(curSrc[1] & 0x0f)<< 2];
 			curDest += 3;
 			destLen -= 3;
-			if (padded) {
+			if (padded){
 				_GTMDevAssert(destLen >= 1, @"our calc for encoded length was wrong");
 				curDest[0] = kBase64PaddingChar;
 				curDest += 1;
@@ -569,7 +568,7 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
                 destLen:(NSUInteger)destLen
                 charset:(const char *)charset
          requirePadding:(BOOL)requirePadding {
-	if (!srcLen || !destLen || !srcBytes || !destBytes) {
+	if (!srcLen || !destLen || !srcBytes || !destBytes){
 		return 0;
 	}
     
@@ -577,20 +576,17 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 	NSUInteger destIndex = 0;
 	int state = 0;
 	char ch = 0;
-	while (srcLen-- && (ch = *srcBytes++) != 0)  {
-		if (IsSpace(ch))  // Skip whitespace
+	while (srcLen-- && (ch = *srcBytes++)!= 0) {
+		if (IsSpace(ch)) // Skip whitespace
 			continue;
-        
 		if (ch == kBase64PaddingChar)
 			break;
-        
 		decode = charset[(unsigned int)ch];
 		if (decode == kBase64InvalidChar)
 			return 0;
-        
 		// Four cyphertext characters decode to three bytes.
 		// Therefore we can be in one of four states.
-		switch (state) {
+		switch (state){
 			case 0:
 				// We're at the beginning of a four-character cyphertext block.
 				// This sets the high six bits of the first byte of the
@@ -603,9 +599,9 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 				// We're one character into a four-character cyphertext block.
 				// This sets the low two bits of the first plaintext byte,
 				// and the high four bits of the second plaintext byte.
-				_GTMDevAssert((destIndex+1) < destLen, @"our calc for decoded length was wrong");
+				_GTMDevAssert((destIndex+1)< destLen, @"our calc for decoded length was wrong");
 				destBytes[destIndex] |= decode >> 4;
-				destBytes[destIndex+1] = (decode & 0x0f) << 4;
+				destBytes[destIndex+1] = (decode & 0x0f)<< 4;
 				destIndex++;
 				state = 2;
 				break;
@@ -617,9 +613,9 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 				// bits are zero, it could be that those two bits are
 				// leftovers from the encoding of data that had a length
 				// of two mod three.
-				_GTMDevAssert((destIndex+1) < destLen, @"our calc for decoded length was wrong");
+				_GTMDevAssert((destIndex+1)< destLen, @"our calc for decoded length was wrong");
 				destBytes[destIndex] |= decode >> 2;
-				destBytes[destIndex+1] = (decode & 0x03) << 6;
+				destBytes[destIndex+1] = (decode & 0x03)<< 6;
 				destIndex++;
 				state = 3;
 				break;
@@ -636,44 +632,43 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
     
 	// We are done decoding Base-64 chars.  Let's see if we ended
 	//      on a byte boundary, and/or with erroneous trailing characters.
-	if (ch == kBase64PaddingChar) {               // We got a pad char
-		if ((state == 0) || (state == 1)) {
+	if (ch == kBase64PaddingChar){               // We got a pad char
+		if ((state == 0)|| (state == 1)){
 			return 0;  // Invalid '=' in first or second position
 		}
-		if (srcLen == 0) {
-			if (state == 2) { // We run out of input but we still need another '='
+		if (srcLen == 0){
+			if (state == 2){ // We run out of input but we still need another '='
 				return 0;
 			}
 			// Otherwise, we are in state 3 and only need this '='
 		} else {
-			if (state == 2) {  // need another '='
-				while ((ch = *srcBytes++) && (srcLen-- > 0)) {
+			if (state == 2){  // need another '='
+				while ((ch = *srcBytes++)&& (srcLen-- > 0)){
 					if (!IsSpace(ch))
 						break;
 				}
-				if (ch != kBase64PaddingChar) {
+				if (ch != kBase64PaddingChar){
 					return 0;
 				}
 			}
 			// state = 1 or 2, check if all remain padding is space
-			while ((ch = *srcBytes++) && (srcLen-- > 0)) {
-				if (!IsSpace(ch)) {
+			while ((ch = *srcBytes++)&& (srcLen-- > 0)){
+				if (!IsSpace(ch)){
 					return 0;
 				}
 			}
 		}
 	} else {
 		// We ended by seeing the end of the string.
-        
-		if (requirePadding) {
+		if (requirePadding){
 			// If we require padding, then anything but state 0 is an error.
-			if (state != 0) {
+			if (state != 0){
 				return 0;
 			}
 		} else {
 			// Make sure we have no partial bytes lying around.  Note that we do not
 			// require trailing '=', so states 2 and 3 are okay too.
-			if (state == 1) {
+			if (state == 1){
 				return 0;
 			}
 		}
@@ -682,8 +677,8 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 	// If then next piece of output was valid and got written to it means we got a
 	// very carefully crafted input that appeared valid but contains some trailing
 	// bits past the real length, so just toss the thing.
-	if ((destIndex < destLen) &&
-		(destBytes[destIndex] != 0)) {
+	if ((destIndex < destLen)&&
+		(destBytes[destIndex] != 0)){
 		return 0;
 	}
     

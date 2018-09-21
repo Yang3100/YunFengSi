@@ -72,7 +72,7 @@
     CC_SHA1(self.bytes, (CC_LONG)self.length, result);
     NSMutableString *hash = [NSMutableString
                              stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
-    for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++) {
+    for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++){
         [hash appendFormat:@"%02x", result[i]];
     }
     return hash;
@@ -89,7 +89,7 @@
     CC_SHA224(self.bytes, (CC_LONG)self.length, result);
     NSMutableString *hash = [NSMutableString
                              stringWithCapacity:CC_SHA224_DIGEST_LENGTH * 2];
-    for (int i = 0; i < CC_SHA224_DIGEST_LENGTH; i++) {
+    for (int i = 0; i < CC_SHA224_DIGEST_LENGTH; i++){
         [hash appendFormat:@"%02x", result[i]];
     }
     return hash;
@@ -106,7 +106,7 @@
     CC_SHA256(self.bytes, (CC_LONG)self.length, result);
     NSMutableString *hash = [NSMutableString
                              stringWithCapacity:CC_SHA256_DIGEST_LENGTH * 2];
-    for (int i = 0; i < CC_SHA256_DIGEST_LENGTH; i++) {
+    for (int i = 0; i < CC_SHA256_DIGEST_LENGTH; i++){
         [hash appendFormat:@"%02x", result[i]];
     }
     return hash;
@@ -123,7 +123,7 @@
     CC_SHA384(self.bytes, (CC_LONG)self.length, result);
     NSMutableString *hash = [NSMutableString
                              stringWithCapacity:CC_SHA384_DIGEST_LENGTH * 2];
-    for (int i = 0; i < CC_SHA384_DIGEST_LENGTH; i++) {
+    for (int i = 0; i < CC_SHA384_DIGEST_LENGTH; i++){
         [hash appendFormat:@"%02x", result[i]];
     }
     return hash;
@@ -140,7 +140,7 @@
     CC_SHA512(self.bytes, (CC_LONG)self.length, result);
     NSMutableString *hash = [NSMutableString
                              stringWithCapacity:CC_SHA512_DIGEST_LENGTH * 2];
-    for (int i = 0; i < CC_SHA512_DIGEST_LENGTH; i++) {
+    for (int i = 0; i < CC_SHA512_DIGEST_LENGTH; i++){
         [hash appendFormat:@"%02x", result[i]];
     }
     return hash;
@@ -154,7 +154,7 @@
 
 - (NSString *)hmacStringUsingAlg:(CCHmacAlgorithm)alg withKey:(NSString *)key {
     size_t size;
-    switch (alg) {
+    switch (alg){
         case kCCHmacAlgMD5: size = CC_MD5_DIGEST_LENGTH; break;
         case kCCHmacAlgSHA1: size = CC_SHA1_DIGEST_LENGTH; break;
         case kCCHmacAlgSHA224: size = CC_SHA224_DIGEST_LENGTH; break;
@@ -167,7 +167,7 @@
     const char *cKey = [key cStringUsingEncoding:NSUTF8StringEncoding];
     CCHmac(alg, cKey, strlen(cKey), self.bytes, self.length, result);
     NSMutableString *hash = [NSMutableString stringWithCapacity:size * 2];
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++){
         [hash appendFormat:@"%02x", result[i]];
     }
     return hash;
@@ -175,7 +175,7 @@
 
 - (NSData *)hmacDataUsingAlg:(CCHmacAlgorithm)alg withKey:(NSData *)key {
     size_t size;
-    switch (alg) {
+    switch (alg){
         case kCCHmacAlgMD5: size = CC_MD5_DIGEST_LENGTH; break;
         case kCCHmacAlgSHA1: size = CC_SHA1_DIGEST_LENGTH; break;
         case kCCHmacAlgSHA224: size = CC_SHA224_DIGEST_LENGTH; break;
@@ -239,17 +239,17 @@
 
 
 - (NSData *)aes256EncryptWithKey:(NSData *)key iv:(NSData *)iv {
-    if (key.length != 16 && key.length != 24 && key.length != 32) {
+    if (key.length != 16 && key.length != 24 && key.length != 32){
         return nil;
     }
-    if (iv.length != 16 && iv.length != 0) {
+    if (iv.length != 16 && iv.length != 0){
         return nil;
     }
     
     NSData *result = nil;
     size_t bufferSize = self.length + kCCBlockSizeAES128;
     void *buffer = malloc(bufferSize);
-    if (!buffer) return nil;
+    if (!buffer)return nil;
     size_t encryptedSize = 0;
     CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt,
                                           kCCAlgorithmAES128,
@@ -262,7 +262,7 @@
                                           buffer,
                                           bufferSize,
                                           &encryptedSize);
-    if (cryptStatus == kCCSuccess) {
+    if (cryptStatus == kCCSuccess){
         result = [[NSData alloc]initWithBytes:buffer length:encryptedSize];
         free(buffer);
         return result;
@@ -273,17 +273,17 @@
 }
 
 - (NSData *)aes256DecryptWithkey:(NSData *)key iv:(NSData *)iv {
-    if (key.length != 16 && key.length != 24 && key.length != 32) {
+    if (key.length != 16 && key.length != 24 && key.length != 32){
         return nil;
     }
-    if (iv.length != 16 && iv.length != 0) {
+    if (iv.length != 16 && iv.length != 0){
         return nil;
     }
     
     NSData *result = nil;
     size_t bufferSize = self.length + kCCBlockSizeAES128;
     void *buffer = malloc(bufferSize);
-    if (!buffer) return nil;
+    if (!buffer)return nil;
     size_t encryptedSize = 0;
     CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt,
                                           kCCAlgorithmAES128,
@@ -296,7 +296,7 @@
                                           buffer,
                                           bufferSize,
                                           &encryptedSize);
-    if (cryptStatus == kCCSuccess) {
+    if (cryptStatus == kCCSuccess){
         result = [[NSData alloc]initWithBytes:buffer length:encryptedSize];
         free(buffer);
         return result;
@@ -307,7 +307,7 @@
 }
 
 - (NSString *)utf8String {
-    if (self.length > 0) {
+    if (self.length > 0){
         return [[NSString alloc] initWithData:self encoding:NSUTF8StringEncoding];
     }
     return @"";
@@ -317,7 +317,7 @@
     NSUInteger length = self.length;
     NSMutableString *result = [NSMutableString stringWithCapacity:length * 2];
     const unsigned char *byte = self.bytes;
-    for (int i = 0; i < length; i++, byte++) {
+    for (int i = 0; i < length; i++, byte++){
         [result appendFormat:@"%02X", *byte];
     }
     return result;
@@ -327,16 +327,16 @@
     hexStr = [hexStr stringByReplacingOccurrencesOfString:@" " withString:@""];
     hexStr = [hexStr lowercaseString];
     NSUInteger len = hexStr.length;
-    if (!len) return nil;
-    unichar *buf = malloc(sizeof(unichar) * len);
-    if (!buf) return nil;
+    if (!len)return nil;
+    unichar *buf = malloc(sizeof(unichar)* len);
+    if (!buf)return nil;
     [hexStr getCharacters:buf range:NSMakeRange(0, len)];
     
     NSMutableData *result = [NSMutableData data];
     unsigned char bytes;
     char str[3] = { '\0', '\0', '\0' };
     int i;
-    for (i = 0; i < len / 2; i++) {
+    for (i = 0; i < len / 2; i++){
         str[0] = buf[i * 2];
         str[1] = buf[i * 2 + 1];
         bytes = strtol(str, NULL, 16);
@@ -372,29 +372,29 @@ static const short base64DecodingTable[256] = {
     if (length == 0)
         return @"";
     
-    NSUInteger out_length = ((length + 2) / 3) * 4;
-    uint8_t *output = malloc(((out_length + 2) / 3) * 4);
+    NSUInteger out_length = ((length + 2)/ 3)* 4;
+    uint8_t *output = malloc(((out_length + 2)/ 3)* 4);
     if (output == NULL)
         return nil;
     
     const char *input = self.bytes;
     NSInteger i, value;
-    for (i = 0; i < length; i += 3) {
+    for (i = 0; i < length; i += 3){
         value = 0;
-        for (NSInteger j = i; j < i + 3; j++) {
+        for (NSInteger j = i; j < i + 3; j++){
             value <<= 8;
-            if (j < length) {
+            if (j < length){
                 value |= (0xFF & input[j]);
             }
         }
-        NSInteger index = (i / 3) * 4;
-        output[index + 0] = base64EncodingTable[(value >> 18) & 0x3F];
-        output[index + 1] = base64EncodingTable[(value >> 12) & 0x3F];
-        output[index + 2] = ((i + 1) < length)
-        ? base64EncodingTable[(value >> 6) & 0x3F]
+        NSInteger index = (i / 3)* 4;
+        output[index + 0] = base64EncodingTable[(value >> 18)& 0x3F];
+        output[index + 1] = base64EncodingTable[(value >> 12)& 0x3F];
+        output[index + 2] = ((i + 1)< length)
+        ? base64EncodingTable[(value >> 6)& 0x3F]
         : '=';
-        output[index + 3] = ((i + 2) < length)
-        ? base64EncodingTable[(value >> 0) & 0x3F]
+        output[index + 3] = ((i + 2)< length)
+        ? base64EncodingTable[(value >> 0)& 0x3F]
         : '=';
     }
     
@@ -424,20 +424,19 @@ static const short base64DecodingTable[256] = {
     uint8_t *output = data.mutableBytes;
     NSInteger inputPoint = 0;
     NSInteger outputPoint = 0;
-    while (inputPoint < length) {
+    while (inputPoint < length){
         char i0 = string[inputPoint++];
         char i1 = string[inputPoint++];
         char i2 = inputPoint < length ? string[inputPoint++] : 'A';
         char i3 = inputPoint < length ? string[inputPoint++] : 'A';
-        
         output[outputPoint++] = (base64DecodingTable[i0] << 2)
         | (base64DecodingTable[i1] >> 4);
-        if (outputPoint < outputLength) {
-            output[outputPoint++] = ((base64DecodingTable[i1] & 0xf) << 4)
+        if (outputPoint < outputLength){
+            output[outputPoint++] = ((base64DecodingTable[i1] & 0xf)<< 4)
             | (base64DecodingTable[i2] >> 2);
         }
-        if (outputPoint < outputLength) {
-            output[outputPoint++] = ((base64DecodingTable[i2] & 0x3) << 6)
+        if (outputPoint < outputLength){
+            output[outputPoint++] = ((base64DecodingTable[i2] & 0x3)<< 6)
             | base64DecodingTable[i3];
         }
     }
@@ -448,25 +447,23 @@ static const short base64DecodingTable[256] = {
 - (id)jsonValueDecoded {
     NSError *error = nil;
     id value = [NSJSONSerialization JSONObjectWithData:self options:kNilOptions error:&error];
-    if (error) {
+    if (error){
         NSLog(@"jsonValueDecoded error:%@", error);
     }
     return value;
 }
 
-+ (NSString *)cachePath
-{
-    NSString *path = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject];
++ (NSString *)cachePath{
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES)lastObject];
     path = [path stringByAppendingPathComponent:@"Caches"];
     path = [path stringByAppendingPathComponent:@"SDDataCache"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]){
         [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
     }
     return path;
 }
 
-+ (NSString *)creatMD5StringWithString:(NSString *)string
-{
++ (NSString *)creatMD5StringWithString:(NSString *)string{
     const char *original_str = [string UTF8String];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
     CC_MD5(original_str, (CC_LONG)strlen(original_str), result);
@@ -477,26 +474,23 @@ static const short base64DecodingTable[256] = {
     return hash;
 }
 
-+ (NSString *)creatDataPathWithString:(NSString *)string
-{
++ (NSString *)creatDataPathWithString:(NSString *)string{
     NSString *path = [NSData cachePath];
     path = [path stringByAppendingPathComponent:[self creatMD5StringWithString:string]];
     return path;
 }
 
-- (void)saveDataCacheWithIdentifier:(NSString *)identifier
-{
+- (void)saveDataCacheWithIdentifier:(NSString *)identifier{
     NSString *path = [NSData creatDataPathWithString:identifier];
     [self writeToFile:path atomically:YES];
 }
 
-+ (NSData *)getDataCacheWithIdentifier:(NSString *)identifier
-{
++ (NSData *)getDataCacheWithIdentifier:(NSString *)identifier{
     static BOOL isCheckedCacheDisk = NO;
-    if (!isCheckedCacheDisk) {
+    if (!isCheckedCacheDisk){
         NSFileManager *manager = [NSFileManager defaultManager];
         NSArray *contents = [manager contentsOfDirectoryAtPath:[self cachePath] error:nil];
-        if (contents.count >= kSDMaxCacheFileAmount) {
+        if (contents.count >= kSDMaxCacheFileAmount){
             [manager removeItemAtPath:[self cachePath] error:nil];
         }
         isCheckedCacheDisk = YES;
@@ -507,7 +501,7 @@ static const short base64DecodingTable[256] = {
 }
 + (NSData *)dataNamed:(NSString *)name {
     NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@""];
-    if (!path) return nil;
+    if (!path)return nil;
     NSData *data = [NSData dataWithContentsOfFile:path];
     return data;
 }

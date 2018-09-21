@@ -282,7 +282,7 @@ typedef void (^StateBlock)(TDTouchIDState state,NSError *error);
 + (UIImage *)imageCompressForSize:(UIImage *)sourceImage targetSize:(CGSize)size;
 
 // 处理二维码模糊的问题
-+ (UIImage *)createNonInterpolatedUIImageFormCIImage:(CIImage *)image withSize:(CGFloat) size;
++ (UIImage *)createNonInterpolatedUIImageFormCIImage:(CIImage *)image withSize:(CGFloat)size;
 
 // 浏览大图, currentImageview 当前图片视图,    alpha 背景透明度
 + (void)scanBigImageWithImageView:(UIImageView *)currentImageview alpha:(CGFloat)alpha;

@@ -16,9 +16,9 @@
 #define PI 3.14159265358979323846264338327950288
 
 //颜色相关
-#define UIColorFromHEXA(hex,a) [UIColor colorWithRed:((hex&0xFF0000)>>16)/255.0f green:((hex&0xFF00)>>8)/255.0f blue:(hex&0xFF)/255.0f alpha:a]
+#define UIColorFromHEXA(hex,a)[UIColor colorWithRed:((hex&0xFF0000)>>16)/255.0f green:((hex&0xFF00)>>8)/255.0f blue:(hex&0xFF)/255.0f alpha:a]
 //文字大小
-#define SystemFontSize(fontsize) [UIFont systemFontOfSize:(fontsize)]
+#define SystemFontSize(fontsize)[UIFont systemFontOfSize:(fontsize)]
 
 @interface KJTools()
 
@@ -33,38 +33,36 @@ static CGRect tool_oldframe;
 + (void)ShowAlertWith:(NSString *)title message:(NSString *)message sureTitle:(NSString*)sureWord andCancel:(NSString*)cancelStr viewControl:(UIViewController *)control andSureBack:(void(^)(void))block andCancelBack:(void(^)(void))canBlock{
     UIAlertController *ac = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *sure = [UIAlertAction actionWithTitle:sureWord style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *sure = [UIAlertAction actionWithTitle:sureWord style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
         block();
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:cancelStr style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:cancelStr style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action){
         canBlock();
     }];
     
-    if ([[[UIDevice currentDevice] systemVersion]integerValue] >=9.0) {
+    if ([[[UIDevice currentDevice] systemVersion]integerValue] >=9.0){
         //        [sure setValue:AssistColor forKey:@"titleTextColor"];
-        [cancel setValue:UIColorFromHEXA(0x333333,1.0) forKey:@"titleTextColor"];
+        [cancel setValue:UIColorFromHEXA(0x333333,1.0)forKey:@"titleTextColor"];
         [sure setValue:MainColor forKey:@"titleTextColor"];
     }
     
     [ac addAction:sure];
     [ac addAction:cancel];
     [control presentViewController:ac animated:YES completion:^{
-        
     }];
 }
 #pragma mark-----提示框 确定和取消
 + (void)ShowOnlyAlertWith:(NSString*)title message:(NSString*)message andSureTitle:(NSString*)sureTitle viewControl:(UIViewController*)control andSureBack:(void(^)(void))block{
     UIAlertController *ac = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *sure = [UIAlertAction actionWithTitle:sureTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *sure = [UIAlertAction actionWithTitle:sureTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
         block();
     }];
-    if ([[[UIDevice currentDevice] systemVersion]integerValue] >=9.0) {
-        [sure setValue:UIColorFromHEXA(0x333333,1.0) forKey:@"titleTextColor"];
+    if ([[[UIDevice currentDevice] systemVersion]integerValue] >=9.0){
+        [sure setValue:UIColorFromHEXA(0x333333,1.0)forKey:@"titleTextColor"];
         [sure setValue:MainColor forKey:@"titleTextColor"];
     }
     [ac addAction:sure];
     [control presentViewController:ac animated:YES completion:^{
-        
     }];
     
 }
@@ -89,14 +87,14 @@ static CGRect tool_oldframe;
 // 请求地址的拼接
 + (NSString *)urlstrSuffix:(NSArray *)key withValue:(NSArray *)value with:(NSString *)suffix{
     NSMutableString *url = [NSMutableString stringWithFormat:@"%@?",suffix];
-    for (int i = 0; i < key.count; i ++) {
-        if (i == key.count-1) {
+    for (int i = 0; i < key.count; i ++){
+        if (i == key.count-1){
             [url appendFormat:@"%@=%@",key[i],value[i]];
         }else{
             [url appendFormat:@"%@=%@&",key[i],value[i]];
         }
     }
-    if ([self IsChinese:[NSString stringWithFormat:@"aa!@#$%@%@)",@"^&*(",url]]) {  //当有中文的时候记得进行UTF8转码
+    if ([self IsChinese:[NSString stringWithFormat:@"aa!@#$%@%@)",@"^&*(",url]]){  //当有中文的时候记得进行UTF8转码
         NSMutableCharacterSet * allowedCharacterSet = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
         NSString *str = url;
         str = [str stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacterSet];
@@ -125,7 +123,7 @@ static CGRect tool_oldframe;
 }
 
 + (NSMutableAttributedString *)changeStrWittContext:(NSString *)context ChangeColorText:(NSString *)ColorStr WithColor:(id)ColorValue WithFont:(id)FontValue {
-    if (context == nil || ColorStr == nil) {
+    if (context == nil || ColorStr == nil){
         return nil;
     }
     NSMutableAttributedString* inputStr = [[NSMutableAttributedString alloc]initWithString:context];
@@ -143,7 +141,7 @@ static CGRect tool_oldframe;
 
 + (NSString *)timeIntervalBeforeNowDescription:(NSString*)time{
     static NSDateFormatter *dateFormatter;
-    if (!dateFormatter) {
+    if (!dateFormatter){
         dateFormatter = [[NSDateFormatter alloc] init];
     }
     //格式化日期字符串,只保留年、月、日信息
@@ -207,7 +205,7 @@ static CGRect tool_oldframe;
     if (hour > 12){
         hour = hour - 12;
     }
-    if(nowDateComponents.day == msgDateComponents.day) { // 同一天,显示时间
+    if(nowDateComponents.day == msgDateComponents.day){ // 同一天,显示时间
         result = [[NSString alloc] initWithFormat:@"%@ %ld:%02d",result,(long)hour,(int)msgDateComponents.minute];
     }
     else if(nowDateComponents.day == (msgDateComponents.day+1)){ //昨天
@@ -232,7 +230,7 @@ static CGRect tool_oldframe;
     else if (totalMin >= 12 * 60 && totalMin <= 18 * 60){
         showPeriodOfTime = NSLocalizedString(@"time_afternoon", nil);
     }
-    else if ((totalMin > 18 * 60 && totalMin <= (23 * 60 + 59)) || totalMin == 0){
+    else if ((totalMin > 18 * 60 && totalMin <= (23 * 60 + 59))|| totalMin == 0){
         showPeriodOfTime = NSLocalizedString(@"time_evening", nil);
     }
     return showPeriodOfTime;
@@ -241,7 +239,7 @@ static CGRect tool_oldframe;
 + (BOOL)comperTTwoMessage:(NSString*)lastTime andNewTime:(NSString*)newTime{
     long  number = 0;
     number = [newTime doubleValue] - [lastTime doubleValue];
-    if (number>300.0) {
+    if (number>300.0){
         return NO;
     }else{
         return YES;
@@ -257,7 +255,7 @@ static CGRect tool_oldframe;
     }
     else{
         int seconds = time % 60;
-        int minutes = (time / 60) % 60;
+        int minutes = (time / 60)% 60;
         long hours = time / 3600;
         return [NSString stringWithFormat:@"%02zd:%02d:%02d",hours, minutes, seconds];
     }
@@ -273,7 +271,6 @@ static CGRect tool_oldframe;
         return [NSString stringWithFormat:@"%2ld%@%2zd%@",time/60,NSLocalizedString(@"time_minute", nil),time%60,NSLocalizedString(@"time_seconds", nil)];
     }
     else{
-        
         return [NSString stringWithFormat:@"%2ld%@%2zd%@",time/3600,NSLocalizedString(@"time_hour", nil),time/60,NSLocalizedString(@"time_minute", nil)];
     }
 }
@@ -365,11 +362,11 @@ static CGRect tool_oldframe;
     value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSInteger length = 0;
     
-    if (!value) {
+    if (!value){
         return NO;
     }else {
         length = value.length;
-        if (length != 15 && length != 18) {
+        if (length != 15 && length != 18){
             return NO;
         }
     }
@@ -380,7 +377,7 @@ static CGRect tool_oldframe;
     NSString *valueStart2 = [value substringToIndex:2];
     BOOL areaFlag = NO;
     
-    for (NSString *areaCode in areasArray) {
+    for (NSString *areaCode in areasArray){
         if ([areaCode isEqualToString:valueStart2]){
             areaFlag = YES;
             break;
@@ -395,69 +392,51 @@ static CGRect tool_oldframe;
     NSUInteger numberofMatch;
     NSInteger year = 0;
     
-    switch (length) {
+    switch (length){
         case 15:
             year = [value substringWithRange:NSMakeRange(6,2)].intValue +1900;
-            
-            if (year %4 ==0 || (year %100 ==0 && year %4 ==0)) {
+                if (year %4 ==0 || (year %100 ==0 && year %4 ==0)){
                 regularExpression = [[NSRegularExpression alloc] initWithPattern:@"^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}$" options:NSRegularExpressionCaseInsensitive error:nil];//测试出生日期的合法性
             }else {
                 regularExpression = [[NSRegularExpression alloc]initWithPattern:@"^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}$" options:NSRegularExpressionCaseInsensitive error:nil];//测试出生日期的合法性
             }
-            
-            numberofMatch = [regularExpression numberOfMatchesInString:value options:NSMatchingReportProgress range:NSMakeRange(0, value.length)];
-            if(numberofMatch > 0) {
+                numberofMatch = [regularExpression numberOfMatchesInString:value options:NSMatchingReportProgress range:NSMakeRange(0, value.length)];
+            if(numberofMatch > 0){
                 return YES;
             }else {
                 return NO;
             }
-            
-        case 18:
-            
-            year = [value substringWithRange:NSMakeRange(6,4)].intValue;
-            if (year %4 ==0 || (year %100 ==0 && year %4 ==0)) {
+            case 18:
+                year = [value substringWithRange:NSMakeRange(6,4)].intValue;
+            if (year %4 ==0 || (year %100 ==0 && year %4 ==0)){
                 regularExpression = [[NSRegularExpression alloc]initWithPattern:@"^[1-9][0-9]{5}19[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}[0-9Xx]$" options:NSRegularExpressionCaseInsensitive error:nil];//测试出生日期的合法性
-                
-            }else {
-                
-                regularExpression = [[NSRegularExpression alloc]initWithPattern:@"^[1-9][0-9]{5}19[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}[0-9Xx]$" options:NSRegularExpressionCaseInsensitive error:nil];//测试出生日期的合法性
-                
-            }
-            
-            numberofMatch = [regularExpression numberOfMatchesInString:value options:NSMatchingReportProgress range:NSMakeRange(0, value.length)];
-            if(numberofMatch > 0) {
-                
-                int S = ([value substringWithRange:NSMakeRange(0,1)].intValue + [value substringWithRange:NSMakeRange(10,1)].intValue) *7 + ([value substringWithRange:NSMakeRange(1,1)].intValue + [value substringWithRange:NSMakeRange(11,1)].intValue) *9 + ([value substringWithRange:NSMakeRange(2,1)].intValue + [value  substringWithRange:NSMakeRange(12,1)].intValue) *10 + ([value  substringWithRange:NSMakeRange(3,1)].intValue + [value  substringWithRange:NSMakeRange(13,1)].intValue) *5 + ([value  substringWithRange:NSMakeRange(4,1)].intValue + [value  substringWithRange:NSMakeRange(14,1)].intValue) *8 + ([value  substringWithRange:NSMakeRange(5,1)].intValue + [value  substringWithRange:NSMakeRange(15,1)].intValue) *4 + ([value  substringWithRange:NSMakeRange(6,1)].intValue + [value  substringWithRange:NSMakeRange(16,1)].intValue) *2 + [value  substringWithRange:NSMakeRange(7,1)].intValue *1 + [value  substringWithRange:NSMakeRange(8,1)].intValue *6 + [value  substringWithRange:NSMakeRange(9,1)].intValue *3;
-                
-                int Y = S %11;
-                
-                NSString *M =@"F";
-                
-                NSString *JYM =@"10X98765432";
-                
-                M = [JYM substringWithRange:NSMakeRange(Y,1)];// 判断校验位
-                
-                if ([M isEqualToString:[value substringWithRange:NSMakeRange(17,1)]]) {
-                    
-                    return YES;// 检测ID的校验位
-                    
-                }else {
+                    }else {
+                        regularExpression = [[NSRegularExpression alloc]initWithPattern:@"^[1-9][0-9]{5}19[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}[0-9Xx]$" options:NSRegularExpressionCaseInsensitive error:nil];//测试出生日期的合法性
+                    }
+                numberofMatch = [regularExpression numberOfMatchesInString:value options:NSMatchingReportProgress range:NSMakeRange(0, value.length)];
+            if(numberofMatch > 0){
+                        int S = ([value substringWithRange:NSMakeRange(0,1)].intValue + [value substringWithRange:NSMakeRange(10,1)].intValue)*7 + ([value substringWithRange:NSMakeRange(1,1)].intValue + [value substringWithRange:NSMakeRange(11,1)].intValue)*9 + ([value substringWithRange:NSMakeRange(2,1)].intValue + [value  substringWithRange:NSMakeRange(12,1)].intValue)*10 + ([value  substringWithRange:NSMakeRange(3,1)].intValue + [value  substringWithRange:NSMakeRange(13,1)].intValue)*5 + ([value  substringWithRange:NSMakeRange(4,1)].intValue + [value  substringWithRange:NSMakeRange(14,1)].intValue)*8 + ([value  substringWithRange:NSMakeRange(5,1)].intValue + [value  substringWithRange:NSMakeRange(15,1)].intValue)*4 + ([value  substringWithRange:NSMakeRange(6,1)].intValue + [value  substringWithRange:NSMakeRange(16,1)].intValue)*2 + [value  substringWithRange:NSMakeRange(7,1)].intValue *1 + [value  substringWithRange:NSMakeRange(8,1)].intValue *6 + [value  substringWithRange:NSMakeRange(9,1)].intValue *3;
+                        int Y = S %11;
+                        NSString *M =@"F";
+                        NSString *JYM =@"10X98765432";
+                        M = [JYM substringWithRange:NSMakeRange(Y,1)];// 判断校验位
+                        if ([M isEqualToString:[value substringWithRange:NSMakeRange(17,1)]]){
+                                return YES;// 检测ID的校验位
+                            }else {
                     return NO;
                 }
             }else {
                 return NO;
             }
-            
-        default:
+            default:
             return NO;
-            
-    }
+        }
 }
 
 // 图片 Kb 压缩
 + (UIImage *)zipImageWithImage:(UIImage *)image withMaxSize:(NSInteger)kBit{
     NSLog(@"开始时间");
-    if (!image) {
+    if (!image){
         return nil;
     }
     CGFloat maxFileSize = kBit*1024;
@@ -465,7 +444,7 @@ static CGRect tool_oldframe;
     //    compression = 0.7;
     NSData *compressedData = UIImageJPEGRepresentation(image, compression);
     int i = 0;
-    while ([compressedData length] > maxFileSize) {
+    while ([compressedData length] > maxFileSize){
         compression *= compression;
         compressedData = UIImageJPEGRepresentation([[self class] compressImage:image newWidth:image.size.width*compression], compression);
         i++;
@@ -475,7 +454,7 @@ static CGRect tool_oldframe;
     return backImg;
 }
 + (UIImage *)compressImage:(UIImage *)image newWidth:(CGFloat)newImageWidth{
-    if (!image) return nil;
+    if (!image)return nil;
     float imageWidth = image.size.width;
     float imageHeight = image.size.height;
     float width = newImageWidth;
@@ -488,7 +467,7 @@ static CGRect tool_oldframe;
     // 并把它设置成为当前正在使用的context
     UIGraphicsBeginImageContext(CGSizeMake(width, height));
     @autoreleasepool {
-        if (widthScale > heightScale) {
+        if (widthScale > heightScale){
             [image drawInRect:CGRectMake(0, 0, imageWidth /heightScale , height)];
         }
         else {
@@ -508,10 +487,10 @@ static CGRect tool_oldframe;
     BOOL res = YES;
     NSCharacterSet *tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
     int i = 0;
-    while (i < number.length) {
+    while (i < number.length){
         NSString * string = [number substringWithRange:NSMakeRange(i, 1)];
         NSRange range = [string rangeOfCharacterFromSet:tmpSet];
-        if (range.length == 0) {
+        if (range.length == 0){
             res = NO;
             break;
         }
@@ -534,7 +513,7 @@ static CGRect tool_oldframe;
     CGFloat scaledWidth = targetWidth;
     CGFloat scaledHeight = targetHeight;
     CGPoint thumbnailPoint = CGPointMake(0.0, 0.0);
-    if(CGSizeEqualToSize(imageSize, size) == NO){
+    if(CGSizeEqualToSize(imageSize, size)== NO){
         CGFloat widthFactor = targetWidth / width;
         CGFloat heightFactor = targetHeight / height;
         if(widthFactor > heightFactor){
@@ -546,9 +525,9 @@ static CGRect tool_oldframe;
         scaledWidth = width * scaleFactor;
         scaledHeight = height * scaleFactor;
         if(widthFactor > heightFactor){
-            thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
+            thumbnailPoint.y = (targetHeight - scaledHeight)* 0.5;
         }else if(widthFactor < heightFactor){
-            thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
+            thumbnailPoint.x = (targetWidth - scaledWidth)* 0.5;
         }
     }
     
@@ -579,7 +558,7 @@ static CGRect tool_oldframe;
     NSTimeInterval timeInterval = endTime - startTime;
     
     //相距5分钟显示时间Label
-    if (fabs (timeInterval) > 300){
+    if (fabs (timeInterval)> 300){
         return YES;
     }
     else{
@@ -614,20 +593,20 @@ static CGRect tool_oldframe;
 //   替换万位一下数字
 +(NSString*)ChangeNumStr:(NSString*)number{
     NSString     *string = nil;
-    if ([number isKindOfClass:[NSNull class]]||number==nil||[number isEqualToString:@""]) {
+    if ([number isKindOfClass:[NSNull class]]||number==nil||[number isEqualToString:@""]){
         string =@"0.00";
         return string;
     }
 
-    if ([number rangeOfString:@"."].location!=NSNotFound) {
+    if ([number rangeOfString:@"."].location!=NSNotFound){
         // 有小数点数据
         CGFloat    num = [number floatValue];
         NSString  *changeNum=  [NSString stringWithFormat:@"%.2f",num];
-        if (num/10000<1) {
+        if (num/10000<1){
             string = [NSString stringWithFormat:@"%@",changeNum];
         }else{
             float  result =  num/10000.0;
-            if (result>=1000) {
+            if (result>=1000){
                 string = [NSString stringWithFormat:@"999+%@",NSLocalizedString(@"number_wan", nil)];
                 //                @"999+万";
             }else{
@@ -635,15 +614,14 @@ static CGRect tool_oldframe;
                 string = [NSString  stringWithFormat:@"%@%@",hash,NSLocalizedString(@"number_wan", nil)];
             }
         }
-        
     }else{
         NSInteger  num= [number integerValue];
         NSString  *lastNum=  [NSString stringWithFormat:@"%ld",(long)num];
-        if (num/10000<1) {
+        if (num/10000<1){
             string = [NSString stringWithFormat:@"%@",lastNum];
         }else{
             float  result =  num/10000.0;
-            if (result>=1000) {
+            if (result>=1000){
                 string = [NSString stringWithFormat:@"999+%@",NSLocalizedString(@"number_wan", nil)];
                 //                @"999+万";;
             }else{
@@ -651,13 +629,11 @@ static CGRect tool_oldframe;
                 string = [NSString  stringWithFormat:@"%@%@",hash,NSLocalizedString(@"number_wan", nil)];
             }
         }
-        
-        
     }
     //    CGFloat    num = [number floatValue];
     //    NSString  *lastNum=  [NSString stringWithFormat:@"%.2f",num];
-    //    if ([lastNum hasPrefix:@"."]) {
-    //        if (num/10000<1) {
+    //    if ([lastNum hasPrefix:@"."]){
+    //        if (num/10000<1){
     //            string = [NSString stringWithFormat:@"%@",lastNum];
     //        }else{
     //            float  result =  num/10000.0;
@@ -667,7 +643,7 @@ static CGRect tool_oldframe;
     //
     //    }else{
     //
-    //        if (num/10000<1) {
+    //        if (num/10000<1){
     //            string = [NSString stringWithFormat:@"%@",lastNum];
     //        }else{
     //            float  result =  num/10000.0;
@@ -681,9 +657,9 @@ static CGRect tool_oldframe;
 
 // 获取当前视图所在的控制器
 + (UIViewController*)getcurrentVC:(UIView*)view;{
-    for (UIView* next = [view superview]; next; next = next.superview) {
+    for (UIView* next = [view superview]; next; next = next.superview){
         UIResponder *nextResponder = [next nextResponder];
-        if ([nextResponder isKindOfClass:[UIViewController class]]) {
+        if ([nextResponder isKindOfClass:[UIViewController class]]){
             return (UIViewController *)nextResponder;
         }
     }
@@ -709,15 +685,15 @@ static CGRect tool_oldframe;
 //class为目标页面的类
 + (void)dismissViewControllerClass:(Class)class{
     UIViewController *vc = [self currentViewController];
-    while (![vc isKindOfClass:class] && vc != nil) {
+    while (![vc isKindOfClass:class] && vc != nil){
         vc = vc.presentingViewController;
     }
     [vc dismissViewControllerAnimated:YES completion:nil];
 }
 
 + (void)popViewControllerClass:(Class)class{
-    for (UIViewController *controller in [self currentViewController].navigationController.viewControllers) {
-        if ([controller isKindOfClass:class]) {
+    for (UIViewController *controller in [self currentViewController].navigationController.viewControllers){
+        if ([controller isKindOfClass:class]){
             [[self currentViewController].navigationController popToViewController:controller animated:YES];
         }
     }
@@ -745,7 +721,7 @@ static CGRect tool_oldframe;
     if (json == nil){
         return nil;
     }
-    if ([json isKindOfClass:[NSData class]]) {
+    if ([json isKindOfClass:[NSData class]]){
         return nil;
     }
     NSData *jsonData = [json dataUsingEncoding:NSUTF8StringEncoding];
@@ -768,14 +744,10 @@ static CGRect tool_oldframe;
     
     NSString *jsonString;
     
-    if (!jsonData) {
-        
+    if (!jsonData){
         NSLog(@"%@",error);
-        
     }else{
-        
         jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
-        
     }
     
     NSMutableString *mutStr = [NSMutableString stringWithString:jsonString];
@@ -832,7 +804,7 @@ static CGRect tool_oldframe;
 
 //// 大礼物动画名称数组
 //+ (NSArray *)BigGiftNameArray{
-//    NSString *docsDir = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+//    NSString *docsDir = [NSHomeDirectory()stringByAppendingPathComponent:@"Documents"];
 //    NSFileManager *fileManager = [NSFileManager defaultManager];
 //
 //    NSDirectoryEnumerator *dirEnum = [fileManager enumeratorAtPath:docsDir];
@@ -848,7 +820,7 @@ static CGRect tool_oldframe;
 //
 //// 获取大礼物动画图片数组
 //+ (NSMutableArray *)getBigGiftPictureArray:(NSString *)key {
-//    NSString *fullpath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:key];
+//    NSString *fullpath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0] stringByAppendingPathComponent:key];
 //    NSFileManager *fileManager = [NSFileManager defaultManager];
 //    NSDirectoryEnumerator *dirEnum = [fileManager enumeratorAtPath:fullpath];
 //
@@ -881,13 +853,13 @@ static CGRect tool_oldframe;
 //}
 
 
-+ (UIImage *)createNonInterpolatedUIImageFormCIImage:(CIImage *)image withSize:(CGFloat) size{
++ (UIImage *)createNonInterpolatedUIImageFormCIImage:(CIImage *)image withSize:(CGFloat)size{
     CGRect extent = CGRectIntegral(image.extent);
     CGFloat scale = MIN(size/CGRectGetWidth(extent), size/CGRectGetHeight(extent));
     
     // 1.创建bitmap;
-    size_t width = CGRectGetWidth(extent) * scale;
-    size_t height = CGRectGetHeight(extent) * scale;
+    size_t width = CGRectGetWidth(extent)* scale;
+    size_t height = CGRectGetHeight(extent)* scale;
     CGColorSpaceRef cs = CGColorSpaceCreateDeviceGray();
     CGContextRef bitmapRef = CGBitmapContextCreate(nil, width, height, 8, 0, cs, (CGBitmapInfo)kCGImageAlphaNone);
     CIContext *context = [CIContext contextWithOptions:nil];
@@ -911,25 +883,25 @@ static CGRect tool_oldframe;
 
 // 获取沙盒地址Library的目录路径
 + (NSString *)applicationDocumentsDirectoryWithLibrary{
-    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
 }
 
 // 获取沙盒地址Documents的目录路径
 + (NSString *)applicationDocumentsDirectoryWithDocuments{
-    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject];
 }
 /**
  *  获取沙盒Preference的文件目录。
  */
 + (NSString *)applicationPreferencePanesDirectoryWithPreference{
-    return [NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSUserDomainMask, YES) lastObject];
+    return [NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSUserDomainMask, YES)lastObject];
 }
 
 /**
  *  获取沙盒Caches的文件目录。
  */
 + (NSString *)applicationPreferencePanesDirectoryWithCaches{
-    return [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    return [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)lastObject];
 }
 // 按路径清除文件
 + (void)clearCachesWithFilePath:(NSString *)path{
@@ -942,7 +914,7 @@ static CGRect tool_oldframe;
 + (void)clearSubfilesWithFilePath:(NSString *)path {
     NSFileManager *manager = [NSFileManager defaultManager];
     NSArray *allPaths = [manager subpathsAtPath:path];
-    for (NSString *str in allPaths) {
+    for (NSString *str in allPaths){
         [manager removeItemAtPath:[path stringByAppendingPathComponent:str] error:nil];
     }
 }
@@ -955,19 +927,18 @@ static CGRect tool_oldframe;
     // 2.检测路径的合理性
     BOOL dir = NO;
     BOOL exits = [mgr fileExistsAtPath:path isDirectory:&dir];
-    if (!exits) return 0;
+    if (!exits)return 0;
     
     // 3.判断是否为文件夹
-    if (dir) { // 文件夹, 遍历文件夹里面的所有文件
+    if (dir){ // 文件夹, 遍历文件夹里面的所有文件
         // 这个方法能获得这个文件夹下面的所有子路径(直接\间接子路径)
         NSArray *subpaths = [mgr subpathsAtPath:path];
         int totalSize = 0;
-        for (NSString *subpath in subpaths) {
+        for (NSString *subpath in subpaths){
             NSString *fullsubpath = [path stringByAppendingPathComponent:subpath];
-            
-            BOOL dir = NO;
+                BOOL dir = NO;
             [mgr fileExistsAtPath:fullsubpath isDirectory:&dir];
-            if (!dir) { // 子路径是个文件
+            if (!dir){ // 子路径是个文件
                 NSDictionary *attrs = [mgr attributesOfItemAtPath:fullsubpath error:nil];
                 totalSize += [attrs[NSFileSize] intValue];
             }
@@ -992,7 +963,7 @@ static CGRect tool_oldframe;
 
 // 根据图片名从获取图片路径
 + (NSString *)getImagePathWithName:(NSString *)name{
-    NSString *documentsFile = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *documentsFile = [NSHomeDirectory()stringByAppendingPathComponent:@"Documents"];
     NSString* fullPathToFile = [documentsFile stringByAppendingPathComponent:name];
     
     return fullPathToFile;
@@ -1003,39 +974,39 @@ static CGRect tool_oldframe;
     struct utsname systemInfo;
     uname(&systemInfo);
     NSString *deviceString = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-    if ([deviceString isEqualToString:@"iPhone1,1"])    return @"iPhone 1G";
-    if ([deviceString isEqualToString:@"iPhone1,2"])    return @"iPhone 3G";
-    if ([deviceString isEqualToString:@"iPhone2,1"])    return @"iPhone 3GS";
-    if ([deviceString isEqualToString:@"iPhone3,1"])    return @"iPhone 4";
-    if ([deviceString isEqualToString:@"iPhone3,2"])    return @"Verizon iPhone 4";
-    if ([deviceString isEqualToString:@"iPhone4,1"])    return @"iPhone 4S";
-    if ([deviceString isEqualToString:@"iPhone5,1"])    return @"iPhone 5";
-    if ([deviceString isEqualToString:@"iPhone5,2"])    return @"iPhone 5";
-    if ([deviceString isEqualToString:@"iPhone5,3"])    return @"iPhone 5C";
-    if ([deviceString isEqualToString:@"iPhone5,4"])    return @"iPhone 5C";
-    if ([deviceString isEqualToString:@"iPhone6,1"])    return @"iPhone 5S";
-    if ([deviceString isEqualToString:@"iPhone6,2"])    return @"iPhone 5S";
-    if ([deviceString isEqualToString:@"iPhone7,1"])    return @"iPhone 6 Plus";
-    if ([deviceString isEqualToString:@"iPhone7,2"])    return @"iPhone 6";
-    if ([deviceString isEqualToString:@"iPhone8,1"])    return @"iPhone 6s";
-    if ([deviceString isEqualToString:@"iPhone8,2"])    return @"iPhone 6s Plus";
-    if ([deviceString isEqualToString:@"iPhone9,1"] || [deviceString isEqualToString:@"iPhone9,3"])    return @"iPhone 7";
-    if ([deviceString isEqualToString:@"iPhone9,2"] || [deviceString isEqualToString:@"iPhone9,4"])    return @"iPhone 7 Plus";
-    if ([deviceString isEqualToString:@"iPhone10,1"] || [deviceString isEqualToString:@"iPhone10,4"])    return @"iPhone 8";
-    if ([deviceString isEqualToString:@"iPhone10,2"] || [deviceString isEqualToString:@"iPhone10,5"])    return @"iPhone 8 Plus";
-    if ([deviceString isEqualToString:@"iPhone10,3"] || [deviceString isEqualToString:@"iPhone10,6"])    return @"iPhone X";
+    if ([deviceString isEqualToString:@"iPhone1,1"])   return @"iPhone 1G";
+    if ([deviceString isEqualToString:@"iPhone1,2"])   return @"iPhone 3G";
+    if ([deviceString isEqualToString:@"iPhone2,1"])   return @"iPhone 3GS";
+    if ([deviceString isEqualToString:@"iPhone3,1"])   return @"iPhone 4";
+    if ([deviceString isEqualToString:@"iPhone3,2"])   return @"Verizon iPhone 4";
+    if ([deviceString isEqualToString:@"iPhone4,1"])   return @"iPhone 4S";
+    if ([deviceString isEqualToString:@"iPhone5,1"])   return @"iPhone 5";
+    if ([deviceString isEqualToString:@"iPhone5,2"])   return @"iPhone 5";
+    if ([deviceString isEqualToString:@"iPhone5,3"])   return @"iPhone 5C";
+    if ([deviceString isEqualToString:@"iPhone5,4"])   return @"iPhone 5C";
+    if ([deviceString isEqualToString:@"iPhone6,1"])   return @"iPhone 5S";
+    if ([deviceString isEqualToString:@"iPhone6,2"])   return @"iPhone 5S";
+    if ([deviceString isEqualToString:@"iPhone7,1"])   return @"iPhone 6 Plus";
+    if ([deviceString isEqualToString:@"iPhone7,2"])   return @"iPhone 6";
+    if ([deviceString isEqualToString:@"iPhone8,1"])   return @"iPhone 6s";
+    if ([deviceString isEqualToString:@"iPhone8,2"])   return @"iPhone 6s Plus";
+    if ([deviceString isEqualToString:@"iPhone9,1"] || [deviceString isEqualToString:@"iPhone9,3"])   return @"iPhone 7";
+    if ([deviceString isEqualToString:@"iPhone9,2"] || [deviceString isEqualToString:@"iPhone9,4"])   return @"iPhone 7 Plus";
+    if ([deviceString isEqualToString:@"iPhone10,1"] || [deviceString isEqualToString:@"iPhone10,4"])   return @"iPhone 8";
+    if ([deviceString isEqualToString:@"iPhone10,2"] || [deviceString isEqualToString:@"iPhone10,5"])   return @"iPhone 8 Plus";
+    if ([deviceString isEqualToString:@"iPhone10,3"] || [deviceString isEqualToString:@"iPhone10,6"])   return @"iPhone X";
     
     return deviceString;
 }
 + (BOOL)isIpad{
     NSString *deviceType = [UIDevice currentDevice].model;
-    if([deviceType isEqualToString:@"iPhone"]) {
+    if([deviceType isEqualToString:@"iPhone"]){
         return NO;
     }
-    else if([deviceType isEqualToString:@"iPod touch"]) {
+    else if([deviceType isEqualToString:@"iPod touch"]){
         return NO;
     }
-    else if([deviceType isEqualToString:@"iPad"]) {
+    else if([deviceType isEqualToString:@"iPad"]){
         return YES;
     }
     return NO;
@@ -1043,7 +1014,7 @@ static CGRect tool_oldframe;
 
 // 根据出生日期算详细年龄
 + (NSString*)getAgeFormYear:(NSString*)year{
-    if (year ==nil || [year isEqualToString:@"出生日期" ]) {
+    if (year ==nil || [year isEqualToString:@"出生日期" ]){
         return @"未设置";
     }
     NSString *ago = [NSString stringWithFormat:@"0%@", NSLocalizedString(@"time_age", nil)];
@@ -1067,7 +1038,7 @@ static CGRect tool_oldframe;
 }
 
 + (NSString *)getAstroWithMonth:(NSString*)year{
-    if (year ==nil || [year isEqualToString:@"出生日期" ]) {
+    if (year ==nil || [year isEqualToString:@"出生日期" ]){
         return @"未设置";
     }
     NSString *birthdayStr=[year substringWithRange:NSMakeRange(0,10)];
@@ -1114,7 +1085,7 @@ static CGRect tool_oldframe;
      射手座 11月22日-----12月21日
      */
     
-    switch (i_month) {
+    switch (i_month){
         case 1:
             if(i_day>=20 && i_day<=31){
                 retStr = [NSString stringWithFormat:@"%@",NSLocalizedString(@"tool_constellation_Aquarius", nil)];
@@ -1233,22 +1204,22 @@ static CGRect tool_oldframe;
 // 拼接字符串,去除"-"的数据,如果都为空显示国家
 + (NSString*)kj_judgeCountry:(NSString*)country State:(NSString*)state City:(NSString*)city Region:(NSString*)region{
     NSString *str=@"";
-    if (![state isEqualToString:@""]&&![state isEqualToString:@"-"]) {
+    if (![state isEqualToString:@""]&&![state isEqualToString:@"-"]){
         str = state;
     }
-    if (![str isEqualToString:@""]) {
+    if (![str isEqualToString:@""]){
         str = [NSString stringWithFormat:@"%@-",str];
     }
     
-    if (![city isEqualToString:@""]&&![city isEqualToString:@"-"]) {
+    if (![city isEqualToString:@""]&&![city isEqualToString:@"-"]){
         str = [NSString stringWithFormat:@"%@%@",str,city];
     }
     
-    if (![region isEqualToString:@""]&&![region isEqualToString:@"-"]) {
+    if (![region isEqualToString:@""]&&![region isEqualToString:@"-"]){
         str = [NSString stringWithFormat:@"%@-%@",str,region];
     }
     
-    if ([str isEqualToString:@""]) {
+    if ([str isEqualToString:@""]){
         str = country;
     }
     
@@ -1270,7 +1241,7 @@ static CGRect tool_oldframe;
 // 读取plist和json文件数据
 + (NSArray*)getPlistOrJsonFile:(NSString*)fileName Type:(NSString*)type{
     NSMutableArray *arrData = [NSMutableArray array];
-    if ([type isEqualToString:@"plist"]) { //[fileName hasSuffix:@".plist"]
+    if ([type isEqualToString:@"plist"]){ //[fileName hasSuffix:@".plist"]
         NSString *_fileName = [fileName stringByReplacingOccurrencesOfString:@".plist" withString:@""];
         NSString *filePath = [[NSBundle mainBundle] pathForResource:_fileName ofType:@"plist"];
         arrData = [NSMutableArray arrayWithContentsOfFile:filePath];
@@ -1288,7 +1259,7 @@ static CGRect tool_oldframe;
 // 根据图片url获取图片尺寸
 + (CGSize)getImageSizeWithURL:(NSString*)urlString{
     NSURL *URL = [NSURL URLWithString:urlString];
-    if(URL == nil) return CGSizeZero; // url不正确返回CGSizeZero
+    if(URL == nil)return CGSizeZero; // url不正确返回CGSizeZero
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:URL];
     NSString* pathExtendsion = [URL.pathExtension lowercaseString];
@@ -1303,7 +1274,7 @@ static CGRect tool_oldframe;
     else{
         size = [self getJPGImageSizeWithRequest:request];
     }
-    if(CGSizeEqualToSize(CGSizeZero, size)) {                    // 如果获取文件头信息失败,发送异步请求请求原图
+    if(CGSizeEqualToSize(CGSizeZero, size)){                    // 如果获取文件头信息失败,发送异步请求请求原图
         NSData* data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:URL] returningResponse:nil error:nil];
         UIImage* image = [UIImage imageWithData:data];
         if(image){
@@ -1322,13 +1293,13 @@ static CGRect tool_oldframe;
         [data getBytes:&w2 range:NSMakeRange(1, 1)];
         [data getBytes:&w3 range:NSMakeRange(2, 1)];
         [data getBytes:&w4 range:NSMakeRange(3, 1)];
-        int w = (w1 << 24) + (w2 << 16) + (w3 << 8) + w4;
+        int w = (w1 << 24)+ (w2 << 16)+ (w3 << 8)+ w4;
         int h1 = 0, h2 = 0, h3 = 0, h4 = 0;
         [data getBytes:&h1 range:NSMakeRange(4, 1)];
         [data getBytes:&h2 range:NSMakeRange(5, 1)];
         [data getBytes:&h3 range:NSMakeRange(6, 1)];
         [data getBytes:&h4 range:NSMakeRange(7, 1)];
-        int h = (h1 << 24) + (h2 << 16) + (h3 << 8) + h4;
+        int h = (h1 << 24)+ (h2 << 16)+ (h3 << 8)+ h4;
         return CGSizeMake(w, h);
     }
     return CGSizeZero;
@@ -1355,44 +1326,44 @@ static CGRect tool_oldframe;
     [request setValue:@"bytes=0-209" forHTTPHeaderField:@"Range"];
     NSData* data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     
-    if ([data length] <= 0x58) {
+    if ([data length] <= 0x58){
         return CGSizeZero;
     }
     
-    if ([data length] < 210) {// 肯定只有一个DQT字段
+    if ([data length] < 210){// 肯定只有一个DQT字段
         short w1 = 0, w2 = 0;
         [data getBytes:&w1 range:NSMakeRange(0x60, 0x1)];
         [data getBytes:&w2 range:NSMakeRange(0x61, 0x1)];
-        short w = (w1 << 8) + w2;
+        short w = (w1 << 8)+ w2;
         short h1 = 0, h2 = 0;
         [data getBytes:&h1 range:NSMakeRange(0x5e, 0x1)];
         [data getBytes:&h2 range:NSMakeRange(0x5f, 0x1)];
-        short h = (h1 << 8) + h2;
+        short h = (h1 << 8)+ h2;
         return CGSizeMake(w, h);
     } else {
         short word = 0x0;
         [data getBytes:&word range:NSMakeRange(0x15, 0x1)];
-        if (word == 0xdb) {
+        if (word == 0xdb){
             [data getBytes:&word range:NSMakeRange(0x5a, 0x1)];
-            if (word == 0xdb) {// 两个DQT字段
+            if (word == 0xdb){// 两个DQT字段
                 short w1 = 0, w2 = 0;
                 [data getBytes:&w1 range:NSMakeRange(0xa5, 0x1)];
                 [data getBytes:&w2 range:NSMakeRange(0xa6, 0x1)];
-                short w = (w1 << 8) + w2;
+                short w = (w1 << 8)+ w2;
                 short h1 = 0, h2 = 0;
                 [data getBytes:&h1 range:NSMakeRange(0xa3, 0x1)];
                 [data getBytes:&h2 range:NSMakeRange(0xa4, 0x1)];
-                short h = (h1 << 8) + h2;
+                short h = (h1 << 8)+ h2;
                 return CGSizeMake(w, h);
             } else {// 一个DQT字段
                 short w1 = 0, w2 = 0;
                 [data getBytes:&w1 range:NSMakeRange(0x60, 0x1)];
                 [data getBytes:&w2 range:NSMakeRange(0x61, 0x1)];
-                short w = (w1 << 8) + w2;
+                short w = (w1 << 8)+ w2;
                 short h1 = 0, h2 = 0;
                 [data getBytes:&h1 range:NSMakeRange(0x5e, 0x1)];
                 [data getBytes:&h2 range:NSMakeRange(0x5f, 0x1)];
-                short h = (h1 << 8) + h2;
+                short h = (h1 << 8)+ h2;
                 return CGSizeMake(w, h);
             }
         } else {
@@ -1404,38 +1375,38 @@ static CGRect tool_oldframe;
 //text 高度
 + (CGFloat)calculateTextHeightWithWidth:(CGFloat)width andText:(NSString *)text andFont:(UIFont *)font{
     NSDictionary *attribute = @{NSFontAttributeName: font};
-    CGRect rect = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:attribute context:nil];
+    CGRect rect = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT)options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:attribute context:nil];
     return rect.size.height;
 }
 
 + (CGFloat)calculateTextHeightWithWidth:(CGFloat)width andText:(NSString *)text attributes:(NSDictionary *)attribute{
-    CGRect rect = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:attribute context:nil];
+    CGRect rect = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT)options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:attribute context:nil];
     return rect.size.height;
 }
 
 //text 宽度
 + (CGFloat)calculateTextWidthWithText:(NSString *)text andFont:(UIFont *)font{
-    if (!text || !font) {
+    if (!text || !font){
         return 0.0f;
     }
     NSDictionary *attribute = @{NSFontAttributeName: font};
-    CGRect rect = [text boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:attribute context:nil];
+    CGRect rect = [text boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT)options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:attribute context:nil];
     return rect.size.width + 2;
 }
 
 + (int)getMayIntege:(NSInteger)divisor dividend:(NSInteger)div{
     int MayIntege=0;
-    if (divisor%div >0) {
+    if (divisor%div >0){
         MayIntege++;
     }
-    if (divisor/div >0) {
+    if (divisor/div >0){
         MayIntege+=divisor/div;
     }
     return MayIntege;
 }
 
 + (int)getRandomNumber:(int)from to:(int)to{
-    return (int)(from + arc4random() % (to-from + 1));
+    return (int)(from + arc4random()% (to-from + 1));
 }
 
 /**
@@ -1447,7 +1418,7 @@ static CGRect tool_oldframe;
 +(void)scanBigImageWithImageView:(UIImageView *)currentImageview alpha:(CGFloat)alpha {
     //  当前imageview的图片
     UIImage *image = currentImageview.image;
-    if (image == nil) {
+    if (image == nil){
         return;
     }
     //  当前视图
@@ -1476,7 +1447,7 @@ static CGRect tool_oldframe;
     //  动画放大所展示的ImageView
     [UIView animateWithDuration:0.4 animations:^{
         CGFloat y,width,height;
-        y = ([UIScreen mainScreen].bounds.size.height - image.size.height * [UIScreen mainScreen].bounds.size.width / image.size.width) * 0.5;
+        y = ([UIScreen mainScreen].bounds.size.height - image.size.height * [UIScreen mainScreen].bounds.size.width / image.size.width)* 0.5;
         //宽度为屏幕宽度
         width = [UIScreen mainScreen].bounds.size.width;
         //高度 根据图片宽高比设置
@@ -1484,8 +1455,7 @@ static CGRect tool_oldframe;
         [imageView setFrame:CGRectMake(0, y, width, height)];
         //重要！ 将视图显示出来
         [backgroundView setAlpha:1];
-    } completion:^(BOOL finished) {
-        
+    } completion:^(BOOL finished){
     }];
     
 }
@@ -1504,7 +1474,7 @@ static CGRect tool_oldframe;
     [UIView animateWithDuration:0.4 animations:^{
         [imageView setFrame:tool_oldframe];
         [backgroundView setAlpha:0];
-    } completion:^(BOOL finished) {
+    } completion:^(BOOL finished){
         //完成后操作->将背景视图删掉
         [backgroundView removeFromSuperview];
     }];
@@ -1512,7 +1482,7 @@ static CGRect tool_oldframe;
 
 // 指纹验证
 + (void)kj_showTouchIDWithDescribe:(NSString *)desc BlockState:(StateBlock)block{
-    if (NSFoundationVersionNumber < NSFoundationVersionNumber_iOS_8_0) {
+    if (NSFoundationVersionNumber < NSFoundationVersionNumber_iOS_8_0){
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"系统版本不支持TouchID (必须高于iOS 8.0才能使用)");
             block(TDTouchIDStateVersionNotSupport,nil);
@@ -1522,15 +1492,15 @@ static CGRect tool_oldframe;
     LAContext *context = [[LAContext alloc]init];
     context.localizedFallbackTitle = desc;
     NSError *error = nil;
-    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
-        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:desc == nil ? @"通过Home键验证已有指纹":desc reply:^(BOOL success, NSError * _Nullable error) {
-            if (success) {
+    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]){
+        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:desc == nil ? @"通过Home键验证已有指纹":desc reply:^(BOOL success, NSError * _Nullable error){
+            if (success){
                 dispatch_async(dispatch_get_main_queue(), ^{
                     NSLog(@"TouchID 验证成功");
                     block(TDTouchIDStateSuccess,error);
                 });
             }else if(error){
-                switch (error.code) {
+                switch (error.code){
                     case LAErrorAuthenticationFailed:{
                         dispatch_async(dispatch_get_main_queue(), ^{
                             NSLog(@"TouchID 验证失败");
@@ -1618,7 +1588,7 @@ static CGRect tool_oldframe;
 + (void)viewAnimationRotate:(UIView*)view isRight:(BOOL)Right speed:(CGFloat)time TransCount:(int)num{
         CABasicAnimation *animation =  [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
         //默认是顺时针效果，若将fromValue和toValue的值互换，则为逆时针效果
-        if (Right) {
+        if (Right){
             animation.fromValue = [NSNumber numberWithFloat:0.f];
             animation.toValue =  [NSNumber numberWithFloat: M_PI *2];
         }else{
@@ -1628,7 +1598,7 @@ static CGRect tool_oldframe;
         animation.duration = time ? time : 5.0f; // 默认5秒
         animation.autoreverses = NO;
         animation.fillMode = kCAFillModeForwards;
-        animation.beginTime = CACurrentMediaTime() + 0.1; // 0.1秒后执行
+        animation.beginTime = CACurrentMediaTime()+ 0.1; // 0.1秒后执行
         animation.repeatCount = num == 0 ? MAXFLOAT : num; //如果这里想设置成一直自旋转，可以设置为MAXFLOAT，否则设置具体的数值则代表执行多少次
         [view.layer addAnimation:animation forKey:@"rotate-layer"];
 }
@@ -1640,7 +1610,7 @@ static CGRect tool_oldframe;
     animation.duration = duration;
     animation.repeatCount = num == 0 ? CGFLOAT_MAX : num;  // 重复次数
     //        animation.autoreverses      = YES; // 动画结束时是否执行逆动画
-    animation.beginTime = CACurrentMediaTime() + .1;// 1秒后执行
+    animation.beginTime = CACurrentMediaTime()+ .1;// 1秒后执行
     animation.fromValue = [NSValue valueWithCGPoint:myView.layer.position]; // 起始帧
     animation.toValue = [NSValue valueWithCGPoint:CGPointMake(x, y)]; // 终了帧
     
@@ -1657,7 +1627,7 @@ static CGRect tool_oldframe;
    // animation.autoreverses      = YES; // 动画结束时是否执行逆动画
     animation.fromValue = [NSNumber numberWithFloat:size]; // 开始时的倍率
     animation.toValue = [NSNumber numberWithFloat:multiple]; // 结束时的倍率
-    if (group) {
+    if (group){
         animation.beginTime = time;
         return animation;
     }
@@ -1670,7 +1640,7 @@ static CGRect tool_oldframe;
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     animation.duration = duration;
     animation.repeatCount = num == 0 ? CGFLOAT_MAX : num;  // 重复次数
-    if (flash) {
+    if (flash){
        animation.autoreverses = YES; // 动画结束时是否执行逆动画
     }
     animation.toValue = [NSNumber numberWithFloat:kj_a]; // 结束时的倍率
@@ -1696,23 +1666,23 @@ static CGRect tool_oldframe;
     NSData*date=[NSData dataWithContentsOfFile:path];
     CGImageSourceRef src = CGImageSourceCreateWithData((CFDataRef)date, NULL);
     CGFloat animationTime = 0.f;
-    if (src) {
+    if (src){
         size_t l = CGImageSourceGetCount(src);
         gifImages = [NSMutableArray arrayWithCapacity:l];
-        for (size_t i = 0; i < l; i++) {
+        for (size_t i = 0; i < l; i++){
             CGImageRef img = CGImageSourceCreateImageAtIndex(src, i, NULL);
             NSDictionary *properties = (NSDictionary *)CFBridgingRelease(CGImageSourceCopyPropertiesAtIndex(src, i, NULL));
             NSDictionary *frameProperties = [properties objectForKey:(NSString *)kCGImagePropertyGIFDictionary];
             NSNumber *delayTime = [frameProperties objectForKey:(NSString *)kCGImagePropertyGIFUnclampedDelayTime];
             animationTime += [delayTime floatValue];
-            if (img) {
+            if (img){
                 [gifImages addObject:[UIImage imageWithCGImage:img]];
                 CGImageRelease(img);
             }
         }
         CFRelease(src);
     }
-    CGFloat time=(1.0f/10.0f) *gifImages.count;
+    CGFloat time=(1.0f/10.0f)*gifImages.count;
     imageView.animationImages = gifImages;
     imageView.animationDuration =time;
     imageView.animationRepeatCount = cle;
@@ -1723,7 +1693,7 @@ static CGRect tool_oldframe;
 + (int)getStatusAudio{
     // 是否有麦克风权限
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
-//    switch (authStatus) {
+//    switch (authStatus){
 //        case AVAuthorizationStatusNotDetermined:
 //            //没有询问是否开启麦克风
 //
@@ -1733,7 +1703,7 @@ static CGRect tool_oldframe;
 //        case AVAuthorizationStatusDenied:
 //            //玩家未授权
 //
-//            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
+//            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted){
 //
 //            }];
 //        case AVAuthorizationStatusAuthorized:
@@ -1748,8 +1718,8 @@ static CGRect tool_oldframe;
 // 删除数组当中的相同元素
 + (NSArray*)kj_delArrayEquelObj:(NSArray*)array{
     NSMutableArray *listAry = [[NSMutableArray alloc]init];
-    for (NSString *str in array) {
-        if (![listAry containsObject:str]) {
+    for (NSString *str in array){
+        if (![listAry containsObject:str]){
             [listAry addObject:str];
         }
     }
@@ -1785,8 +1755,8 @@ static CGRect tool_oldframe;
 // 判断当前页面是push方式进入还是present方式进入
 + (int)kj_judgeCurrentVCIsPushOrPrsent:(UIViewController*)vc{
     NSArray *viewcontrollers = vc.navigationController.viewControllers;
-    if (viewcontrollers.count>1) {
-        if ([viewcontrollers objectAtIndex:viewcontrollers.count-1]==vc) {
+    if (viewcontrollers.count>1){
+        if ([viewcontrollers objectAtIndex:viewcontrollers.count-1]==vc){
             //push方式
             return 1;
         }
@@ -1798,12 +1768,11 @@ static CGRect tool_oldframe;
 + (void)pushToIphoneSetCenter{
     NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
     UIApplication *application = [UIApplication sharedApplication];
-    if ([application canOpenURL:url]) {
+    if ([application canOpenURL:url]){
         //如果这个要打开的URL有效，并且在应用中配置它布尔值为YES时才可以打开，否则打不开
         //        NSDictionary *options = @{UIApplicationOpenURLOptionUniversalLinksOnly : @YES};
-        [application openURL:url options:@{} completionHandler:^(BOOL success) {
-            
-        }];
+        [application openURL:url options:@{} completionHandler:^(BOOL success){
+            }];
     }
 }
 
@@ -1819,7 +1788,7 @@ static CGRect tool_oldframe;
     /**
      *  NSClassFromString是一个很有用的东西,用此函数进行动态加载尝试,如果返回nil, 则不能加载此类的实例
      */
-    id myObj = [[NSClassFromString(class_name) alloc] init];
+    id myObj = [[NSClassFromString(class_name)alloc] init];
     return myObj;
 }
 
@@ -1832,7 +1801,7 @@ static CGRect tool_oldframe;
 // jpg,png图片转字符串
 + (NSString *)kj_imageToBase64Str:(UIImage *)image{
     NSData *data;
-    if (UIImagePNGRepresentation(image) == nil) {
+    if (UIImagePNGRepresentation(image)== nil){
         data = UIImageJPEGRepresentation(image, 1.0f);
     }
     else {
@@ -1847,7 +1816,7 @@ static CGRect tool_oldframe;
     uint8_t c;
     [data getBytes:&c length:1];
     
-    switch (c) {
+    switch (c){
         case 0xFF:
             return @"jpeg";
         case 0x89:
@@ -1858,12 +1827,11 @@ static CGRect tool_oldframe;
         case 0x4D:
             return @"tiff";
         case 0x52:
-            if ([data length] < 12) {
+            if ([data length] < 12){
                 return nil;
             }
-            
-            NSString *testString = [[NSString alloc] initWithData:[data subdataWithRange:NSMakeRange(0, 12)] encoding:NSASCIIStringEncoding];
-            if ([testString hasPrefix:@"RIFF"] && [testString hasSuffix:@"WEBP"]) {
+                NSString *testString = [[NSString alloc] initWithData:[data subdataWithRange:NSMakeRange(0, 12)] encoding:NSASCIIStringEncoding];
+            if ([testString hasPrefix:@"RIFF"] && [testString hasSuffix:@"WEBP"]){
                 return @"webp";
             }
             return @"未判断出来";
@@ -1910,16 +1878,16 @@ static CGRect tool_oldframe;
     NSString              *viewOrientation = nil;
     CGSize                 viewSize        = [UIScreen mainScreen].bounds.size;
     UIInterfaceOrientation orientation     = [[UIApplication sharedApplication] statusBarOrientation];
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight){
         viewOrientation = @"Landscape";
     } else {
         viewOrientation = @"Portrait";
     }
     
     NSArray *imagesDictionary = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
-    for (NSDictionary *dict in imagesDictionary) {
+    for (NSDictionary *dict in imagesDictionary){
         CGSize imageSize = CGSizeFromString(dict[@"UILaunchImageSize"]);
-        if (CGSizeEqualToSize(imageSize, viewSize) && [viewOrientation isEqualToString:dict[@"UILaunchImageOrientation"]]) {
+        if (CGSizeEqualToSize(imageSize, viewSize)&& [viewOrientation isEqualToString:dict[@"UILaunchImageOrientation"]]){
             lauchImage = [UIImage imageNamed:dict[@"UILaunchImageName"]];
         }
     }
@@ -1945,7 +1913,7 @@ UIImageView *needleAnimation = nil; //记录上一帧动画素材
   
     //创建一个数组，数组中按顺序添加要播放的图片（图片为静态的图片）
     NSMutableArray *imgArray = @[].mutableCopy;
-    for (int i=1; i<=num; i++) {
+    for (int i=1; i<=num; i++){
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%d",name,i]];
         [imgArray addObject:image];
     }
@@ -1967,7 +1935,7 @@ UIImageView *needleAnimation = nil; //记录上一帧动画素材
 }
 // 停止上一个动画播放
 + (void)endImages{
-    if (needleAnimation.animationImages) {
+    if (needleAnimation.animationImages){
         [needleAnimation stopAnimating];
         needleAnimation.animationImages = nil;
     }
@@ -1978,7 +1946,7 @@ UIImageView *needleAnimation = nil; //记录上一帧动画素材
 }
 id controller;
 + (id)storageid:(id)str{
-    if (str) {
+    if (str){
         controller =str;
     }
     return controller;
@@ -2011,7 +1979,7 @@ id controller;
  基本思想：假设数据是按升序排序的，对于给定值x，从序列的中间位置开始比较，如果当前位置值等于x，则查找成功；若x小于当前位置值，则在数列的前半段 中查找；若x大于当前位置值则在数列的后半段中继续查找，直到找到为止。
  */
 + (NSInteger)binarySearchTarget:(NSInteger)target inArray:(NSArray *)arr{
-    if (arr.count < 1) {
+    if (arr.count < 1){
         //数组无元素,返回-1;
         return -1;
     }
@@ -2020,22 +1988,22 @@ id controller;
     NSInteger end = arr.count - 1;
     NSInteger mind = 0;
     // 进行循环 // 数组中第一个对象和最后一个对象之前还有其他对象则进行循环
-    while (start < end - 1) {
-        //会有一些朋友看到有些人是( start + end ) / 2这样写的,但是这样写有一点不好,就是start+end会出现整数溢出的情况,如果存在溢出,你再除以2也是没有用的,所以不能这么写
-        mind = start + (end - start) / 2;
+    while (start < end - 1){
+        //会有一些朋友看到有些人是( start + end )/ 2这样写的,但是这样写有一点不好,就是start+end会出现整数溢出的情况,如果存在溢出,你再除以2也是没有用的,所以不能这么写
+        mind = start + (end - start)/ 2;
         // 如果中间值大于目标值
-        if ([arr[mind] integerValue]> target) {
+        if ([arr[mind] integerValue]> target){
             end = mind; // 中间值做为最后一个值，在前半段再进行相同的搜索
         }else{
             start = mind;
         }
     }
     // 如果第一个值和目标值相等则获取第一个值的下标
-    if ([arr[start] integerValue] == target) {
+    if ([arr[start] integerValue] == target){
         return start;
     }
     // 如果最后一个值和目标值想等则获取最后一个下标
-    if ([arr[end] integerValue] == target) {
+    if ([arr[end] integerValue] == target){
         return end;
     }
     return -1;
@@ -2053,9 +2021,9 @@ id controller;
     id temp;
     int i, j;
     NSInteger count = [arr count];
-    for (i=0; i < count - 1; ++i) {
-        for (j=0; j < count - i - 1; ++j) {
-            if (arr[j] > arr[j+1]) {    // 升序排列
+    for (i=0; i < count - 1; ++i){
+        for (j=0; j < count - i - 1; ++j){
+            if (arr[j] > arr[j+1]){    // 升序排列
                 temp = arr[j];
                 arr[j] = arr[j+1];
                 arr[j+1] = temp;
@@ -2078,9 +2046,9 @@ id controller;
     id temp;
     int i, j;
     NSInteger count = [arr count];
-    for (i=1; i < count; ++i) {
+    for (i=1; i < count; ++i){
         temp = arr[i];
-        for (j=i; j > 0 && temp < arr[j-1]; --j) {
+        for (j=i; j > 0 && temp < arr[j-1]; --j){
             arr[j] = arr[j-1];
         }
         arr[j] = temp; // j是循环结束后的值
@@ -2100,14 +2068,14 @@ id controller;
     id temp;
     int min, i, j;
     NSInteger count = [arr count];
-    for (i=0; i < count; ++i) {
+    for (i=0; i < count; ++i){
         min = i;
-        for (j = i+1; j < count; ++j) {
-            if (arr[min] > arr[j]) {
+        for (j = i+1; j < count; ++j){
+            if (arr[min] > arr[j]){
                 min = j;
             }
         }
-        if (min != i) {
+        if (min != i){
             temp = arr[min];
             arr[min] = arr[i];
             arr[i] = temp;
@@ -2120,14 +2088,14 @@ id controller;
 + (int)maxCommonDivisorNum:(int)a Num2:(int)b{
 //    // 1.直接遍历法
 //    int max = 0;
-//    for (int i = 1; i <=b; i++) {
-//        if (a % i == 0 && b % i == 0) {
+//    for (int i = 1; i <=b; i++){
+//        if (a % i == 0 && b % i == 0){
 //            max = i;
 //        }
 //    }
 //    return max;
     
-    if (a<b) { // 交换位置
+    if (a<b){ // 交换位置
         a = a + b;
         b = a - b;
         a = a - b;
@@ -2135,7 +2103,7 @@ id controller;
     
     // 2.辗转相除法
     int tmp;
-    while(a % b > 0) {
+    while(a % b > 0){
         tmp = a % b;
         a = b;
         b = tmp;
@@ -2145,8 +2113,8 @@ id controller;
 
 // 判断质数
 + (BOOL)isPrimeFromNum:(int)num{
-    for(int i = 2; i <= sqrt(num); i++) {
-        if(num % i == 0) {
+    for(int i = 2; i <= sqrt(num); i++){
+        if(num % i == 0){
             return NO;
         }
     }

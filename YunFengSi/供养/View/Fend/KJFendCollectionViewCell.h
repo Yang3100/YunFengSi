@@ -10,6 +10,6 @@
 
 @interface KJFendCollectionViewCell : UICollectionViewCell
 
-@property(nonatomic,strong) NSObject *model;
+@property(nonatomic,strong)NSObject *model;
 
 @end

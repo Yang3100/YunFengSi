@@ -13,12 +13,12 @@
 
 - (void)setModel:(NSObject *)model{
     __block CGSize HeaderViewSize;
-    KJHelpDetailHeaderView *headerView = [KJHelpDetailHeaderView createHelpDetailHeaderViewFromData:nil Size:^(CGSize size) {
+    KJHelpDetailHeaderView *headerView = [KJHelpDetailHeaderView createHelpDetailHeaderViewFromData:nil Size:^(CGSize size){
         HeaderViewSize = size;
     }];
     
     [self.contentView addSubview:headerView];
-    [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [headerView mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.mas_equalTo(self.contentView);
         make.left.mas_equalTo(self.contentView);
         make.width.mas_equalTo(HeaderViewSize.width);

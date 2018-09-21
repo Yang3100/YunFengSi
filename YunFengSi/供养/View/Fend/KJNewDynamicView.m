@@ -11,9 +11,9 @@
 
 @interface KJNewDynamicView()<KJScrollTextViewDelegate>
 
-@property (nonatomic, strong) UIImageView *newDynamicImageView;//头像
-@property (nonatomic, strong) KJScrollTextView *scrollTextView;
-@property (nonatomic, strong) KJScrollTextView *scrollTextView2;
+@property (nonatomic, strong)UIImageView *newDynamicImageView;//头像
+@property (nonatomic, strong)KJScrollTextView *scrollTextView;
+@property (nonatomic, strong)KJScrollTextView *scrollTextView2;
 
 @end
 
@@ -23,9 +23,9 @@
     KJNewDynamicView *backView = [[self alloc] init];
     backView.backgroundColor = [UIColor whiteColor];
     
-    [KJTools makeCornerRadius:Handle(10) borderColor:DefaultBackgroudColor layer:backView.layer borderWidth:0.5];
+    [KJTools makeCornerRadius:Handle(10)borderColor:DefaultBackgroudColor layer:backView.layer borderWidth:0.5];
     
-    if (block) {
+    if (block){
         block([backView getViewSizeFrom:model]);
     }
     return backView;
@@ -38,7 +38,7 @@
     
     // 先调用superView的layoutIfNeeded方法再获取frame
     [self layoutIfNeeded];
-    CGFloat h = Handle(10) + CGRectGetHeight(self.newDynamicImageView.frame) + Handle(9);
+    CGFloat h = Handle(10)+ CGRectGetHeight(self.newDynamicImageView.frame)+ Handle(9);
     return CGSizeMake(SCREEN_WIDTH, h);
 }
 
@@ -51,20 +51,20 @@
 }
 
 - (void)setUI{
-    [self.newDynamicImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.newDynamicImageView mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.mas_equalTo(self).mas_offset(Handle(10));
         make.left.mas_equalTo(self).mas_offset(Handle(15));
         make.width.height.mas_equalTo(Handle(40));
     }];
     [self addSubview:self.scrollTextView];
-    [self.scrollTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.scrollTextView mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.mas_equalTo(self).mas_offset(Handle(10));
         make.left.mas_equalTo(self.newDynamicImageView.mas_right).mas_offset(Handle(10));
         make.right.mas_equalTo(self).mas_offset(-Handle(10));
         make.height.mas_equalTo(Handle(20));
     }];
     [self addSubview:self.scrollTextView2];
-    [self.scrollTextView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.scrollTextView2 mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.mas_equalTo(self.scrollTextView.mas_bottom);
         make.left.mas_equalTo(self.newDynamicImageView.mas_right).mas_offset(Handle(10));
         make.right.mas_equalTo(self).mas_offset(-Handle(10));
@@ -88,14 +88,14 @@
 }
 
 - (UIImageView*)newDynamicImageView{
-    if (!_newDynamicImageView) {
+    if (!_newDynamicImageView){
         _newDynamicImageView = InsertImageView(self, CGRectZero, GetImage(@"zuixindongtai"));
     }
     return _newDynamicImageView;
 }
 
 - (KJScrollTextView*)scrollTextView{
-    if (!_scrollTextView) {
+    if (!_scrollTextView){
         _scrollTextView = [[KJScrollTextView alloc] initWithFrame:CGRectMake(60, 64, SCREEN_WIDTH-70, 20)];
         _scrollTextView.delegate            = self;
         _scrollTextView.textStayTime        = 2;
@@ -108,7 +108,7 @@
     return _scrollTextView;
 }
 - (KJScrollTextView*)scrollTextView2{
-    if (!_scrollTextView2) {
+    if (!_scrollTextView2){
         _scrollTextView2 = [[KJScrollTextView alloc] initWithFrame:CGRectMake(60, 84, SCREEN_WIDTH-70, 20)];
         _scrollTextView2.delegate            = self;
         _scrollTextView2.textStayTime        = 2;

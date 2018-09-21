@@ -14,7 +14,7 @@
 #define UpImageDataUrl    @"http://static.eagleeyetv.com.cn/upload_img.php"
 
 #define UpLoadVideo @"/upload/video.php"   ///上传视频
-#define VideoPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"anchor.mp4"]
+#define VideoPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:@"anchor.mp4"]
 
 @implementation HNRequestManager
 
@@ -39,19 +39,18 @@
     NSString *imageURL = UpImageDataUrl;
     NSData * imageData = nil;
     //    imageData = UIImagePNGRepresentation(image);
-    //    if (imageData.length == 0) {
+    //    if (imageData.length == 0){
     //        imageData = UIImageJPEGRepresentation(image, 1.0);
     //    }
     imageData = [KJTools zipImageWithImage:image withMaxSize:1500];
-    [manager POST:imageURL parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [manager POST:imageURL parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData){
         [formData appendPartWithFileData:imageData name:@"file" fileName:@"1.png" mimeType:@"image/png"];
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
+    } progress:^(NSProgress * _Nonnull uploadProgress){
         // 上传进度
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
         NSDictionary*dictionary=[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         success(dictionary);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
         faild(error);
     }];
 }
@@ -77,15 +76,14 @@
     NSURL* url = [NSURL fileURLWithPath:VideoPath];
     NSData* videoData = [NSData dataWithContentsOfURL:url];
     
-    [manager POST:imageURL parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [manager POST:imageURL parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData){
         [formData appendPartWithFileData:videoData name:@"file" fileName:fileName mimeType:@"mp4"];
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
+    } progress:^(NSProgress * _Nonnull uploadProgress){
         // 上传进度
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
         NSDictionary*dictionary=[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         success(dictionary);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
         faild(error);
     }];
 }
@@ -123,21 +121,19 @@
     
     // GET请求方式
     if (type == HNRequestMethodTypeGET){
-        [[HNHTTPRequestManager shareInstance] getWithUrl:requestUrl refreshCache:isCache params:param success:^(id responseObject) {
+        [[HNHTTPRequestManager shareInstance] getWithUrl:requestUrl refreshCache:isCache params:param success:^(id responseObject){
             success(responseObject);
-        } fail:^(NSError *error) {
+        } fail:^(NSError *error){
            faild(error);
         }];
     }
     // POST请求方式
     else if (type == HNRequestMethodTypePOST){
-        [[HNHTTPRequestManager shareInstance] postWithUrl:requestUrl refreshCache:isCache params:param success:^(id responseObject) {
+        [[HNHTTPRequestManager shareInstance] postWithUrl:requestUrl refreshCache:isCache params:param success:^(id responseObject){
             success(responseObject);
-            
-            // 在这里判断数据是否正确
+                // 在这里判断数据是否正确
             // 解析code
-            
-        } fail:^(NSError *error) {
+            } fail:^(NSError *error){
             faild(error);
         }];
     }
@@ -155,7 +151,7 @@
     [paramDic setObject:@"1" forKey:@"m_id"]; // m_id
     
 //    // 个人信息相关
-//    if (![kTOKEN isEqualToString:@""]&&kTOKEN!=nil) {
+//    if (![kTOKEN isEqualToString:@""]&&kTOKEN!=nil){
 //        [paramDic setObject:kTOKEN forKey:@"access_token"];  // 用户的access_token, 由服务器下发
 //    }
     

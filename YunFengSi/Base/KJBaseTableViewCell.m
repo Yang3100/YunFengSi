@@ -27,7 +27,7 @@ static NSString *cellID = nil;
     UITableViewCell *baseCell = [tableView dequeueReusableCellWithIdentifier:cellID];
     
 //    DLog(@"CellId:=====>>>>%@",cellID);
-    if (baseCell == nil) {
+    if (baseCell == nil){
         baseCell = [[self alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
         baseCell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
@@ -42,7 +42,7 @@ static NSString *cellID = nil;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
+    if (self){
         [self setUI];
     }
     return self;
