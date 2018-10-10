@@ -42,16 +42,16 @@ _Pragma("clang diagnostic pop")\
 } while (0)
 
 // 是否为空对象
-#define KJObjectIsNil(__object) ((nil == __object)|| [__object isKindOfClass:[NSNull class]])
+#define KJObjectIsNil(__object)   ((nil == __object) || [__object isKindOfClass:[NSNull class]])
 
 // 字符串为空
-#define KJStringIsEmpty(__string)((__string.length == 0)|| KJObjectIsNil(__string))
+#define KJStringIsEmpty(__string) ((__string.length == 0) || KJObjectIsNil(__string))
 
 // 字符串不为空
 #define KJStringIsNotEmpty(__string) (!KJStringIsEmpty(__string))
 
 // 数组为空
-#define KJArrayIsEmpty(__array)((KJObjectIsNil(__array))|| (__array.count==0))
+#define KJArrayIsEmpty(__array)   ((KJObjectIsNil(__array)) || (__array.count==0))
 
 #define _weakself __weak typeof(self)weakself = self
 #pragma mark ********** 快捷获取当前进程的代理对象指针 ************/
@@ -59,12 +59,8 @@ _Pragma("clang diagnostic pop")\
 
 // IOS版本
 #define KJIOSVersion [[[UIDevice currentDevice] systemVersion] floatValue]
-#define KJ_iOS7_VERSTION_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 7.0)
-#define KJ_iOS8_VERSTION_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 8.0)
-#define KJ_iOS9_VERSTION_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 9.0)
-#define KJ_iOS10_VERSTION_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 10.0)
 
-/// 类型相关
+/// 机型相关
 #define KJ_IS_IPAD   (UI_USER_INTERFACE_IDIOM()== UIUserInterfaceIdiomPad)
 #define KJ_IS_IPHONE (UI_USER_INTERFACE_IDIOM()== UIUserInterfaceIdiomPhone)
 #define KJ_IS_RETINA ([[UIScreen mainScreen] scale] >= 2.0)
@@ -113,13 +109,13 @@ _Pragma("clang diagnostic pop")\
 #define KJCommentHorizontalSpace     Handle(11.0f)
 #define KJCommentVerticalSpace       Handle(7.0f)
 #define KJTopicAvatarWH              Handle(30.0f) // 话题头像宽高
-#define KJTopicMoreButtonW           24.0f // 话题更多按钮宽
+#define KJTopicMoreButtonW           24.0f  // 话题更多按钮宽
 #define KJGlobalBottomLineHeight     0.55f  // 线高
 
 #pragma mark *******    颜色   *********/
-#define UIColorFromHEXA(hex,a)[UIColor colorWithRed:((hex&0xFF0000)>>16)/255.0f green:((hex&0xFF00)>>8)/255.0f blue:(hex&0xFF)/255.0f alpha:a]
-#define UIColorFromRGBA(r,g,b,a)[UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]  // rgb颜色+透明度
-#define UIColorHexFromRGB(hex)UIColorFromHEXA(hex,1.0)
+#define UIColorFromHEXA(hex,a)    [UIColor colorWithRed:((hex&0xFF0000)>>16)/255.0f green:((hex&0xFF00)>>8)/255.0f blue:(hex&0xFF)/255.0f alpha:a]
+#define UIColorFromRGBA(r,g,b,a)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]  // rgb颜色+透明度
+#define UIColorHexFromRGB(hex)    UIColorFromHEXA(hex,1.0)
 
 
 #define MainColor             UIColorFromHEXA(0xfea43b,1.0) // app 主色调
@@ -129,13 +125,13 @@ _Pragma("clang diagnostic pop")\
 #define DefaultBackgroudColor UIColorFromHEXA(0xf9f6f6,1.0) // 视图里面的背景颜色
 #define DefaultLineColor      UIColorFromHEXA(0x000000,0.5) // 边框线的颜色
 // 填充颜色,获取的是父视图Table背景颜色
-#define KJTableFillColor [UIColor groupTableViewBackgroundColor]
+#define KJTableFillColor      [UIColor groupTableViewBackgroundColor]
 
 
 #pragma mark *******    图片资源相关   *********
 #define GetImage(imageName)  [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageName]]
-#define DefaultHeaderImage    GetImage(@"me_no_header")    // 头像占位图
-#define DefaultCoverImage     GetImage(@"me_no_cover")     // 封面占位图
+#define DefaultHeaderImage   GetImage(@"me_no_header")    // 头像占位图
+#define DefaultCoverImage    GetImage(@"me_no_cover")     // 封面占位图
 
 #pragma mark *******    系统默认字体设置和自选字体设置   *********/
 #define SystemFontSize(fontsize)[UIFont systemFontOfSize:(fontsize)]

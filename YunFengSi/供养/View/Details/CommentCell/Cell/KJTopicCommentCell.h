@@ -3,7 +3,7 @@
 //  KJDevelopExample
 //
 //  Created by CoderMikeHe on 17/2/9.
-//  Copyright © 2017年 CoderMikeHe. All rights reserved.
+//  Copyright © 2017年 杨科军. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -22,8 +22,9 @@
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 
 /** 评论Frame */
-@property (nonatomic , strong)KJCommentFrame *commentFrame;
+@property (nonatomic,strong) KJCommentFrame *commentFrame;
 
 /** 代理 */
-@property (nonatomic , weak)id <KJTopicCommentCellDelegate> delegate;
+@property (nonatomic,weak) id<KJTopicCommentCellDelegate> delegate;
+
 @end

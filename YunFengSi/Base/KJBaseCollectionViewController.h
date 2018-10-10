@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KJBaseCollectionViewController : KJBaseViewController
+@interface KJBaseCollectionViewController : UIViewController
 <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
 /// The table view for collectionView controller.

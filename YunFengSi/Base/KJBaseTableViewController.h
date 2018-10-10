@@ -2,13 +2,13 @@
 //  SUTableViewController0.h
 //  KJDevelopExample
 //
-//  Created by senba on 2017/6/12.
-//  Copyright © 2017年 CoderMikeHe. All rights reserved.
+//  Created by 杨科军 on 2017/6/12.
+//  Copyright © 2017年 杨科军. All rights reserved.
 //  tableView
 
 #import "UIScrollView+KJRefresh.h"
 
-@interface KJBaseTableViewController : KJBaseViewController
+@interface KJBaseTableViewController : UIViewController
 <UITableViewDataSource,UITableViewDelegate>
 
 /// 表格视图样式

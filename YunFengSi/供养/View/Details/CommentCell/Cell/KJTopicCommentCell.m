@@ -3,7 +3,7 @@
 //  KJDevelopExample
 //
 //  Created by CoderMikeHe on 17/2/9.
-//  Copyright © 2017年 CoderMikeHe. All rights reserved.
+//  Copyright © 2017年 杨科军. All rights reserved.
 //
 
 #import "KJTopicCommentCell.h"
@@ -76,7 +76,7 @@
 - (void)_setupSubViews{
     // 文本
     YYLabel *contentLabel = [[YYLabel alloc] init];
-    contentLabel.numberOfLines = 0 ;
+    contentLabel.numberOfLines = 0;
     contentLabel.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:contentLabel];
     self.contentLabel = contentLabel;

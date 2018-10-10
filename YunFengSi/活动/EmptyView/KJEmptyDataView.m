@@ -1,14 +1,14 @@
 //
-//  CMHEmptyDataView.m
+//  KJEmptyDataView.m
 //  MHDevelopExample
 //
 //  Created by lx on 2018/6/19.
-//  Copyright © 2018年 CoderMikeHe. All rights reserved.
+//  Copyright © 2018年 杨科军. All rights reserved.
 //
 
-#import "CMHEmptyDataView.h"
+#import "KJEmptyDataView.h"
 
-@interface CMHEmptyDataView ()
+@interface KJEmptyDataView ()
 
 /// imageView <图片>
 @property (nonatomic , readwrite , weak) UIImageView *imageView;
@@ -21,10 +21,10 @@
 @end
 
 
-@implementation CMHEmptyDataView
+@implementation KJEmptyDataView
 
 #pragma mark - Public Method
-- (void)configEmptyViewWithType:(CMHEmptyDataViewType)type emptyInfo:(NSString *)emptyInfo errorInfo:(NSString *)errorInfo offsetTop:(CGFloat)offsetTop hasData:(BOOL)hasData hasError:(BOOL)hasError reloadBlock:(void(^)(void))reloadBlock{
+- (void)configEmptyViewWithType:(KJEmptyDataViewType)type emptyInfo:(NSString *)emptyInfo errorInfo:(NSString *)errorInfo offsetTop:(CGFloat)offsetTop hasData:(BOOL)hasData hasError:(BOOL)hasError reloadBlock:(void(^)(void))reloadBlock{
     
     if (hasData) {  /// 有数据，则不需要显示占位图
         self.hidden = YES;
@@ -46,10 +46,10 @@
     if (hasError) { /// 请求出错 1. 网络问题  2. 服务器问题
         if (random) {  /// 无网络
             errorInfo = KJStringIsNotEmpty(errorInfo)?errorInfo:@"呀！网络正在开小差~";
-            image = [UIImage imageNamed:[NSString stringWithFormat:@"cmh_default_no_wifi_%ld",(long)random]];
+            image = [UIImage imageNamed:[NSString stringWithFormat:@"kj_default_no_wifi_%ld",(long)random]];
         }else{    /// 服务器出错
             errorInfo = KJStringIsNotEmpty(errorInfo)?errorInfo:@"呜呜！服务器崩溃了~";
-            image = [UIImage imageNamed:@"cmh_default_service_error"];
+            image = [UIImage imageNamed:@"kj_default_service_error"];
         }
 
         /// 赋值
@@ -61,71 +61,59 @@
     
     /// 无数据
     switch (type) {
-        case CMHEmptyDataViewTypeDefault:  /// 默认情况
-            {
-                emptyInfo = KJStringIsNotEmpty(emptyInfo)?emptyInfo:@"哇喔！空空如也~";
-                image = [UIImage imageNamed:[NSString stringWithFormat:@"cmh_default_empty_data_%ld",(long)random]];
-            }
+        case KJEmptyDataViewTypeDefault:{  /// 默认情况
+            emptyInfo = KJStringIsNotEmpty(emptyInfo)?emptyInfo:@"哇喔！空空如也~";
+            image = [UIImage imageNamed:[NSString stringWithFormat:@"kj_default_empty_data_%ld",(long)random]];
+        }
             break;
-        case CMHEmptyDataViewTypeBuyGoods:
-        {
+        case KJEmptyDataViewTypeBuyGoods:{
             emptyInfo = KJStringIsNotEmpty(emptyInfo)?emptyInfo:@"没买到心仪的宝贝\n去首页逛逛吧～";
-            image = [UIImage imageNamed:@"cmh_default_buy_goods"];
+            image = [UIImage imageNamed:@"kj_default_buy_goods"];
         }
             break;
-        case CMHEmptyDataViewTypeSoldGoods:
-        {
+        case KJEmptyDataViewTypeSoldGoods:{
             emptyInfo = KJStringIsNotEmpty(emptyInfo)?emptyInfo:@"你的商品无人问津\n分享到朋友圈吆喝一下～";
-            image = [UIImage imageNamed:@"cmh_default_sold_goods"];
+            image = [UIImage imageNamed:@"kj_default_sold_goods"];
         }
             break;
-        case CMHEmptyDataViewTypePublishGoods:
-        {
+        case KJEmptyDataViewTypePublishGoods:{
             emptyInfo = KJStringIsNotEmpty(emptyInfo)?emptyInfo:@"赶紧找出家里的闲置上传吧\n发布出来可以换钱哦～";
-            image = [UIImage imageNamed:@"cmh_default_publish_goods"];
+            image = [UIImage imageNamed:@"kj_default_publish_goods"];
         }
             break;
-        case CMHEmptyDataViewTypeCollectGoods:
-        {
+        case KJEmptyDataViewTypeCollectGoods:{
             emptyInfo = KJStringIsNotEmpty(emptyInfo)?emptyInfo:@"你还没有收藏相关商品\n赶快去逛逛吧～";
-            image = [UIImage imageNamed:@"cmh_default_collect_goods"];
+            image = [UIImage imageNamed:@"kj_default_collect_goods"];
         }
             break;
-        case CMHEmptyDataViewTypeGoodsDetail:
-        {
+        case KJEmptyDataViewTypeGoodsDetail:{
             emptyInfo = KJStringIsNotEmpty(emptyInfo)?emptyInfo:@"这个商品不见了\n换一个商品再看看～";
-            image = [UIImage imageNamed:@"cmh_default_goods_detail"];
+            image = [UIImage imageNamed:@"kj_default_goods_detail"];
         }
             break;
-        case CMHEmptyDataViewTypeOrderDetail:
-        {
+        case KJEmptyDataViewTypeOrderDetail:{
             emptyInfo = KJStringIsNotEmpty(emptyInfo)?emptyInfo:@"暂无订单消息，去首页逛逛吧～";
-            image = [UIImage imageNamed:@"cmh_default_order_detail"];
+            image = [UIImage imageNamed:@"kj_default_order_detail"];
         }
             break;
-        case CMHEmptyDataViewTypeSearchGoods:
-        {
+        case KJEmptyDataViewTypeSearchGoods:{
             emptyInfo = KJStringIsNotEmpty(emptyInfo)?emptyInfo:@"这是一道超岗题\n换一个关键词看看～";
-            image = [UIImage imageNamed:@"cmh_default_search_no_result"];
+            image = [UIImage imageNamed:@"kj_default_search_no_result"];
         }
             break;
-        case CMHEmptyDataViewTypeAddress:
-        {
+        case KJEmptyDataViewTypeAddress:{
             emptyInfo = KJStringIsNotEmpty(emptyInfo)?emptyInfo:@"添加地址信息，下单更快捷～";
-            image = [UIImage imageNamed:@"cmh_default_my_address"];
+            image = [UIImage imageNamed:@"kj_default_my_address"];
         }
             break;
-        case CMHEmptyDataViewTypeRedPocket:
-        {
+        case KJEmptyDataViewTypeRedPocket:{
             emptyInfo = KJStringIsNotEmpty(emptyInfo)?emptyInfo:@"您还没有可用的红包哦～";
-            image = [UIImage imageNamed:@"cmh_default_red_pocket"];
+            image = [UIImage imageNamed:@"kj_default_red_pocket"];
         }
             break;
-            
-        default:
-            {
+        default:{
                 emptyInfo = KJStringIsNotEmpty(emptyInfo)?emptyInfo:@"哇喔！空空如也~";
-                image = [UIImage imageNamed:[NSString stringWithFormat:@"cmh_default_empty_data_%ld",(long)random]];
+                image = [UIImage imageNamed:[NSString stringWithFormat:@"kj_default_empty_data_%ld",(long)random]];
             }
             break;
     }

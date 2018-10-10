@@ -3,7 +3,7 @@
 //  KJDevelopExample
 //
 //  Created by CoderMikeHe on 17/2/8.
-//  Copyright © 2017年 CoderMikeHe. All rights reserved.
+//  Copyright © 2017年 杨科军. All rights reserved.
 //
 
 #import "KJTopicFrame.h"
@@ -110,14 +110,13 @@
             commentFrame.maxW = textLimitSize.width;
             commentFrame.comment = comment;
             [self.commentFrames addObject:commentFrame];
-                tableViewH += commentFrame.cellHeight;
+            tableViewH += commentFrame.cellHeight;
         }
     }
     
     self.tableViewFrame = CGRectMake(tableViewX, tableViewY, tableViewW, tableViewH);
     // 自身高度
     self.height = CGRectGetMaxY(self.textFrame);
-
 }
 
 

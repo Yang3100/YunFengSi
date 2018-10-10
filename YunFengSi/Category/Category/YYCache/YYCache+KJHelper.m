@@ -3,7 +3,7 @@
 //  KJDevelopExample
 //
 //  Created by lx on 2018/6/8.
-//  Copyright © 2018年 CoderMikeHe. All rights reserved.
+//  Copyright © 2018年 杨科军. All rights reserved.
 //
 
 #import "YYCache+KJHelper.h"

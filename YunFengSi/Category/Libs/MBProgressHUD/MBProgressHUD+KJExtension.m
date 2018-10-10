@@ -3,7 +3,7 @@
 //  MBProgressHUD+KJExtension.m
 //
 //  Created by apple on 16/5/10.
-//  Copyright © 2016年 CoderMikeHe. All rights reserved.
+//  Copyright © 2016年 杨科军. All rights reserved.
 //
 
 #import "MBProgressHUD+KJExtension.h"

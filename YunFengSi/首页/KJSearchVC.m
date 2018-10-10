@@ -147,8 +147,8 @@ static NSUInteger const KJSearchGoodsHistoryMaxCount  = 30;
         NSLog(@" --- insert search searchText success --- ");
     }];
     
-    /// 回调数据 必须要等dismiss掉，在回调数据
-    !self.callback?:self.callback(searchText);
+//    /// 回调数据 必须要等dismiss掉，在回调数据
+//    !self.callback?:self.callback(searchText);
     
     /// 退出控制器
     [self _closeAction];

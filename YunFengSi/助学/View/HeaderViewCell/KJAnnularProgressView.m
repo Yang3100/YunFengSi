@@ -30,7 +30,11 @@
 @property (nonatomic, strong)UILabel  *detailLabel;//详情
 
 @property (nonatomic, strong)UILabel  *seeLabel;//看完了
-@property (nonatomic, strong)UILabel  *giveLikeLabel;//点赞
+@property (nonatomic, strong)UIButton  *giveLikeButton;//点赞
+
+// 粒子效果
+@property(nonatomic,strong) CAEmitterLayer *emitterLayer;  // 粒子容器
+@property(nonatomic,strong) CAEmitterCell *emitterCell;    // 粒子
 
 @end
 
@@ -53,7 +57,7 @@
     
     // 先调用superView的layoutIfNeeded方法再获取frame
     [self layoutIfNeeded];
-    CGFloat h = CGRectGetHeight(self.giveLikeLabel.frame)+ self.giveLikeLabel.frame.origin.y + Handle(20);
+    CGFloat h = CGRectGetHeight(self.giveLikeButton.frame)+ self.giveLikeButton.frame.origin.y + Handle(20);
     return CGSizeMake(SCREEN_WIDTH, h);
 }
 
@@ -126,7 +130,7 @@
         make.height.mas_equalTo(Handle(20));
     }];
     
-    [self.giveLikeLabel mas_makeConstraints:^(MASConstraintMaker *make){
+    [self.giveLikeButton mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.mas_equalTo(self.seeLabel.mas_bottom).mas_offset(Handle(10));
         make.centerX.mas_equalTo(self);
         make.height.mas_equalTo(Handle(30));
@@ -260,12 +264,118 @@
     }
     return _seeLabel;
 }
-- (UILabel*)giveLikeLabel{
-    if (!_giveLikeLabel){
-        _giveLikeLabel=InsertLabel(self, CGRectZero, NSTextAlignmentCenter, @"118", SystemFontSize(12), [UIColor grayColor]);
-        [KJTools makeCornerRadius:Handle(5)borderColor:[UIColor grayColor] layer:_giveLikeLabel.layer borderWidth:1];
+- (UIButton*)giveLikeButton{
+    if (!_giveLikeButton){
+        _giveLikeButton = [[UIButton alloc] initWithFrame:CGRectZero];
+        [_giveLikeButton setTitle:@"118" forState:UIControlStateNormal];
+        //设置button正常状态下的图片
+        [_giveLikeButton setImage:[UIImage imageNamed:@"comment_zan_nor"]
+                        forState:UIControlStateNormal];
+        //设置button高亮状态下的图片
+        [_giveLikeButton setImage:[UIImage imageNamed:@"comment_zan_high"]
+                        forState:UIControlStateHighlighted];
+        //button图片的偏移量，距上左下右分别(10, 10, 10, 60)像素点
+//        CGFloat leftlab = [_giveLikeLabel.titleLabel.text sizeWithAttributes:@{NSFontAttributeName : _giveLikeLabel.titleLabel.font}].width;
+//        [_giveLikeLabel setImageEdgeInsets:UIEdgeInsetsMake(0, leftlab + 70, 0, 0)];
+//        [_giveLikeLabel setTitleEdgeInsets:UIEdgeInsetsMake(0, -40, 0, 0)];
+
+        _giveLikeButton.imageEdgeInsets = UIEdgeInsetsMake(0, 30, 0, 60);
+        //button标题的偏移量，这个偏移量是相对于图片的
+        _giveLikeButton.titleEdgeInsets = UIEdgeInsetsMake(0, -10, 0, -5);
+        _giveLikeButton.showsTouchWhenHighlighted = YES;
+        // 重点位置结束
+        _giveLikeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+        //设置button正常状态下的标题颜色
+        [_giveLikeButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        //设置button高亮状态下的标题颜色
+        [_giveLikeButton setTitleColor:[UIColor greenColor] forState:UIControlStateHighlighted];
+        _giveLikeButton.titleLabel.font = [UIFont systemFontOfSize:12];
+        [_giveLikeButton addTarget:self action:@selector(buttonDidClicked)forControlEvents:UIControlEventTouchUpInside];
+        [KJTools makeCornerRadius:Handle(5) borderColor:[UIColor grayColor] layer:_giveLikeButton.layer borderWidth:1];
+        _giveLikeButton.highlighted = NO;
+        _giveLikeButton.selected = NO;
+        [self addSubview:_giveLikeButton];
     }
-    return _giveLikeLabel;
+    return _giveLikeButton;
 }
+
+- (void)buttonDidClicked{
+    if (self.giveLikeButton.selected) {
+        [MBProgressHUD kj_showTips:@"您已点赞!!"];
+        return;
+    }
+    
+    self.giveLikeButton.highlighted = YES;
+    self.giveLikeButton.selected = YES;
+    [_giveLikeButton setTitle:@"119" forState:UIControlStateNormal];
+    [_giveLikeButton setImage:[UIImage imageNamed:@"comment_zan_high"]
+                     forState:UIControlStateNormal];
+    
+    // 添加粒子效果层
+    [self.layer addSublayer:self.emitterLayer];
+    
+    
+    //  延时执行
+    int64_t delayInSeconds = 3.0; // 延迟的时间
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+       [self.emitterLayer removeFromSuperlayer];
+    });
+}
+
+#pragma mark - 初始化粒子容器
+- (CAEmitterLayer*)emitterLayer{
+    if (!_emitterLayer) {
+        // 粒子容器
+        CAEmitterLayer *emitterLayer = [CAEmitterLayer layer];
+        // 决定了粒子发射形状的中心点
+        emitterLayer.emitterPosition = self.giveLikeButton.center;
+        // 发射源的尺寸大小
+        emitterLayer.emitterSize     = self.giveLikeButton.frame.size;
+        emitterLayer.emitterMode     = kCAEmitterLayerPoints;  // 发射模式
+        emitterLayer.emitterShape    = kCAEmitterLayerCircle;  // 发射源的形状
+        emitterLayer.renderMode      = kCAEmitterLayerAdditive;  // 渲染模式
+        
+        
+        //        CAEmitterCell *subCell2 = home_Emitter_subCell([KJTools getImageFromColor:[UIColor blueColor] Rect:CGRectMake(0, 0, 10, 10)]);
+        // 将色块粒子加入到容器之中
+        emitterLayer.emitterCells = @[self.emitterCell];
+        
+        _emitterLayer = emitterLayer;
+    }
+    return _emitterLayer;
+}
+
+#pragma mark - 粒子设置
+- (CAEmitterCell*)emitterCell{
+    if (!_emitterCell) {
+        _emitterCell = [CAEmitterCell emitterCell];
+        
+        // 粒子
+        // 和CALayer一样，只是用来设置图片
+        UIImage *image = GetImage(@"comment_zan_high");
+        _emitterCell.contents = (__bridge id _Nullable)image.CGImage;
+        
+        _emitterCell.lifetime = 5;    // 粒子存活时间
+        _emitterCell.lifetimeRange = 0; // 生命周期范围
+        _emitterCell.alphaRange = 0.5f;
+        _emitterCell.alphaSpeed = -0.3f;      // 粒子消逝的速度
+        _emitterCell.spin = M_PI;             // 自旋转角度
+        _emitterCell.spinRange = 2 * M_PI;    // 自旋转角度范围
+        
+        // 发射器
+        _emitterCell.birthRate = 50;        // 每秒生成粒子的个数
+        _emitterCell.yAcceleration = 0.f;   // 粒子的初始加速度
+        _emitterCell.xAcceleration = 0.1f;
+        _emitterCell.velocity = 80;           // 粒子运动的速度均值
+        _emitterCell.velocityRange = 30.f;    // 粒子运动的速度扰动范围
+        _emitterCell.emissionRange  = 2*M_PI; // 粒子发射角度范围
+        
+        _emitterCell.scale = 0.1;             // 缩放比例
+        _emitterCell.scaleRange = 0.3;        // 缩放比例范围
+        _emitterCell.scaleSpeed = 0.05;
+    }
+    return _emitterCell;
+}
+
 
 @end

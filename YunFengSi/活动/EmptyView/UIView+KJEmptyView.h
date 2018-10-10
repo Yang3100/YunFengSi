@@ -1,18 +1,18 @@
 //
-//  UIView+CMHEmptyView.h
+//  UIView+KJEmptyView.h
 //  MHDevelopExample
 //
 //  Created by lx on 2018/6/19.
-//  Copyright © 2018年 CoderMikeHe. All rights reserved.
+//  Copyright © 2018年 杨科军. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "CMHEmptyDataView.h"
+#import "KJEmptyDataView.h"
 
-@interface UIView (CMHEmptyView)
+@interface UIView (KJEmptyView)
 
 /// emptyDataView
-@property (nonatomic , readwrite , strong) CMHEmptyDataView *emptyDataView;
+@property (nonatomic , readwrite , strong) KJEmptyDataView *emptyDataView;
 
 /**
  无数据显示友好文本提示视图
@@ -24,5 +24,5 @@
  @param hasError 是否存在错误
  @param reloadBlock 如果有加载按钮点击的回调
  */
-- (void)cmh_configEmptyViewWithType:(CMHEmptyDataViewType)type emptyInfo:(NSString *)emptyInfo errorInfo:(NSString *)errorInfo offsetTop:(CGFloat)offsetTop hasData:(BOOL)hasData hasError:(BOOL)hasError reloadBlock:(void(^)(void))reloadBlock;
+- (void)kj_configEmptyViewWithType:(KJEmptyDataViewType)type emptyInfo:(NSString *)emptyInfo errorInfo:(NSString *)errorInfo offsetTop:(CGFloat)offsetTop hasData:(BOOL)hasData hasError:(BOOL)hasError reloadBlock:(void(^)(void))reloadBlock;
 @end

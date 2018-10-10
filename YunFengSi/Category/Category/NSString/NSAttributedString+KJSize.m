@@ -2,8 +2,8 @@
 //  NSAttributedString+KJSize.m
 //  SenbaUsed
 //
-//  Created by senba on 2017/5/29.
-//  Copyright © 2017年 CoderMikeHe. All rights reserved.
+//  Created by 杨科军 on 2017/5/29.
+//  Copyright © 2017年 杨科军. All rights reserved.
 //
 
 #import "NSAttributedString+KJSize.h"

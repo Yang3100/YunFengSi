@@ -7,8 +7,8 @@
 //
 
 #import "KJMeVC.h"
-#import "CMHWaterfall.h"
-#import "CMHWaterfallCell.h"
+#import "KJWaterfall.h"
+#import "KJWaterfallCell.h"
 // 瀑布流
 #import <CHTCollectionViewWaterfallLayout.h>
 
@@ -56,8 +56,8 @@
     [self _makeSubViewsConstraints];
     
     /// 注册cell
-    [self.collectionView registerClass:[CMHWaterfallCell class]
-            forCellWithReuseIdentifier:@"CMHWaterfallCell"];
+    [self.collectionView registerClass:[KJWaterfallCell class]
+            forCellWithReuseIdentifier:@"KJWaterfallCell"];
     [self.collectionView registerClass:[UICollectionReusableView class]
             forSupplementaryViewOfKind:CHTCollectionElementKindSectionFooter
                    withReuseIdentifier:@"footerView"];
@@ -73,10 +73,10 @@
     return self.dataSource.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView dequeueReusableCellWithIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath{
-    return [collectionView dequeueReusableCellWithReuseIdentifier:@"CMHWaterfallCell" forIndexPath:indexPath];
+    return [collectionView dequeueReusableCellWithReuseIdentifier:@"KJWaterfallCell" forIndexPath:indexPath];
 }
 
-- (void)configureCell:(CMHWaterfallCell *)cell atIndexPath:(NSIndexPath *)indexPath withObject:(id)object{
+- (void)configureCell:(KJWaterfallCell *)cell atIndexPath:(NSIndexPath *)indexPath withObject:(id)object{
     [cell configureModel:object];
 }
 
@@ -174,7 +174,7 @@
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 /// 子类必须override
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CMHWaterfall *waterfall = self.dataSource[indexPath.item];
+    KJWaterfall *waterfall = self.dataSource[indexPath.item];
     CGFloat width = SCREEN_WIDTH/2;
     CGFloat height = width * waterfall.height / waterfall.width;
     return CGSizeMake(width, height);
@@ -209,7 +209,7 @@
         int a = (int)name.count-1;
         int b = (int)im.count-1;
         for (int i=0; i<23; i++) {
-            CMHWaterfall *wf8 = [[CMHWaterfall alloc] init];
+            KJWaterfall *wf8 = [[KJWaterfall alloc] init];
             wf8.title = name[[KJTools getRandomNumber:0 to:a]];
             wf8.imageUrl = im[[KJTools getRandomNumber:0 to:b]];
             wf8.width = 200;

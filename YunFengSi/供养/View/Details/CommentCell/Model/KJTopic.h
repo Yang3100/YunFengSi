@@ -3,7 +3,7 @@
 //  KJDevelopExample
 //
 //  Created by CoderMikeHe on 17/2/8.
-//  Copyright © 2017年 CoderMikeHe. All rights reserved.
+//  Copyright © 2017年 杨科军. All rights reserved.
 //  话题模型（类似于一条说说、微博）
 
 #import <Foundation/Foundation.h>

@@ -2,8 +2,8 @@
 //  SUSearchBarView.h
 //  KJDevelopExample
 //
-//  Created by senba on 2017/6/12.
-//  Copyright © 2017年 CoderMikeHe. All rights reserved.
+//  Created by 杨科军 on 2017/6/12.
+//  Copyright © 2017年 杨科军. All rights reserved.
 //  商品首页的搜索view -- V
 
 #import <UIKit/UIKit.h>

@@ -3,7 +3,7 @@
 //  KJDevelopExample
 //
 //  Created by CoderMikeHe on 17/2/9.
-//  Copyright © 2017年 CoderMikeHe. All rights reserved.
+//  Copyright © 2017年 杨科军. All rights reserved.
 //
 
 #import "KJTopicCell.h"
@@ -176,7 +176,6 @@
     createTimeLabel.textTapAction = ^(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect){
         [weakSelf _contentTextDidClicked];
     };
-    
     
     // 文本
     YYLabel *contentLabel = [[YYLabel alloc] init];
