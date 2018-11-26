@@ -10,7 +10,6 @@
 
 #import "SUSearchBarView.h"
 
-#import "KJHelpFristCell.h"
 #import "KJNewActivityCell.h"
 
 #import "KJSearchVC.h"

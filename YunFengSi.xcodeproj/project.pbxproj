@@ -84,7 +84,6 @@
 		68583B092154E55200492FC7 /* KJEmptyDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68583AE62154E55200492FC7 /* KJEmptyDataView.m */; };
 		68583B282154E55200492FC7 /* UIView+KJEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68583B082154E55200492FC7 /* UIView+KJEmptyView.m */; };
 		68614F2821538219004E5B57 /* KJBaseCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68614F2721538219004E5B57 /* KJBaseCollectionViewController.m */; };
-		68614F2B21538A05004E5B57 /* KJSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68614F2A21538A05004E5B57 /* KJSearchVC.m */; };
 		68614F3321538A55004E5B57 /* KJSearchTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68614F2D21538A55004E5B57 /* KJSearchTitleView.m */; };
 		68614F3421538A55004E5B57 /* KJSearchHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 68614F2E21538A55004E5B57 /* KJSearchHistoryCell.m */; };
 		68614F3521538A55004E5B57 /* KJSearchHistoryHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68614F2F21538A55004E5B57 /* KJSearchHistoryHeaderView.m */; };
@@ -121,7 +120,6 @@
 		68C41BC6214F5E4100488C1E /* KJHelpStudyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C41BC5214F5E4100488C1E /* KJHelpStudyVC.m */; };
 		68C41BC9214F5E5C00488C1E /* KJFendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C41BC8214F5E5C00488C1E /* KJFendVC.m */; };
 		68C41BCC214F5E7400488C1E /* KJActivityVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C41BCB214F5E7400488C1E /* KJActivityVC.m */; };
-		68C41BCF214F5E8200488C1E /* KJHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C41BCE214F5E8200488C1E /* KJHomeVC.m */; };
 		68C41BD3214F757600488C1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68C41BD1214F757600488C1E /* Main.storyboard */; };
 		68C41BDC214F7D8D00488C1E /* KJNewDynamicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C41BDB214F7D8D00488C1E /* KJNewDynamicView.m */; };
 		68C41BDF214F82F300488C1E /* KJFendCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C41BDE214F82F300488C1E /* KJFendCollectionView.m */; };
@@ -136,6 +134,8 @@
 		68C41C04214FF2FD00488C1E /* KJDetailsHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C41C03214FF2FD00488C1E /* KJDetailsHeaderCell.m */; };
 		68C41C0B214FF4F200488C1E /* KJDetailHeaderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C41C0A214FF4F200488C1E /* KJDetailHeaderModel.m */; };
 		68D14C5A215139C2006B60D9 /* KJAnnularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D14C59215139C2006B60D9 /* KJAnnularProgressView.m */; };
+		68D41DAA21703BBD001E0DE0 /* KJSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D41DA621703BBD001E0DE0 /* KJSearchVC.m */; };
+		68D41DAB21703BBD001E0DE0 /* KJHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D41DA921703BBD001E0DE0 /* KJHomeVC.m */; };
 		68D522DA21522FB8006D1C0C /* HNNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D522CD21522FB8006D1C0C /* HNNetworking.m */; };
 		68D522DB21522FB8006D1C0C /* HNHTTPRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D522D021522FB8006D1C0C /* HNHTTPRequestManager.m */; };
 		68D522DC21522FB8006D1C0C /* NSNumber+BinAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D522D321522FB8006D1C0C /* NSNumber+BinAdd.m */; };
@@ -266,8 +266,6 @@
 		68583B082154E55200492FC7 /* UIView+KJEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+KJEmptyView.m"; sourceTree = "<group>"; };
 		68614F2621538219004E5B57 /* KJBaseCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJBaseCollectionViewController.h; sourceTree = "<group>"; };
 		68614F2721538219004E5B57 /* KJBaseCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJBaseCollectionViewController.m; sourceTree = "<group>"; };
-		68614F2921538A05004E5B57 /* KJSearchVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJSearchVC.h; sourceTree = "<group>"; };
-		68614F2A21538A05004E5B57 /* KJSearchVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJSearchVC.m; sourceTree = "<group>"; };
 		68614F2D21538A55004E5B57 /* KJSearchTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KJSearchTitleView.m; sourceTree = "<group>"; };
 		68614F2E21538A55004E5B57 /* KJSearchHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KJSearchHistoryCell.m; sourceTree = "<group>"; };
 		68614F2F21538A55004E5B57 /* KJSearchHistoryHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KJSearchHistoryHeaderView.m; sourceTree = "<group>"; };
@@ -344,8 +342,6 @@
 		68C41BC8214F5E5C00488C1E /* KJFendVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJFendVC.m; sourceTree = "<group>"; };
 		68C41BCA214F5E7400488C1E /* KJActivityVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJActivityVC.h; sourceTree = "<group>"; };
 		68C41BCB214F5E7400488C1E /* KJActivityVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJActivityVC.m; sourceTree = "<group>"; };
-		68C41BCD214F5E8200488C1E /* KJHomeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJHomeVC.h; sourceTree = "<group>"; };
-		68C41BCE214F5E8200488C1E /* KJHomeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJHomeVC.m; sourceTree = "<group>"; };
 		68C41BD1214F757600488C1E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		68C41BDA214F7D8D00488C1E /* KJNewDynamicView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJNewDynamicView.h; sourceTree = "<group>"; };
 		68C41BDB214F7D8D00488C1E /* KJNewDynamicView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJNewDynamicView.m; sourceTree = "<group>"; };
@@ -373,6 +369,10 @@
 		68C41C0A214FF4F200488C1E /* KJDetailHeaderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJDetailHeaderModel.m; sourceTree = "<group>"; };
 		68D14C58215139C2006B60D9 /* KJAnnularProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KJAnnularProgressView.h; sourceTree = "<group>"; };
 		68D14C59215139C2006B60D9 /* KJAnnularProgressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KJAnnularProgressView.m; sourceTree = "<group>"; };
+		68D41DA621703BBD001E0DE0 /* KJSearchVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KJSearchVC.m; path = ViewController/KJSearchVC.m; sourceTree = "<group>"; };
+		68D41DA721703BBD001E0DE0 /* KJHomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KJHomeVC.h; path = ViewController/KJHomeVC.h; sourceTree = "<group>"; };
+		68D41DA821703BBD001E0DE0 /* KJSearchVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KJSearchVC.h; path = ViewController/KJSearchVC.h; sourceTree = "<group>"; };
+		68D41DA921703BBD001E0DE0 /* KJHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KJHomeVC.m; path = ViewController/KJHomeVC.m; sourceTree = "<group>"; };
 		68D522CD21522FB8006D1C0C /* HNNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HNNetworking.m; sourceTree = "<group>"; };
 		68D522CE21522FB8006D1C0C /* HNHTTPRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HNHTTPRequestManager.h; sourceTree = "<group>"; };
 		68D522CF21522FB8006D1C0C /* HNNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HNNetworking.h; sourceTree = "<group>"; };
@@ -1007,10 +1007,10 @@
 			isa = PBXGroup;
 			children = (
 				68614F2C21538A55004E5B57 /* View */,
-				68C41BCD214F5E8200488C1E /* KJHomeVC.h */,
-				68C41BCE214F5E8200488C1E /* KJHomeVC.m */,
-				68614F2921538A05004E5B57 /* KJSearchVC.h */,
-				68614F2A21538A05004E5B57 /* KJSearchVC.m */,
+				68D41DA721703BBD001E0DE0 /* KJHomeVC.h */,
+				68D41DA921703BBD001E0DE0 /* KJHomeVC.m */,
+				68D41DA821703BBD001E0DE0 /* KJSearchVC.h */,
+				68D41DA621703BBD001E0DE0 /* KJSearchVC.m */,
 			);
 			path = "首页";
 			sourceTree = "<group>";
@@ -1349,9 +1349,9 @@
 				681F5B2D2153317B00F95528 /* UIViewController+DismissKeyboard.m in Sources */,
 				682D2BB52150EA2C007E0FB9 /* KJHelpDetailsVC.m in Sources */,
 				68C41C00214FE13000488C1E /* KJDisplayCollectionViewCell.m in Sources */,
+				68D41DAA21703BBD001E0DE0 /* KJSearchVC.m in Sources */,
 				681F5B2A2153317B00F95528 /* NSString+KJValid.m in Sources */,
 				68C41BC6214F5E4100488C1E /* KJHelpStudyVC.m in Sources */,
-				68C41BCF214F5E8200488C1E /* KJHomeVC.m in Sources */,
 				68C41B94214F55D400488C1E /* KJTools.m in Sources */,
 				681F5B242153317B00F95528 /* UIAlertController+KJColor.m in Sources */,
 				68D522DF21522FB8006D1C0C /* NSData+BinAdd.m in Sources */,
@@ -1398,6 +1398,7 @@
 				681F5B2E2153317B00F95528 /* UIViewController+HUD.m in Sources */,
 				68D522DB21522FB8006D1C0C /* HNHTTPRequestManager.m in Sources */,
 				682D2BB22150D129007E0FB9 /* KJHelpSecondCell.m in Sources */,
+				68D41DAB21703BBD001E0DE0 /* KJHomeVC.m in Sources */,
 				682D2BB92150EB6A007E0FB9 /* KJHelpDetailHeaderCell.m in Sources */,
 				683A206B214F4AD9005C8BE9 /* AppDelegate.m in Sources */,
 				684540172154C14900C32EEA /* KJWaterfallCell.m in Sources */,
@@ -1412,7 +1413,6 @@
 				68AC7DE52151F3A9006674A8 /* KJEncryptTool.m in Sources */,
 				68C41BA1214F576A00488C1E /* KJBaseTableViewCell.m in Sources */,
 				681F5B2F2153317B00F95528 /* Foundation+Log.m in Sources */,
-				68614F2B21538A05004E5B57 /* KJSearchVC.m in Sources */,
 				68C41BEA214F968500488C1E /* KJDetailsHeaderView.m in Sources */,
 				682D2BA821509F8A007E0FB9 /* NSDate+Extension.m in Sources */,
 				683A2074214F4AD9005C8BE9 /* YunFengSi.xcdatamodeld in Sources */,
